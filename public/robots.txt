@@ -19,4 +19,4 @@ Allow: /packages/
 Allow: /about/
 Allow: /contact/
 Allow: /gallery/
-Allow: /public
+Allow: /public/
