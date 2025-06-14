@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -39,9 +39,11 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://alltripp.com'),
-  alternates: {
+  metadataBase: new URL('https://alltripp.com'),  alternates: {
     canonical: '/',
+  },
+  verification: {
+    google: 'your-google-verification-code',
   },
   openGraph: {
     type: "website",
@@ -52,7 +54,7 @@ export const metadata: Metadata = {
     siteName: "AllTripp",
     images: [
       {
-        url: "/logo.png",
+        url: "/favicon.ico",
         width: 1200,
         height: 630,
         alt: "AllTripp - Travel Agency India",
@@ -63,7 +65,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AllTripp - Premium Travel Experiences Across India",
     description: "Discover India's hidden gems with AllTripp. Authentic travel experiences, cultural tours, and adventure trips.",
-    images: ["/logo.png"],
+    images: ["/favicon.ico"],
     creator: "@AllTripp",
   },
   robots: {
@@ -88,8 +90,13 @@ export const metadata: Metadata = {
     apple: [
       { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
     ],
-  },
-  manifest: '/manifest.json',
+  },  manifest: '/manifest.json',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#000000',
 }
 
 export default function RootLayout({
@@ -99,11 +106,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="canonical" href="https://alltripp.com" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta name="google-site-verification" content="your-google-verification-code" />
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -113,7 +121,7 @@ export default function RootLayout({
               "name": "AllTripp",
               "description": "Premium travel experiences across India",
               "url": "https://alltripp.com",
-              "logo": "https://alltripp.com/logo.png",
+              "logo": "https://alltripp.com/favicon.ico",
               "sameAs": [
                 "https://facebook.com/alltripp",
                 "https://instagram.com/alltripp",
@@ -136,13 +144,7 @@ export default function RootLayout({
               ]
             })
           }}
-        />      </head>
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </ThemeProvider>
+        />
       </body>
     </html>
   )
