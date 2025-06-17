@@ -105,11 +105,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html lang="en" suppressHydrationWarning>      <body className={`${inter.className} m-0 p-0`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <Navbar />
-          <main>{children}</main>
+          <main className="m-0 p-0">{children}</main>
           <Footer />
         </ThemeProvider>
         <script

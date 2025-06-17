@@ -40,7 +40,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section ref={ref} className="relative h-[85vh] w-full overflow-hidden">
+    <section ref={ref} className="relative h-screen w-full overflow-hidden" style={{ marginTop: '-60px', paddingTop: '60px' }}>
       <Image
         src="/himalayas.jpg"
         alt="Scenic view of Himalayas/Kashmir"
@@ -50,7 +50,7 @@ export default function HeroSection() {
       />
       <div className="absolute inset-0 bg-black/40" /> {/* Overlay */}
       <motion.div
-        className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white px-4"
+        className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white px-4 pt-20"
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}

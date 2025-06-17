@@ -1,247 +1,234 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 
 const destinations = [
 	{
-		name: "Kashmir",
-		description:
-			"Nestled in the Himalayas, Kashmir boasts stunning valleys and lakes, with a rich cultural heritage. Experience the serene beauty of Dal Lake, explore the Mughal gardens, and witness the snow-capped peaks that make this paradise on earth truly unforgettable.",
-		image: "/destinations/kashmir.jpg",
+		name: "Goa",
+		shortDescription: "Goa is a mesmerizing city that boasts stunning beaches, magnificent churches, and impressive forts. It's a perfect romantic getaway for beach lovers.",
+		detailedDescription: "Experience the perfect blend of Portuguese heritage and tropical paradise. From pristine beaches to vibrant nightlife, Goa offers an unforgettable coastal experience with water sports, beach shacks, and sunset views.",
+		image: "/destinations/goa.jpg",
+		badge: "POPULAR"
 	},
 	{
-		name: "Rajasthan",
-		description:
-			"A land of royal palaces, desert landscapes, and colorful markets, offering a captivating blend of history, culture, and architectural wonders in cities like Jaipur, Udaipur, and Jaisalmer. Discover the golden sands of the Thar Desert and majestic forts.",
-		image: "/destinations/rajasthan.jpg",
+		name: "Rishikesh",
+		shortDescription: "Rishikesh is a city in India renowned for its temples, ashrams, yoga centers, and natural beauty including waterfalls and greenery. It's also a hub for adventure activities.",
+		detailedDescription: "Known as the 'Yoga Capital of the World', Rishikesh offers spiritual awakening alongside thrilling adventures like river rafting, bungee jumping, and trekking in the foothills of the Himalayas.",
+		image: "/destinations/kashmir.jpg",
+		badge: "POPULAR"
+	},
+	{
+		name: "Jim Corbett",
+		shortDescription: "Jim Corbett National Park is a wildlife sanctuary located in Uttarakhand, India. It offers a perfect weekend getaway with adventure activities, wildlife sightings, and mysterious stories.",
+		detailedDescription: "India's oldest national park, home to the majestic Bengal tiger. Experience thrilling jungle safaris, bird watching, and stay in luxury resorts while exploring the rich biodiversity of the Terai region.",
+		image: "/destinations/Uttarakhand.jpg",
+		badge: "POPULAR"
+	},
+	{
+		name: "Amritsar",
+		shortDescription: "Amritsar, the heart of Punjab, is a revered site for Sikhs and a pilgrimage destination for many due to the presence of the Golden Temple.",
+		detailedDescription: "Explore historical landmarks such as Jallianwala Bagh and Wagah Border, as well as the Harke Bird Sanctuary. Experience the spiritual ambiance of the Golden Temple and taste authentic Punjabi cuisine.",
+		image: "/destinations/himachal-pradesh.jpg",
+		badge: "POPULAR"
 	},
 	{
 		name: "Kerala",
-		description:
-			"Known as 'God's Own Country,' Kerala enchants visitors with lush backwaters, serene beaches, and abundant greenery—perfect for a tranquil and rejuvenating escape. Cruise through the backwaters and experience Ayurvedic wellness traditions.",
+		shortDescription: "Kerala, known as 'God's Own Country', offers backwaters, hill stations, and pristine beaches with unique cultural experiences.",
+		detailedDescription: "Cruise through serene backwaters in traditional houseboats, explore spice plantations in Munnar, and experience Ayurvedic treatments in this tropical paradise.",
 		image: "/destinations/kerala.jpg",
+		badge: "POPULAR"
+	},
+	{
+		name: "Rajasthan",
+		shortDescription: "The land of kings, featuring magnificent palaces, desert landscapes, and rich cultural heritage.",
+		detailedDescription: "Explore majestic forts and palaces, experience camel safaris in the Thar Desert, and immerse yourself in the vibrant culture of royal Rajasthan.",
+		image: "/destinations/rajasthan.jpg",
+		badge: "POPULAR"
+	},
+	{
+		name: "Ladakh",
+		shortDescription: "A high-altitude desert offering breathtaking landscapes, monasteries, and adventure activities.",
+		detailedDescription: "Discover the moonlike landscapes of Ladakh, visit ancient Buddhist monasteries, and experience thrilling mountain adventures in the Himalayas.",
+		image: "/destinations/Ladakh.jpg",
+		badge: "POPULAR"
 	},
 	{
 		name: "Himachal Pradesh",
-		description:
-			"Famed for its snow-capped mountains, pine forests, and adventure hubs like Manali and Shimla, ideal for trekking, nature walks, and scenic retreats. Discover pristine valleys and experience the thrill of mountain adventures.",
-		image: "/destinations/himachal-pradesh.jpg",
-	},
-	{
-		name: "Goa",
-		description:
-			"Famed for its sun-kissed beaches, vibrant nightlife, and laid-back coastal vibe, a favorite for relaxation, water sports, and lively festivals. Experience the perfect blend of Portuguese heritage and tropical paradise.",
-		image: "/destinations/goa.jpg",
-	},
-	{
-		name: "Uttarakhand",
-		description:
-			"Home to the Himalayas, spiritual towns, and adventure sports, offering breathtaking views, trekking trails, and peaceful hill stations like Nainital and Mussoorie. Discover the source of the Ganges and experience spiritual awakening.",
-		image: "/destinations/Uttarakhand.jpg",
-	},
-	{
-		name: "Meghalaya",
-		description:
-			"Known for its dense rainforests and living root bridges, with tribal culture thriving through unique customs, music, and traditional crafts. Explore the wettest place on earth and witness nature's incredible engineering.",
-		image: "/destinations/Meghalaya.jpg",
-	},
-	{
-		name: "Assam",
-		description:
-			"Lush forests and the mighty Brahmaputra River define Assam's rich natural environment, while diverse ethnic communities celebrate vibrant folk traditions and festivals. Experience the world's finest tea gardens and spot the one-horned rhinoceros.",
-		image: "/destinations/assam.jpeg",
-	},
+		shortDescription: "Hill stations with snow-capped mountains, apple orchards, and pleasant weather year-round.",
+		detailedDescription: "Enjoy the cool mountain air of Shimla and Manali, experience adventure sports, and witness stunning Himalayan landscapes.",
+		image: "/destinations/himachal.jpg",
+		badge: "POPULAR"
+	}
 ];
 
 export default function DestinationsSection() {
 	const ref = useRef<HTMLElement>(null);
-	const isInView = useInView(ref, { once: true, amount: 0.1 });	const [currentIndex, setCurrentIndex] = useState(0);
-	const [isPlaying, setIsPlaying] = useState(true);
-	// Auto-slide functionality
+	const isInView = useInView(ref, { once: true, amount: 0.1 });
+	
+	// State for cycling through destinations
+	const [currentStartIndex, setCurrentStartIndex] = useState(0);
+	const [isTransitioning, setIsTransitioning] = useState(false);
+	const destinationsPerPage = 4;
+
+	// Auto-rotate destinations every 5 seconds
 	useEffect(() => {
-		if (!isPlaying) return;
+		if (!isInView) return;
 
 		const interval = setInterval(() => {
-			setCurrentIndex((prev) => (prev + 1) % destinations.length);
-		}, 5000); // 5 seconds per slide
+			setIsTransitioning(true);
+			setTimeout(() => {
+				setCurrentStartIndex((prevIndex) => {
+					const nextIndex = prevIndex + destinationsPerPage;
+					return nextIndex >= destinations.length ? 0 : nextIndex;
+				});
+				setIsTransitioning(false);
+			}, 300);
+		}, 5000);
 
 		return () => clearInterval(interval);
-	}, [isPlaying]);
+	}, [isInView]);
 
-	const goToNext = () => {
-		setCurrentIndex((prev) => (prev + 1) % destinations.length);
+	// Get current destinations to display
+	const getCurrentDestinations = () => {
+		const current = [];
+		for (let i = 0; i < destinationsPerPage; i++) {
+			const index = (currentStartIndex + i) % destinations.length;
+			current.push(destinations[index]);
+		}
+		return current;
 	};
 
-	const goToPrev = () => {
-		setCurrentIndex((prev) => (prev - 1 + destinations.length) % destinations.length);
+	const currentDestinations = getCurrentDestinations();
+
+	const containerVariants = {
+		hidden: { opacity: 0 },
+		visible: {
+			opacity: 1,
+			transition: {
+				staggerChildren: 0.1,
+			},
+		},
 	};
 
-	const togglePlayPause = () => {
-		setIsPlaying(!isPlaying);
+	const cardVariants = {
+		hidden: { opacity: 0, y: 50 },
+		visible: {
+			opacity: 1,
+			y: 0,
+			transition: {
+				duration: 0.6,
+				ease: "easeOut",
+			},
+		},
 	};
 
 	return (
 		<section 
 			id="destinations" 
 			ref={ref} 
-			className="relative h-screen w-full overflow-hidden"
+			className="py-20 bg-gradient-to-b from-gray-50 to-white"
 		>
-			{/* Background Slides */}
-			{destinations.map((destination, index) => (
+			<div className="container mx-auto px-6">
+				{/* Section Header */}
 				<motion.div
-					key={index}
-					className="absolute inset-0 w-full h-full"
-					initial={{ opacity: 0, scale: 1.1 }}
-					animate={{ 
-						opacity: index === currentIndex ? 1 : 0,
-						scale: index === currentIndex ? 1 : 1.1,
-					}}
-					transition={{ 
-						duration: 1.2, 
-						ease: [0.25, 0.1, 0.25, 1]
-					}}
+					initial={{ opacity: 0, y: 30 }}
+					animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 30 }}
+					transition={{ duration: 0.8 }}
+					className="text-center mb-16"
 				>
-					{/* Background Image */}
-					<div className="absolute inset-0">
-						<Image
-							src={destination.image}
-							alt={destination.name}
-							fill
-							className="object-cover"
-							priority={index === 0}
-							quality={90}
-						/>
-						{/* Gradient Overlay */}
-						<div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
-					</div>
-
-					{/* Content */}
-					<div className="relative z-10 h-full flex items-center">
-						<div className="container mx-auto px-6 md:px-12">
-							<div className="max-w-2xl">
-								<motion.div
-									initial={{ opacity: 0, y: 50 }}
-									animate={{ 
-										opacity: index === currentIndex ? 1 : 0,
-										y: index === currentIndex ? 0 : 50,
-									}}
-									transition={{ 
-										duration: 0.8, 
-										delay: index === currentIndex ? 0.3 : 0,
-										ease: "easeOut"
-									}}
-								>
-									{/* Destination Badge */}
-									<div className="inline-block mb-6">
-										<span className="text-sm font-semibold text-white/80 tracking-wider uppercase bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
-											Destination {String(index + 1).padStart(2, '0')}
-										</span>
-									</div>
-
-									{/* Title */}
-									<h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-										{destination.name}
-									</h1>
-
-									{/* Description */}
-									<p className="text-lg md:text-xl text-white/90 leading-relaxed mb-8 max-w-xl">
-										{destination.description}
-									</p>
-
-									{/* CTA Button */}
-									<Button
-										size="lg"
-										className="bg-white text-black hover:bg-white/90 font-semibold px-8 py-6 text-lg rounded-full transition-all duration-300 hover:scale-105"
-									>
-										Explore {destination.name}
-									</Button>
-								</motion.div>
-							</div>
-						</div>
-					</div>
-				</motion.div>
-			))}
-
-			{/* Navigation Controls */}
-			<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-				<div className="flex items-center space-x-6 bg-white/10 backdrop-blur-md rounded-full px-6 py-4 border border-white/20">
-					{/* Previous Button */}
-					<Button
-						variant="ghost"
-						size="sm"
-						onClick={goToPrev}
-						className="text-white hover:bg-white/20 rounded-full p-3 transition-all duration-300"
-					>
-						<ChevronLeft className="w-6 h-6" />
-					</Button>
-
-					{/* Play/Pause Button */}
-					<Button
-						variant="ghost"
-						size="sm"
-						onClick={togglePlayPause}
-						className="text-white hover:bg-white/20 rounded-full p-3 transition-all duration-300"
-					>
-						{isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-					</Button>
-
-					{/* Next Button */}
-					<Button
-						variant="ghost"
-						size="sm"
-						onClick={goToNext}
-						className="text-white hover:bg-white/20 rounded-full p-3 transition-all duration-300"
-					>
-						<ChevronRight className="w-6 h-6" />
-					</Button>
-				</div>
-			</div>
-
-			{/* Slide Indicators */}
-			<div className="absolute bottom-8 right-8 z-20">
-				<div className="flex flex-col space-y-2">
-					{destinations.map((_, index) => (
-						<button
-							key={index}
-							onClick={() => setCurrentIndex(index)}
-							className={`w-3 h-3 rounded-full transition-all duration-300 ${
-								index === currentIndex 
-									? 'bg-white scale-125' 
-									: 'bg-white/40 hover:bg-white/60'
-							}`}
-						/>
-					))}
-				</div>
-			</div>			{/* Progress Bar */}
-			{isPlaying && (
-				<div className="absolute bottom-0 left-0 w-full h-1 bg-white/20 z-20">
-					<motion.div
-						className="h-full bg-white"
-						initial={{ width: "0%" }}
-						animate={{ width: "100%" }}
-						transition={{ duration: 5, ease: "linear" }}
-						key={currentIndex}
-					/>
-				</div>
-			)}
-
-			{/* Section Title (Top Left) */}
-			<div className="absolute top-8 left-8 z-20">
-				<motion.div
-					initial={{ opacity: 0, x: -50 }}
-					animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -50 }}
-					transition={{ duration: 0.8, delay: 0.2 }}
-				>
-					<h2 className="text-2xl md:text-3xl font-bold text-white/90">
-						Premium Destinations
+					<h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+						Cities Exploration
 					</h2>
-					<p className="text-white/70 text-sm mt-1">
-						Discover breathtaking locations
+					<p className="text-lg text-gray-600 max-w-2xl mx-auto">
+						Discover incredible destinations across India with our curated travel experiences
 					</p>
+				</motion.div>				{/* Destinations Grid */}
+				<motion.div
+					variants={containerVariants}
+					initial="hidden"
+					animate={isInView ? "visible" : "hidden"}
+					className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transition-all duration-500 ${
+						isTransitioning ? 'opacity-50 scale-95' : 'opacity-100 scale-100'
+					}`}
+				>
+					{currentDestinations.map((destination, index) => (
+						<motion.div
+							key={`${destination.name}-${currentStartIndex}-${index}`}
+							variants={cardVariants}
+							className="group relative h-96 rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+						>
+							{/* Background Image - Full Coverage with object-cover to remove white spaces */}
+							<div className="absolute inset-0">
+								<Image
+									src={destination.image}
+									alt={destination.name}
+									fill
+									className="object-cover object-center transition-transform duration-700 group-hover:scale-110"
+								/>
+							</div>
+							
+							{/* Gradient overlay to ensure text readability */}
+							<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+							
+							{/* Badge */}
+							<div className="absolute top-4 left-4 z-20">
+								<span className="bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+									{destination.badge}
+								</span>
+							</div>
+
+							{/* Default Overlay - Light */}
+							<div className="absolute inset-0 bg-black/30 transition-opacity duration-500 group-hover:opacity-0" />
+
+							{/* Hover Overlay - Dark */}
+							<div className="absolute inset-0 bg-black/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+							{/* Default Content - Bottom Positioned */}
+							<div className="absolute inset-x-0 bottom-0 p-6 text-white transition-all duration-500 group-hover:opacity-0">
+								<h3 className="text-2xl font-bold mb-2 drop-shadow-lg">{destination.name}</h3>
+								<p className="text-sm text-white/90 line-clamp-2 mb-4 drop-shadow">
+									{destination.shortDescription}
+								</p>
+							</div>
+
+							{/* Hover Content - Centered */}
+							<div className="absolute inset-0 p-6 flex flex-col justify-center items-center text-center text-white opacity-0 transition-all duration-500 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0">
+								<h3 className="text-3xl font-bold mb-4 drop-shadow-lg">{destination.name}</h3>
+								<p className="text-sm text-white/90 mb-6 leading-relaxed drop-shadow">
+									{destination.detailedDescription}
+								</p>
+								<Button 
+									className="bg-yellow-400 text-black hover:bg-yellow-500 font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+								>
+									View tours
+								</Button>
+							</div>
+						</motion.div>
+					))}
+				</motion.div>
+
+				{/* Rotation Indicator */}
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: isInView ? 1 : 0 }}
+					transition={{ delay: 1 }}
+					className="flex justify-center mt-8"
+				>
+					<div className="flex space-x-2">
+						{Array.from({ length: Math.ceil(destinations.length / destinationsPerPage) }).map((_, index) => (
+							<div
+								key={index}
+								className={`w-2 h-2 rounded-full transition-all duration-300 ${
+									Math.floor(currentStartIndex / destinationsPerPage) === index
+										? 'bg-yellow-400 w-8'
+										: 'bg-gray-300'
+								}`}
+							/>
+						))}
+					</div>
 				</motion.div>
 			</div>
 		</section>

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { SiInstagram, SiFacebook, SiX, SiLinkedin } from "react-icons/si";
+import { SiInstagram, SiFacebook, SiLinkedin } from "react-icons/si";
 import { IconBrandWhatsapp } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 
@@ -104,36 +104,41 @@ export default function Footer() {
 
           {/* Column 4: Social and WhatsApp Booking */}
           <div className="space-y-4">
-            <h3 className="text-lgfont-semibold">Follow Us</h3>
+            <h3 className="text-lg font-semibold">Follow Us</h3>
             <div className="flex gap-4">
-              <Link
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+              <motion.a
+                href="https://www.instagram.com/alltripp_/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.2, rotate: 10 }}
+                whileTap={{ scale: 0.95 }}
+                className="text-yellow-400 hover:text-yellow-300 transition-colors drop-shadow-lg"
+                aria-label="Instagram"
               >
-                <SiInstagram className="h-5 w-5" />
-                <span className="sr-only">Instagram</span>
-              </Link>
-              <Link
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                <SiInstagram className="h-7 w-7" />
+              </motion.a>
+              <motion.a
+                href="https://www.facebook.com/people/AllTripp/61569322995221/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.2, rotate: -10 }}
+                whileTap={{ scale: 0.95 }}
+                className="text-yellow-400 hover:text-yellow-300 transition-colors drop-shadow-lg"
+                aria-label="Facebook"
               >
-                <SiFacebook className="h-5 w-5" />
-                <span className="sr-only">Facebook</span>
-              </Link>
-              <Link
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                <SiFacebook className="h-7 w-7" />
+              </motion.a>
+              <motion.a
+                href="https://www.linkedin.com/company/alltripp/?originalSubdomain=in"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.2, rotate: 8 }}
+                whileTap={{ scale: 0.95 }}
+                className="text-yellow-400 hover:text-yellow-300 transition-colors drop-shadow-lg"
+                aria-label="LinkedIn"
               >
-                <SiX className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
-              </Link>
-              <Link
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <SiLinkedin className="h-5 w-5" />
-                <span className="sr-only">LinkedIn</span>
-              </Link>
+                <SiLinkedin className="h-7 w-7" />
+              </motion.a>
             </div>
 
             <div className="pt-4">
