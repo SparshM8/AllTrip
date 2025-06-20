@@ -3,10 +3,11 @@ import HeroSection from "@/components/hero-section";
 import AboutSection from "@/components/about-section";
 import FeaturesSection from "@/components/features-section";
 import DestinationsSection from "@/components/destinations-section";
-import TripsSection from "@/components/trips-section";
+import ItinerariesSection from "@/components/trips-section";
 import CampusAmbassadorSection from "@/components/campus-ambassador-section";
 import TestimonialsSection from "@/components/testimonials-section";
 import EventSection from "@/components/event-section";
+import BlogSection from "@/components/blog-section";
 
 export const metadata: Metadata = {
   title: "AllTripp - Discover India's Hidden Gems | Premium Travel Experiences",
@@ -55,10 +56,11 @@ export default function Home() {
       <AboutSection />
       <FeaturesSection />
       <DestinationsSection />
-      <TripsSection />
+      <ItinerariesSection />
       <EventSection />
       <CampusAmbassadorSection />
       <TestimonialsSection />
+      <BlogSection />
     </>
   );
 }

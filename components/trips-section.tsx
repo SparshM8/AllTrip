@@ -8,95 +8,124 @@ import { Button } from "@/components/ui/button";
 import {
   ChevronLeft,
   ChevronRight,
-  MessageCircle,
+  Star,
+  MapPin,
+  Users,
   Calendar,
+  Heart,
+  Wifi,
+  Car,
+  Camera,
 } from "lucide-react";
+
+// Helper function to map itinerary titles to their correct folder slugs
+const getItinerarySlug = (title: string): string => {
+  const slugMap: Record<string, string> = {
+    "Offbeat Meghalaya - Kongthong": "offbeat-meghalaya---kongthong",
+    "Offbeat Meghalaya - Mawlyngbna": "offbeat-meghalaya---mawlyngbna", 
+    "Jibhi & Shoja Offbeat": "jibhi---shoja-offbeat",
+    "Himachal Cultural Trail": "himachal-cultural-trail"
+  };
+  
+  return slugMap[title] || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+};
 
 type Trip = {
   title: string;
   description: string;
   image: string;
   duration: string;
+  price: number;
+  originalPrice?: number;
+  rating: number;
+  reviews: number;
+  location: string;
+  groupSize: string;
+  features: string[];
+  bestTime: string;
 };
 
-const trips: Trip[] = [
+const itineraries: Trip[] = [
   {
-    title: "Golden Triangle Tour",
+    title: "Offbeat Meghalaya - Kongthong",
     description:
-      "Experience India's most iconic circuit, blending the grandeur of Delhi's monuments, the timeless beauty of the Taj Mahal in Agra, and the royal heritage of Jaipur. Perfect for first-time visitors seeking a mix of history, culture, and vibrant city life.",
-    image: "/featured/delhi.jpg",
-    duration: "5 Days / 4 Nights",
+      "Experience the authentic whistling village with remote locations and traditional Khasi culture.",
+    image: "/Itenaries/Meghalaya.jpg",
+    duration: "2 Nights / 3 Days",
+    price: 7999,
+    originalPrice: 9999,
+    rating: 4.9,
+    reviews: 42,
+    location: "Kongthong Village, Meghalaya",
+    groupSize: "2-8 People",
+    features: ["Eco Homestay", "Village Walks", "Cave Exploration"],
+    bestTime: "Oct - Mar",
   },
   {
-    title: "Spiti Valley Adventure",
+    title: "Offbeat Meghalaya - Mawlyngbna",
     description:
-      "Embark on a high-altitude adventure through Spiti Valley's dramatic landscapes, ancient monasteries, and remote Himalayan villages. Ideal for thrill-seekers and nature lovers craving offbeat experiences.",
-    image: "/featured/himachal.jpg",
-    duration: "8 Days / 7 Nights",
+      "Nature and waterfalls adventure in peaceful Mawlyngbna with zero crowds and authentic experiences.",
+    image: "/Itenaries/Mawlyngbna.jpg",
+    duration: "2 Nights / 3 Days",
+    price: 8500,
+    originalPrice: 10000,
+    rating: 4.8,
+    reviews: 37,
+    location: "Mawlyngbna Village, Meghalaya",
+    groupSize: "2-6 People",
+    features: ["Waterfalls", "Kayaking", "Fossil Park"],
+    bestTime: "Oct - Apr",
   },
   {
-    title: "Kerala Backwaters & Beaches",
+    title: "Jibhi & Shoja Offbeat",
     description:
-      "Cruise through Kerala's tranquil backwaters on a traditional houseboat, unwind on palm-fringed beaches, and immerse yourself in lush greenery. Perfect for relaxation and rejuvenation in 'God's Own Country'.",
-    image: "/featured/kerala-backwaters.webp",
-    duration: "6 Days / 5 Nights",
+      "Escape to serene Himachal villages with treehouse stays, hidden waterfalls, and peaceful treks.",
+    image: "/Itenaries/Jibhi.jpg",
+    duration: "2 Nights / 3 Days",
+    price: 9500,
+    originalPrice: 10000,
+    rating: 4.7,
+    reviews: 89,
+    location: "Jibhi & Shoja, Himachal Pradesh",
+    groupSize: "2-10 People",
+    features: ["Treehouse Stay", "Serolsar Lake Trek", "Pine Forests"],
+    bestTime: "Mar - Jun, Sep - Nov",
   },
   {
-    title: "Rajasthan Royal Heritage Tour",
+    title: "Himachal Cultural Trail",
     description:
-      "Explore Rajasthan's majestic forts, opulent palaces, and colorful bazaars in cities like Udaipur, Jodhpur, and Jaisalmer. Discover the vibrant traditions and desert landscapes that define India's royal past.",
-    image: "/featured/Rajasthan.jpg",
-    duration: "7 Days / 6 Nights",
-  },
-  {
-    title: "Ladakh Cultural & Scenic Expedition",
-    description:
-      "Journey through Ladakh's stark mountain landscapes, serene monasteries, and high-altitude lakes. A unique blend of adventure and spiritual discovery in the Himalayas.",
-    image: "/featured/Ladakh.jpg",
-    duration: "9 Days / 8 Nights",
-  },
-  {
-    title: "Sikkim & Darjeeling Himalayan Explorer",
-    description:
-      "Travel through the lush hills of Sikkim and Darjeeling, famed for tea gardens, Buddhist monasteries, and breathtaking mountain views. Ideal for those seeking tranquility and cultural immersion.",
-    image: "/featured/Darjeeling.jpg",
-    duration: "6 Days / 5 Nights",
-  },
-  {
-    title: "Goa Leisure & Heritage Tour",
-    description:
-      "Relax on Goa's sun-kissed beaches, explore Portuguese-influenced architecture, and savor vibrant nightlife. A perfect blend of relaxation and cultural exploration.",
-    image: "/featured/goa.jpg",
-    duration: "4 Days / 3 Nights",
-  },
-  {
-    title: "Manali Adventure",
-    description:
-      "Enjoy thrilling adventures like paragliding and trekking amidst stunning Himalayan landscapes, along with visits to hot springs and cultural sites.",
-    image: "/featured/Manali.jpg",
-    duration: "5 Days / 4 Nights",
-  },
-  {
-    title: "Shimla Colonial Heritage",
-    description:
-      "Explore colonial heritage landmarks, scenic mountain walks, and the charming Kalka-Shimla toy train experience.",
-    image: "/featured/Shimla.jpg",
-    duration: "4 Days / 3 Nights",
-  },
-  {
-    title: "Meghalaya Living Roots & Culture",
-    description:
-      "Trek to living root bridges, enjoy water sports at Umiam Lake, and immerse yourself in rich Khasi tribal culture and scenic beauty.",
-    image: "/featured/Meghalaya.jpg",
-    duration: "5 Days / 4 Nights",
+      "Explore art villages, tea gardens, and monasteries around Dharamshala and Palampur for cultural immersion.",
+    image: "/Itenaries/Himachal Cultural.jpg",
+    duration: "2 Nights / 3 Days",
+    price: 9000,
+    originalPrice: 10000,
+    rating: 4.6,
+    reviews: 56,
+    location: "Bir, Andretta & Palampur",
+    groupSize: "2-8 People",
+    features: ["Art Workshops", "Tea Gardens", "Monastery Visits"],
+    bestTime: "Mar - Jun, Sep - Nov",
   },
 ];
 
-export default function TripsSection() {
+export default function ItinerariesSection() {
   const ref = useRef(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [likedTrips, setLikedTrips] = useState<Set<number>>(new Set());
+
+  const toggleLike = (idx: number) => {
+    setLikedTrips(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(idx)) {
+        newSet.delete(idx);
+      } else {
+        newSet.add(idx);
+      }
+      return newSet;
+    });
+  };
 
   const scrollNext = () => {
     carouselRef.current?.scrollBy({
@@ -113,45 +142,71 @@ export default function TripsSection() {
   };
 
   return (
-    <section id="trips" ref={ref} className="py-20">
+    <section id="itineraries" ref={ref} className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
       <div className="container px-4 md:px-6">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold tracking-tight mb-4">
-            Featured Trips
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Plan your dream journey with AllTripp! Whether you're traveling
-            solo, with friends, or as part of a group, our trips are designed to
-            create unforgettable memories and lasting connections.
-          </p>
+        <div className="text-center mb-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent mb-4">
+               ITINERARIES
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Discover India's hidden gems with our carefully crafted offbeat travel experiences
+            </p>
+          </motion.div>
         </div>
 
-        <motion.div
-          className="overflow-hidden"
-          initial={{ opacity: 0 }}
-          animate={
-            isInView
-              ? { opacity: 1, transition: { duration: 0.7, ease: "easeInOut" } }
-              : {}
-          }
-        >
+        <div className="relative">
+          {/* Left Navigation Button */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={scrollPrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border-2 border-yellow-500 bg-yellow-500 text-white hover:bg-yellow-600 transition-all duration-300 shadow-lg -ml-16"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </Button>
+
+          {/* Right Navigation Button */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={scrollNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border-2 border-yellow-500 bg-yellow-500 text-white hover:bg-yellow-600 transition-all duration-300 shadow-lg -mr-16"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </Button>
+
+          <motion.div
+            className="overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={
+              isInView
+                ? { opacity: 1, transition: { duration: 0.7, ease: "easeInOut" } }
+                : {}
+            }
+          >
+
           <div
             ref={carouselRef}
-            className="flex space-x-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide py-4"
+            className="flex space-x-4 overflow-x-auto snap-x snap-mandatory py-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           >
-            {trips.map((trip, idx) => (
+            {itineraries.map((itinerary, idx) => (
               <motion.div
                 key={idx}
-                className="snap-start flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 px-3"
-                initial={{ y: 30, opacity: 0 }}
+                className="snap-start flex-shrink-0 w-full sm:w-[350px] lg:w-[380px]"
+                initial={{ y: 50, opacity: 0 }}
                 animate={
                   isInView
                     ? {
                         y: 0,
                         opacity: 1,
                         transition: {
-                          delay: idx * 0.1,
-                          duration: 0.7,
+                          delay: idx * 0.15,
+                          duration: 0.8,
                           ease: "easeInOut",
                         },
                       }
@@ -160,89 +215,110 @@ export default function TripsSection() {
                 onMouseEnter={() => setHoveredCard(idx)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                <Card className="h-full overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                  <div className="relative h-48 w-full">
+                <Card className="group h-full bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden rounded-2xl">
+                  {/* Image Section */}
+                  <div className="relative h-52 w-full overflow-hidden">
                     <Image
-                      src={trip.image}
-                      alt={trip.title}
+                      src={itinerary.image}
+                      alt={itinerary.title}
                       fill
-                      className="object-cover"
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
                       loading="lazy"
                     />
-                    {/* WhatsApp quick inquiry button */}
-                    <a
-                      href={`https://wa.me/919266602470?text=Hi%20AllTripp%2C%20I'm%20interested%20in%20${encodeURIComponent(
-                        trip.title
-                      )}%20and%20would%20like%20to%20know%20more%20details.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`absolute top-3 right-3 bg-green-500 text-white p-2 rounded-full shadow-md transform transition-all duration-300 ${
-                        hoveredCard === idx
-                          ? "scale-110 opacity-100"
-                          : "opacity-70 scale-90"
-                      }`}
-                      aria-label={`Quick inquiry about ${trip.title} on WhatsApp`}
+                    
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    
+                    {/* Heart/Like Button */}
+                    <button
+                      onClick={() => toggleLike(idx)}
+                      className="absolute top-3 right-3 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300"
                     >
-                      <MessageCircle size={18} />
-                    </a>
+                      <Heart 
+                        size={18} 
+                        className={`${likedTrips.has(idx) ? 'fill-red-500 text-red-500' : 'text-white'} transition-colors duration-300`}
+                      />
+                    </button>
+
+                    {/* Price Badge */}
+                    <div className="absolute top-3 left-3">
+                      <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        {itinerary.originalPrice && (
+                          <span className="line-through text-white/80 mr-2">₹{itinerary.originalPrice.toLocaleString()}</span>
+                        )}
+                        ₹{itinerary.price.toLocaleString()}
+                      </div>
+                    </div>
+
+                    {/* Rating */}
+                    <div className="absolute bottom-3 left-3 flex items-center space-x-2">
+                      <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
+                        <Star size={12} className="text-yellow-400 fill-yellow-400 mr-1" />
+                        <span className="text-white text-sm font-medium">{itinerary.rating}</span>
+                        <span className="text-white/80 text-xs ml-1">({itinerary.reviews})</span>
+                      </div>
+                    </div>
                   </div>
-                  <CardContent className="p-6 flex flex-col justify-between h-full">
+
+                  {/* Content Section */}
+                  <CardContent className="p-5 space-y-3">
+                    {/* Title and Location */}
                     <div>
-                      <h3 className="text-xl font-semibold mb-2">
-                        {trip.title}
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-yellow-600 transition-colors duration-300 line-clamp-1">
+                        {itinerary.title}
                       </h3>
-                      <p className="text-muted-foreground mb-3 text-sm">
-                        {trip.description}
+                      <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm mb-2">
+                        <MapPin size={12} className="mr-1 text-red-500" />
+                        <span className="line-clamp-1">{itinerary.location}</span>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-2">
+                        {itinerary.description}
                       </p>
                     </div>
-                    <div className="mt-4">
-                      {/* Duration display - more prominent now */}
-                      <div className="inline-flex items-center text-sm font-medium mb-3 p-1 bg-slate-50 dark:bg-slate-800 rounded">
-                        <Calendar className="h-4 w-4 mr-1 text-primary" />
-                        <span>{trip.duration}</span>
+
+                    {/* Trip Details */}
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="flex items-center text-gray-600 dark:text-gray-300">
+                        <Calendar size={12} className="mr-2 text-blue-500" />
+                        <span className="text-xs">{itinerary.duration}</span>
                       </div>
-                      <Button
-                        className="w-full bg-primary hover:bg-primary/90 text-white flex items-center justify-center gap-2"
-                        asChild
-                      >
-                        <a
-                          href={`https://wa.me/919266602470?text=Hi%20AllTripp%2C%20I'm%20interested%20in%20booking%20the%20${encodeURIComponent(
-                            trip.title
-                          )}%20package.%20Please%20share%20more%20details%20about%20availability%20and%20pricing.`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <span>Book Now</span>
-                        </a>
-                      </Button>
+                      <div className="flex items-center text-gray-600 dark:text-gray-300">
+                        <Users size={12} className="mr-2 text-green-500" />
+                        <span className="text-xs">{itinerary.groupSize}</span>
+                      </div>
                     </div>
+
+                    {/* Features */}
+                    <div className="flex flex-wrap gap-1">
+                      {itinerary.features.slice(0, 3).map((feature, featureIdx) => (
+                        <span
+                          key={featureIdx}
+                          className="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 text-xs rounded-full"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Reserve Button */}
+                    <Button
+                      className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                      asChild
+                    >
+                      <a
+                        href={`/itineraries/${getItinerarySlug(itinerary.title)}`}
+                      >
+                        View Details
+                      </a>
+                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>
             ))}
           </div>
-
-          {/* Arrows below center */}
-          <div className="flex justify-center space-x-4 mt-6">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={scrollPrev}
-              className="hover:border-primary hover:text-primary"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={scrollNext}
-              className="hover:border-primary hover:text-primary"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </Button>
-          </div>
         </motion.div>
       </div>
+    </div>
     </section>
   );
 }

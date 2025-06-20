@@ -1,0 +1,289 @@
+"use client";
+
+import { useRef } from "react";
+import Image from "next/image";
+import { motion, useInView } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  MapPin,
+  Calendar,
+  Users,
+  Star,
+  Clock,
+  Mountain,
+  Camera,
+  Utensils,
+  Bed,
+  ChevronRight,
+  Phone,
+} from "lucide-react";
+
+export default function OffbeatMeghalayaKongthongPage() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+
+  const dayWiseItinerary = [
+    {
+      day: 1,
+      title: "Arrival + Explore Kongthong",
+      highlights: ["Arrival at Guwahati Airport", "Drive to Kongthong Village", "Village walk", "Whistling tradition"],
+      timeline: [
+        { time: "Morning", activity: "Arrival at Guwahati Airport" },
+        { time: "Drive", activity: "Drive to Kongthong Village (~6 hrs via Shillong/Pynursla)" },
+        { time: "Check-in", activity: "Check-in to eco homestay" },
+        { time: "Afternoon", activity: "Guided village walk in Kongthong • Learn about the whistling tradition • Explore local bamboo craft and forest surroundings" },
+        { time: "Evening", activity: "Local Khasi-style dinner • Optional bonfire and music with villagers" },
+      ],
+      meals: "Lunch, Dinner",
+      stay: "Homestay in Kongthong"
+    },
+    {
+      day: 2,
+      title: "Nature Trails & Offbeat Caves",
+      highlights: ["Forest hike", "Bamboo bridges", "Cave exploration", "Local guides"],
+      timeline: [
+        { time: "Morning", activity: "Guided forest hike to Sder or Mawmih Village • Cross bamboo bridges, watch birds • Packed breakfast or picnic lunch in the forest" },
+        { time: "Afternoon", activity: "Visit Krem Diengjem or Krem Mawblang Caves - Limestone cave exploration with local guides" },
+        { time: "Evening", activity: "Return to Kongthong • Relax with tea and sunset views • Optional: storytelling or local games" },
+      ],
+      meals: "Breakfast, Lunch, Dinner",
+      stay: "Same Homestay in Kongthong"
+    },
+    {
+      day: 3,
+      title: "Viewpoints & Departure",
+      highlights: ["Sunrise viewpoint", "Laitlum Canyon", "Return journey"],
+      timeline: [
+        { time: "Morning", activity: "Short hike to Khmat Sniang Viewpoint (sunrise optional) • Breakfast at homestay • Check-out" },
+        { time: "On the way back", activity: "Stop at Laitlum Canyon (early visit = peaceful)" },
+        { time: "Return Journey", activity: "Drive to Guwahati Airport (~6 hrs) or Shillong (~4 hrs)" },
+      ],
+      meals: "Breakfast",
+      stay: "Departure"
+    }
+  ];
+
+  const travelTips = [
+    "Carry trekking shoes, warm clothes, torchlight",
+    "Power banks & light luggage advised",
+    "Network is limited – perfect for digital detox",
+    "Respect local traditions and ask before photos"
+  ];
+
+  const packageIncludes = [
+    "2 nights accommodation in eco homestay",
+    "All meals as per itinerary",
+    "Private transportation from Guwahati",
+    "Local guide for village walks and caves",
+    "Entry fees to caves and viewpoints",
+    "Cultural activities and interactions"
+  ];
+
+  return (
+    <div ref={ref} className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
+      {/* Hero Section */}
+      <section className="relative h-[70vh] overflow-hidden">        <Image
+          src="/Itenaries/Meghalaya.jpg"
+          alt="Kongthong Village, Meghalaya"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+        
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="text-center text-white px-6"
+          >
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">
+              Offbeat Meghalaya
+            </h1>
+            <p className="text-xl md:text-2xl mb-6">
+              Kongthong - The Whistling Village
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm md:text-base">
+              <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2">
+                <Calendar className="mr-2" size={18} />
+                <span>2N/3D</span>
+              </div>
+              <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2">
+                <Users className="mr-2" size={18} />
+                <span>2-8 People</span>
+              </div>
+              <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2">
+                <Star className="mr-2 text-yellow-400 fill-yellow-400" size={18} />
+                <span>4.9 Rating</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="container mx-auto px-6 py-16">
+        {/* Package Overview */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-16"
+        >
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-6 text-gray-900">
+                Experience Authentic Village Life
+              </h2>
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                Discover Kongthong, the magical whistling village where each person has their own unique tune instead of a name. 
+                This offbeat Meghalaya experience focuses on remote locations, authentic cultural interactions, and staying in one 
+                village to deeply connect with local traditions.
+              </p>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="flex items-center text-gray-600">
+                  <Mountain className="mr-2 text-green-600" size={16} />
+                  <span>Remote Village Stay</span>
+                </div>
+                <div className="flex items-center text-gray-600">
+                  <Camera className="mr-2 text-blue-600" size={16} />
+                  <span>Cultural Photography</span>
+                </div>
+                <div className="flex items-center text-gray-600">
+                  <Utensils className="mr-2 text-orange-600" size={16} />
+                  <span>Local Khasi Cuisine</span>
+                </div>
+                <div className="flex items-center text-gray-600">
+                  <Bed className="mr-2 text-purple-600" size={16} />
+                  <span>Eco Homestay</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative">
+              <Card className="p-6 bg-gradient-to-br from-yellow-50 to-orange-50 border-0 shadow-xl">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-gray-900 mb-2">
+                    ₹7,999 <span className="text-lg text-gray-500 line-through">₹9,999</span>
+                  </div>
+                  <p className="text-gray-600 mb-4">Per Person (2N/3D)</p>                  <a
+                    href="https://wa.me/919266602470?text=Hi%20AllTripp%2C%20I'm%20interested%20in%20the%20Offbeat%20Meghalaya%20Kongthong%20package.%20Please%20share%20availability%20and%20booking%20details."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-3 rounded-xl inline-flex items-center justify-center gap-2 transition-all duration-300"
+                  >
+                    <Phone size={18} />
+                    Book Now via WhatsApp
+                  </a>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Day-wise Itinerary */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
+            Detailed Itinerary
+          </h2>
+          
+          <div className="space-y-8">
+            {dayWiseItinerary.map((day, index) => (
+              <Card key={index} className="overflow-hidden shadow-lg border-0">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                        {day.day}
+                      </div>
+                    </div>
+                    
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                        Day {day.day}: {day.title}
+                      </h3>
+                      
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div>
+                          <h4 className="font-semibold text-gray-900 mb-3">Timeline:</h4>
+                          <div className="space-y-3">
+                            {day.timeline.map((item, idx) => (
+                              <div key={idx} className="flex items-start gap-3">
+                                <Clock className="text-yellow-500 mt-1" size={16} />
+                                <div>
+                                  <span className="font-medium text-gray-900">{item.time}:</span>
+                                  <span className="text-gray-600 ml-2">{item.activity}</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold text-gray-900 mb-3">Highlights:</h4>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {day.highlights.map((highlight, idx) => (
+                              <span
+                                key={idx}
+                                className="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full"
+                              >
+                                {highlight}
+                              </span>
+                            ))}
+                          </div>
+                          
+                          <div className="space-y-2 text-sm text-gray-600">
+                            <div><strong>Meals:</strong> {day.meals}</div>
+                            <div><strong>Stay:</strong> {day.stay}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Package Includes & Travel Tips */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="grid md:grid-cols-2 gap-8"
+        >
+          <Card className="p-6 border-0 shadow-lg">
+            <h3 className="text-xl font-bold mb-4 text-gray-900">Package Includes</h3>
+            <ul className="space-y-3">
+              {packageIncludes.map((item, index) => (
+                <li key={index} className="flex items-start gap-3">
+                  <ChevronRight className="text-green-500 mt-0.5" size={16} />
+                  <span className="text-gray-600">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </Card>
+
+          <Card className="p-6 border-0 shadow-lg">
+            <h3 className="text-xl font-bold mb-4 text-gray-900">Travel Tips</h3>
+            <ul className="space-y-3">
+              {travelTips.map((tip, index) => (
+                <li key={index} className="flex items-start gap-3">
+                  <ChevronRight className="text-yellow-500 mt-0.5" size={16} />
+                  <span className="text-gray-600">{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </motion.section>
+      </div>
+    </div>
+  );
+}

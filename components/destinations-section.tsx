@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
@@ -70,23 +71,23 @@ export default function DestinationsSection() {
 	
 	// State for cycling through destinations
 	const [currentStartIndex, setCurrentStartIndex] = useState(0);
-	const [isTransitioning, setIsTransitioning] = useState(false);
 	const destinationsPerPage = 4;
+	const [fade, setFade] = useState(false);
 
-	// Auto-rotate destinations every 5 seconds
+	// Auto-rotate destinations every 7 seconds (less frequent)
 	useEffect(() => {
 		if (!isInView) return;
 
 		const interval = setInterval(() => {
-			setIsTransitioning(true);
+			setFade(true);
 			setTimeout(() => {
 				setCurrentStartIndex((prevIndex) => {
 					const nextIndex = prevIndex + destinationsPerPage;
 					return nextIndex >= destinations.length ? 0 : nextIndex;
 				});
-				setIsTransitioning(false);
-			}, 300);
-		}, 5000);
+				setFade(false);
+			}, 350); // fade duration
+		}, 7000);
 
 		return () => clearInterval(interval);
 	}, [isInView]);
@@ -125,90 +126,85 @@ export default function DestinationsSection() {
 		},
 	};
 
+	// Memoized card to prevent unnecessary re-renders
+	const DestinationCard = React.memo(function DestinationCard({ destination, index, currentStartIndex }: { destination: any, index: number, currentStartIndex: number }) {
+		return (
+			<div
+				key={`${destination.name}-${currentStartIndex}-${index}`}
+				className="group relative h-96 rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+			>
+				<div className="absolute inset-0">
+					<Image
+						src={destination.image}
+						alt={destination.name}
+						fill
+						priority={index === 0}
+						quality={60}
+						className="object-cover object-center transition-transform duration-700 group-hover:scale-110"
+					/>
+				</div>
+				<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+				<div className="absolute top-4 left-4 z-20">
+					<span className="bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+						{destination.badge}
+					</span>
+				</div>
+				<div className="absolute inset-0 bg-black/30 transition-opacity duration-500 group-hover:opacity-0" />
+				<div className="absolute inset-0 bg-black/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+				<div className="absolute inset-x-0 bottom-0 p-6 text-white transition-all duration-500 group-hover:opacity-0">
+					<h3 className="text-2xl font-bold mb-2 drop-shadow-lg">{destination.name}</h3>
+					<p className="text-sm text-white/90 line-clamp-2 mb-4 drop-shadow">
+						{destination.shortDescription}
+					</p>
+				</div>				<div className="absolute inset-0 p-6 flex flex-col justify-center items-center text-center text-white opacity-0 transition-all duration-500 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0">
+					<h3 className="text-3xl font-bold mb-4 drop-shadow-lg">{destination.name}</h3>
+					<p className="text-sm text-white/90 mb-6 leading-relaxed drop-shadow">
+						{destination.detailedDescription}
+					</p>
+					<a 
+						href={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-')}`}
+						className="inline-block bg-yellow-400 text-black hover:bg-yellow-500 font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+					>
+						View tours
+					</a>
+				</div>
+			</div>
+		);
+	});
+
 	return (
 		<section 
 			id="destinations" 
 			ref={ref} 
 			className="py-20 bg-gradient-to-b from-gray-50 to-white"
 		>
-			<div className="container mx-auto px-6">
-				{/* Section Header */}
+			<div className="container mx-auto px-6">				{/* Section Header */}
 				<motion.div
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 30 }}
 					transition={{ duration: 0.8 }}
 					className="text-center mb-16"
 				>
-					<h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+					<h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-black mb-6 tracking-wider uppercase">
 						Cities Exploration
 					</h2>
-					<p className="text-lg text-gray-600 max-w-2xl mx-auto">
+					<div className="w-24 h-1 bg-yellow-500 mx-auto mb-8"></div>
+					<p className="text-lg md:text-xl lg:text-2xl text-black max-w-3xl mx-auto font-bold tracking-wide leading-relaxed">
 						Discover incredible destinations across India with our curated travel experiences
 					</p>
-				</motion.div>				{/* Destinations Grid */}
-				<motion.div
-					variants={containerVariants}
-					initial="hidden"
-					animate={isInView ? "visible" : "hidden"}
-					className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transition-all duration-500 ${
-						isTransitioning ? 'opacity-50 scale-95' : 'opacity-100 scale-100'
-					}`}
+				</motion.div>{/* Destinations Grid */}
+				<div
+					className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transition-opacity duration-300 ${fade ? 'opacity-0' : 'opacity-100'}`}
 				>
 					{currentDestinations.map((destination, index) => (
-						<motion.div
+						<DestinationCard
 							key={`${destination.name}-${currentStartIndex}-${index}`}
-							variants={cardVariants}
-							className="group relative h-96 rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
-						>
-							{/* Background Image - Full Coverage with object-cover to remove white spaces */}
-							<div className="absolute inset-0">
-								<Image
-									src={destination.image}
-									alt={destination.name}
-									fill
-									className="object-cover object-center transition-transform duration-700 group-hover:scale-110"
-								/>
-							</div>
-							
-							{/* Gradient overlay to ensure text readability */}
-							<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-							
-							{/* Badge */}
-							<div className="absolute top-4 left-4 z-20">
-								<span className="bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-									{destination.badge}
-								</span>
-							</div>
-
-							{/* Default Overlay - Light */}
-							<div className="absolute inset-0 bg-black/30 transition-opacity duration-500 group-hover:opacity-0" />
-
-							{/* Hover Overlay - Dark */}
-							<div className="absolute inset-0 bg-black/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-							{/* Default Content - Bottom Positioned */}
-							<div className="absolute inset-x-0 bottom-0 p-6 text-white transition-all duration-500 group-hover:opacity-0">
-								<h3 className="text-2xl font-bold mb-2 drop-shadow-lg">{destination.name}</h3>
-								<p className="text-sm text-white/90 line-clamp-2 mb-4 drop-shadow">
-									{destination.shortDescription}
-								</p>
-							</div>
-
-							{/* Hover Content - Centered */}
-							<div className="absolute inset-0 p-6 flex flex-col justify-center items-center text-center text-white opacity-0 transition-all duration-500 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0">
-								<h3 className="text-3xl font-bold mb-4 drop-shadow-lg">{destination.name}</h3>
-								<p className="text-sm text-white/90 mb-6 leading-relaxed drop-shadow">
-									{destination.detailedDescription}
-								</p>
-								<Button 
-									className="bg-yellow-400 text-black hover:bg-yellow-500 font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
-								>
-									View tours
-								</Button>
-							</div>
-						</motion.div>
+							destination={destination}
+							index={index}
+							currentStartIndex={currentStartIndex}
+						/>
 					))}
-				</motion.div>
+				</div>
 
 				{/* Rotation Indicator */}
 				<motion.div

@@ -5,6 +5,8 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { Analytics } from "@vercel/analytics/react"
+import ClientPerformance from "@/components/client-performance"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -38,8 +40,8 @@ export const metadata: Metadata = {
     email: false,
     address: false,
     telephone: false,
-  },
-  metadataBase: new URL('https://alltripp.com'),  alternates: {
+  },  metadataBase: new URL('https://alltripp.com'),
+  alternates: {
     canonical: '/',
   },
   verification: {
@@ -54,7 +56,7 @@ export const metadata: Metadata = {
     siteName: "AllTripp",
     images: [
       {
-        url: "/favicon.ico",
+        url: "/logo.png",
         width: 1200,
         height: 630,
         alt: "AllTripp - Travel Agency India",
@@ -65,7 +67,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AllTripp - Premium Travel Experiences Across India",
     description: "Discover India's hidden gems with AllTripp. Authentic travel experiences, cultural tours, and adventure trips.",
-    images: ["/favicon.ico"],
+    images: ["/logo.png"],
     creator: "@AllTripp",
   },
   robots: {
@@ -88,9 +90,9 @@ export const metadata: Metadata = {
     ],
     shortcut: '/favicon.ico',
     apple: [
-      { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
-    ],
-  },  manifest: '/manifest.json',
+      { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },    ],
+  },
+  manifest: '/manifest.json',
 }
 
 export const viewport: Viewport = {
@@ -105,12 +107,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>      <body className={`${inter.className} m-0 p-0`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} m-0 p-0`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <Navbar />
           <main className="m-0 p-0">{children}</main>
           <Footer />
         </ThemeProvider>
+        <Analytics />
+        <ClientPerformance />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -120,7 +125,7 @@ export default function RootLayout({
               "name": "AllTripp",
               "description": "Premium travel experiences across India",
               "url": "https://alltripp.com",
-              "logo": "https://alltripp.com/favicon.ico",
+              "logo": "https://alltripp.com/logo.png",
               "sameAs": [
                 "https://facebook.com/alltripp",
                 "https://instagram.com/alltripp",
