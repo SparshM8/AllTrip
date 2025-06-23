@@ -1,0 +1,58 @@
+[
+  {
+    "title": "Offbeat Meghalaya - Kongthong",
+    "description": "Experience the authentic whistling village with remote locations and traditional Khasi culture.",
+    "image": "/Itenaries/Meghalaya.jpg",
+    "duration": "2 Nights / 3 Days",
+    "price": 7999,
+    "originalPrice": 9999,
+    "rating": 4.9,
+    "reviews": 42,
+    "location": "Kongthong Village, Meghalaya",
+    "groupSize": "2-8 People",
+    "features": ["Eco Homestay", "Village Walks", "Cave Exploration"],
+    "bestTime": "Oct - Mar"
+  },
+  {
+    "title": "Offbeat Meghalaya - Mawlyngbna",
+    "description": "Nature and waterfalls adventure in peaceful Mawlyngbna with zero crowds and authentic experiences.",
+    "image": "/Itenaries/Mawlyngbna.jpg",
+    "duration": "2 Nights / 3 Days",
+    "price": 8500,
+    "originalPrice": 10000,
+    "rating": 4.8,
+    "reviews": 37,
+    "location": "Mawlyngbna Village, Meghalaya",
+    "groupSize": "2-6 People",
+    "features": ["Waterfalls", "Kayaking", "Fossil Park"],
+    "bestTime": "Oct - Apr"
+  },
+  {
+    "title": "Jibhi & Shoja Offbeat",
+    "description": "Escape to serene Himachal villages with treehouse stays, hidden waterfalls, and peaceful treks.",
+    "image": "/Itenaries/Jibhi.jpg",
+    "duration": "2 Nights / 3 Days",
+    "price": 9500,
+    "originalPrice": 10000,
+    "rating": 4.7,
+    "reviews": 89,
+    "location": "Jibhi & Shoja, Himachal Pradesh",
+    "groupSize": "2-10 People",
+    "features": ["Treehouse Stay", "Serolsar Lake Trek", "Pine Forests"],
+    "bestTime": "Mar - Jun, Sep - Nov"
+  },
+  {
+    "title": "Himachal Cultural Trail",
+    "description": "Explore art villages, tea gardens, and monasteries around Dharamshala and Palampur for cultural immersion.",
+    "image": "/Itenaries/Himachal Cultural.jpg",
+    "duration": "2 Nights / 3 Days",
+    "price": 9000,
+    "originalPrice": 10000,
+    "rating": 4.6,
+    "reviews": 56,
+    "location": "Bir, Andretta & Palampur",
+    "groupSize": "2-8 People",
+    "features": ["Art Workshops", "Tea Gardens", "Monastery Visits"],
+    "bestTime": "Mar - Jun, Sep - Nov"
+  }
+]

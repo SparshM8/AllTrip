@@ -17,6 +17,7 @@ import {
   Car,
   Camera,
 } from "lucide-react";
+import itinerariesData from "@/data/itineraries.json";
 
 // Helper function to map itinerary titles to their correct folder slugs
 const getItinerarySlug = (title: string): string => {
@@ -45,68 +46,7 @@ type Trip = {
   bestTime: string;
 };
 
-const itineraries: Trip[] = [
-  {
-    title: "Offbeat Meghalaya - Kongthong",
-    description:
-      "Experience the authentic whistling village with remote locations and traditional Khasi culture.",
-    image: "/Itenaries/Meghalaya.jpg",
-    duration: "2 Nights / 3 Days",
-    price: 7999,
-    originalPrice: 9999,
-    rating: 4.9,
-    reviews: 42,
-    location: "Kongthong Village, Meghalaya",
-    groupSize: "2-8 People",
-    features: ["Eco Homestay", "Village Walks", "Cave Exploration"],
-    bestTime: "Oct - Mar",
-  },
-  {
-    title: "Offbeat Meghalaya - Mawlyngbna",
-    description:
-      "Nature and waterfalls adventure in peaceful Mawlyngbna with zero crowds and authentic experiences.",
-    image: "/Itenaries/Mawlyngbna.jpg",
-    duration: "2 Nights / 3 Days",
-    price: 8500,
-    originalPrice: 10000,
-    rating: 4.8,
-    reviews: 37,
-    location: "Mawlyngbna Village, Meghalaya",
-    groupSize: "2-6 People",
-    features: ["Waterfalls", "Kayaking", "Fossil Park"],
-    bestTime: "Oct - Apr",
-  },
-  {
-    title: "Jibhi & Shoja Offbeat",
-    description:
-      "Escape to serene Himachal villages with treehouse stays, hidden waterfalls, and peaceful treks.",
-    image: "/Itenaries/Jibhi.jpg",
-    duration: "2 Nights / 3 Days",
-    price: 9500,
-    originalPrice: 10000,
-    rating: 4.7,
-    reviews: 89,
-    location: "Jibhi & Shoja, Himachal Pradesh",
-    groupSize: "2-10 People",
-    features: ["Treehouse Stay", "Serolsar Lake Trek", "Pine Forests"],
-    bestTime: "Mar - Jun, Sep - Nov",
-  },
-  {
-    title: "Himachal Cultural Trail",
-    description:
-      "Explore art villages, tea gardens, and monasteries around Dharamshala and Palampur for cultural immersion.",
-    image: "/Itenaries/Himachal Cultural.jpg",
-    duration: "2 Nights / 3 Days",
-    price: 9000,
-    originalPrice: 10000,
-    rating: 4.6,
-    reviews: 56,
-    location: "Bir, Andretta & Palampur",
-    groupSize: "2-8 People",
-    features: ["Art Workshops", "Tea Gardens", "Monastery Visits"],
-    bestTime: "Mar - Jun, Sep - Nov",
-  },
-];
+const itineraries: Trip[] = itinerariesData;
 
 export default function ItinerariesSection() {
   const ref = useRef(null);
@@ -197,7 +137,7 @@ export default function ItinerariesSection() {
             {itineraries.map((itinerary, idx) => (
               <motion.div
                 key={idx}
-                className="snap-start flex-shrink-0 w-full sm:w-[350px] lg:w-[380px]"
+                className="snap-start flex-shrink-0 w-full sm:w-[400px] lg:w-[420px]"
                 initial={{ y: 50, opacity: 0 }}
                 animate={
                   isInView
@@ -216,8 +156,8 @@ export default function ItinerariesSection() {
                 onMouseLeave={() => setHoveredCard(null)}
               >
                 <Card className="group h-full bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden rounded-2xl">
-                  {/* Image Section */}
-                  <div className="relative h-52 w-full overflow-hidden">
+                  {/* Extended Image Section with Overlay Content */}
+                  <div className="relative h-[550px] w-full overflow-hidden">
                     <Image
                       src={itinerary.image}
                       alt={itinerary.title}
@@ -227,22 +167,22 @@ export default function ItinerariesSection() {
                     />
                     
                     {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     
                     {/* Heart/Like Button */}
                     <button
                       onClick={() => toggleLike(idx)}
-                      className="absolute top-3 right-3 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300"
+                      className="absolute top-4 right-4 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300"
                     >
                       <Heart 
-                        size={18} 
+                        size={20} 
                         className={`${likedTrips.has(idx) ? 'fill-red-500 text-red-500' : 'text-white'} transition-colors duration-300`}
                       />
                     </button>
 
                     {/* Price Badge */}
-                    <div className="absolute top-3 left-3">
-                      <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    <div className="absolute top-4 left-4">
+                      <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
                         {itinerary.originalPrice && (
                           <span className="line-through text-white/80 mr-2">₹{itinerary.originalPrice.toLocaleString()}</span>
                         )}
@@ -250,68 +190,61 @@ export default function ItinerariesSection() {
                       </div>
                     </div>
 
-                    {/* Rating */}
-                    <div className="absolute bottom-3 left-3 flex items-center space-x-2">
-                      <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
-                        <Star size={12} className="text-yellow-400 fill-yellow-400 mr-1" />
-                        <span className="text-white text-sm font-medium">{itinerary.rating}</span>
-                        <span className="text-white/80 text-xs ml-1">({itinerary.reviews})</span>
+                    {/* Content Overlay - Positioned at Bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="bg-black/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 space-y-3">
+                        {/* Title and Location */}
+                        <div>
+                          <h3 className="text-lg font-bold text-white mb-1 group-hover:text-yellow-400 transition-colors duration-300 line-clamp-1">
+                            {itinerary.title}
+                          </h3>
+                          <div className="flex items-center text-white/90 text-sm mb-2">
+                            <MapPin size={14} className="mr-1 text-red-400" />
+                            <span className="line-clamp-1">{itinerary.location}</span>
+                          </div>
+                          <p className="text-white/80 text-sm line-clamp-2 mb-3">
+                            {itinerary.description}
+                          </p>
+                        </div>
+
+                        {/* Trip Details */}
+                        <div className="grid grid-cols-2 gap-3 text-sm mb-3">
+                          <div className="flex items-center text-white/90">
+                            <Calendar size={12} className="mr-1 text-blue-400" />
+                            <span className="text-xs">{itinerary.duration}</span>
+                          </div>
+                          <div className="flex items-center text-white/90">
+                            <Users size={12} className="mr-1 text-green-400" />
+                            <span className="text-xs">{itinerary.groupSize}</span>
+                          </div>
+                        </div>
+
+                        {/* Features */}
+                        <div className="flex flex-wrap gap-1 mb-3">
+                          {itinerary.features.slice(0, 3).map((feature, featureIdx) => (
+                            <span
+                              key={featureIdx}
+                              className="px-2 py-1 bg-white/20 backdrop-blur-sm text-white text-xs rounded-full"
+                            >
+                              {feature}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Reserve Button */}
+                        <Button
+                          className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                          asChild
+                        >
+                          <a
+                            href={`/itineraries/${getItinerarySlug(itinerary.title)}`}
+                          >
+                            View Details
+                          </a>
+                        </Button>
                       </div>
                     </div>
                   </div>
-
-                  {/* Content Section */}
-                  <CardContent className="p-5 space-y-3">
-                    {/* Title and Location */}
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-yellow-600 transition-colors duration-300 line-clamp-1">
-                        {itinerary.title}
-                      </h3>
-                      <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm mb-2">
-                        <MapPin size={12} className="mr-1 text-red-500" />
-                        <span className="line-clamp-1">{itinerary.location}</span>
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-2">
-                        {itinerary.description}
-                      </p>
-                    </div>
-
-                    {/* Trip Details */}
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="flex items-center text-gray-600 dark:text-gray-300">
-                        <Calendar size={12} className="mr-2 text-blue-500" />
-                        <span className="text-xs">{itinerary.duration}</span>
-                      </div>
-                      <div className="flex items-center text-gray-600 dark:text-gray-300">
-                        <Users size={12} className="mr-2 text-green-500" />
-                        <span className="text-xs">{itinerary.groupSize}</span>
-                      </div>
-                    </div>
-
-                    {/* Features */}
-                    <div className="flex flex-wrap gap-1">
-                      {itinerary.features.slice(0, 3).map((feature, featureIdx) => (
-                        <span
-                          key={featureIdx}
-                          className="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 text-xs rounded-full"
-                        >
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Reserve Button */}
-                    <Button
-                      className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                      asChild
-                    >
-                      <a
-                        href={`/itineraries/${getItinerarySlug(itinerary.title)}`}
-                      >
-                        View Details
-                      </a>
-                    </Button>
-                  </CardContent>
                 </Card>
               </motion.div>
             ))}

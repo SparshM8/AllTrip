@@ -35,40 +35,43 @@ export default function AboutSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-8"
           >
-            {/* Badge */}
-            <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-              Our Story
-            </div>
+            {/* Content with Translucent Background */}
+            <div className="bg-white/70 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-lg">
+              {/* Badge */}
+              <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-6">
+                Our Story
+              </div>
 
-            {/* Main Heading */}
-            <div className="space-y-4">
-              <h2 className="text-4xl lg:text-5xl font-bold leading-tight">
-                <span className="text-green-600">Redefining Travel</span>
-                <br />
-                <span className="text-blue-600">Standards</span>
-              </h2>
-              
-              <p className="text-lg text-gray-600 leading-relaxed">
-                We believe travel is about confidence, authenticity, and celebrating 
-                your unique journey. Since our founding, we've curated the finest 
-                experiences for every travel style and destination.
-              </p>
-            </div>
+              {/* Main Heading */}
+              <div className="space-y-4 mb-8">
+                <h2 className="text-4xl lg:text-5xl font-bold leading-tight">
+                  <span className="bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent">Redefining Travel</span>
+                  <br />
+                  <span className="bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent">Standards</span>
+                </h2>
+                
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  We believe travel is about confidence, authenticity, and celebrating 
+                  your unique journey. Since our founding, we've curated the finest 
+                  experiences for every travel style and destination.
+                </p>
+              </div>
 
-            {/* Statistics */}
-            <div className="flex gap-8">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                  className="text-center"
-                >
-                  <div className="text-3xl font-bold text-gray-900">{stat.number}</div>
-                  <div className="text-sm text-gray-600 mt-1">{stat.label}</div>
-                </motion.div>
-              ))}
+              {/* Statistics */}
+              <div className="flex gap-8">
+                {stats.map((stat, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                    transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                    className="text-center"
+                  >
+                    <div className="text-3xl font-bold text-gray-900">{stat.number}</div>
+                    <div className="text-sm text-gray-600 mt-1">{stat.label}</div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </motion.div>
 
