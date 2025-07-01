@@ -16,7 +16,7 @@ const DotLottieReactDynamic = dynamic(
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white rounded-t-3xl overflow-hidden">
+    <footer className="bg-gray-900 text-white overflow-hidden">
       <div className="container px-4 md:px-6 py-12">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Column 1: Branding and Animation */}

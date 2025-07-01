@@ -1,0 +1,56 @@
+{
+  "dayWiseItinerary": [
+    {
+      "day": 1,
+      "title": "Arrival + Explore Kongthong",
+      "highlights": ["Arrival at Guwahati Airport", "Drive to Kongthong Village", "Village walk", "Whistling tradition"],
+      "timeline": [
+        { "time": "Morning", "activity": "Arrival at Guwahati Airport" },
+        { "time": "Drive", "activity": "Drive to Kongthong Village (~6 hrs via Shillong/Pynursla)" },
+        { "time": "Check-in", "activity": "Check-in to eco homestay" },
+        { "time": "Afternoon", "activity": "Guided village walk in Kongthong • Learn about the whistling tradition • Explore local bamboo craft and forest surroundings" },
+        { "time": "Evening", "activity": "Local Khasi-style dinner • Optional bonfire and music with villagers" }
+      ],
+      "meals": "Lunch, Dinner",
+      "stay": "Homestay in Kongthong"
+    },
+    {
+      "day": 2,
+      "title": "Nature Trails & Offbeat Caves",
+      "highlights": ["Forest hike", "Bamboo bridges", "Cave exploration", "Local guides"],
+      "timeline": [
+        { "time": "Morning", "activity": "Guided forest hike to Sder or Mawmih Village • Cross bamboo bridges, watch birds • Packed breakfast or picnic lunch in the forest" },
+        { "time": "Afternoon", "activity": "Visit Krem Diengjem or Krem Mawblang Caves - Limestone cave exploration with local guides" },
+        { "time": "Evening", "activity": "Return to Kongthong • Relax with tea and sunset views • Optional: storytelling or local games" }
+      ],
+      "meals": "Breakfast, Lunch, Dinner",
+      "stay": "Same Homestay in Kongthong"
+    },
+    {
+      "day": 3,
+      "title": "Viewpoints & Departure",
+      "highlights": ["Sunrise viewpoint", "Laitlum Canyon", "Return journey"],
+      "timeline": [
+        { "time": "Morning", "activity": "Short hike to Khmat Sniang Viewpoint (sunrise optional) • Breakfast at homestay • Check-out" },
+        { "time": "On the way back", "activity": "Stop at Laitlum Canyon (early visit = peaceful)" },
+        { "time": "Return Journey", "activity": "Drive to Guwahati Airport (~6 hrs) or Shillong (~4 hrs)" }
+      ],
+      "meals": "Breakfast",
+      "stay": "Departure"
+    }
+  ],
+  "travelTips": [
+    "Carry trekking shoes, warm clothes, torchlight",
+    "Power banks & light luggage advised",
+    "Network is limited – perfect for digital detox",
+    "Respect local traditions and ask before photos"
+  ],
+  "packageIncludes": [
+    "2 nights accommodation in eco homestay",
+    "All meals as per itinerary",
+    "Private transportation from Guwahati",
+    "Local guide for village walks and caves",
+    "Entry fees to caves and viewpoints",
+    "Cultural activities and interactions"
+  ]
+}

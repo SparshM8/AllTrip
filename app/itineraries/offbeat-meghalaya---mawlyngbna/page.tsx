@@ -20,75 +20,13 @@ import {
   Waves,
   TreePine,
 } from "lucide-react";
+import itineraryData from "@/data/itinerary-mawlyngbna.json";
 
 export default function OffbeatMeghalayaMawlyngbnaPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
 
-  const dayWiseItinerary = [
-    {
-      day: 1,
-      title: "Guwahati → Mawlyngbna (via Laitlum Canyon)",
-      highlights: ["Laitlum Canyon visit", "Village arrival", "Community homestay", "Viewpoint exploration"],
-      timeline: [
-        { time: "8-9 AM", activity: "Arrive in Guwahati" },
-        { time: "Morning Drive", activity: "Drive to Laitlum Canyon (offbeat canyon view – 4 hrs)" },
-        { time: "Afternoon", activity: "Continue to Mawlyngbna village (~2 hrs from Laitlum)" },
-        { time: "Check-in", activity: "Check-in at Mawlyngbna community homestay / Traveller's Nest / Ialong Stay" },
-        { time: "Evening", activity: "Explore nearby viewpoints or relax at the stay" },
-      ],
-      meals: "Lunch, Dinner",
-      stay: "Mawlyngbna Homestay"
-    },
-    {
-      day: 2,
-      title: "Mawlyngbna Exploration Day",
-      highlights: ["Split Rock", "Phlangmawsyrpat Falls", "Kayaking", "Fossil Park", "Cave exploration"],
-      timeline: [
-        { time: "Morning", activity: "Breakfast at homestay" },
-        { time: "Full Day", activity: "Explore Split Rock, Phlangmawsyrpat Falls, Umkhakoi Reservoir (kayaking), Fossil Park" },
-        { time: "Optional", activity: "Optional visit to Ritymmen Cave" },
-        { time: "Evening", activity: "Return to homestay for lunch, evening bonfire or stargazing" },
-      ],
-      meals: "Breakfast, Lunch, Dinner",
-      stay: "Mawlyngbna Homestay"
-    },
-    {
-      day: 3,
-      title: "Leisure Morning + Return to Guwahati",
-      highlights: ["Village walk", "Return journey", "Peaceful departure"],
-      timeline: [
-        { time: "Morning", activity: "Easy breakfast, short village walk" },
-        { time: "Departure", activity: "Start return journey to Guwahati (6–7 hrs)" },
-        { time: "Evening", activity: "Reach Guwahati by 6–7 PM for late train/flight" },
-      ],
-      meals: "Breakfast",
-      stay: "Departure"
-    }
-  ];
-
-  const recommendedStays = [
-    "Traveller's Nest Mawlyngbna",
-    "Ialong Traveller's Nest", 
-    "MaplePine Farm"
-  ];
-
-  const budgetBreakdown = [
-    { item: "Private Cab (3 days)", cost: "₹9,000 total" },
-    { item: "Homestay (2 nights)", cost: "₹3,000 pp" },
-    { item: "Food (All meals)", cost: "₹1,200" },
-    { item: "Entry + Activities", cost: "₹500–800" },
-    { item: "Total", cost: "₹7,500–8,500 per person" }
-  ];
-
-  const packageIncludes = [
-    "2 nights accommodation in eco homestay",
-    "All meals as per itinerary",
-    "Private transportation from Guwahati",
-    "Kayaking at Umkhakoi Reservoir",
-    "Entry fees to Fossil Park and caves",
-    "Guided visits to Split Rock and waterfalls"
-  ];
+  const { dayWiseItinerary, recommendedStays, budgetBreakdown, packageIncludes } = itineraryData;
 
   return (
     <div ref={ref} className="min-h-screen bg-gradient-to-br from-slate-50 to-white">

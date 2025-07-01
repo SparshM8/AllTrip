@@ -1,0 +1,28 @@
+{
+  "stats": [
+    {
+      "number": "50K+",
+      "label": "Happy Travelers",
+      "icon": "Users"
+    },
+    {
+      "number": "500+",
+      "label": "Premium Destinations",
+      "icon": "MapPin"
+    }
+  ],
+  "features": [
+    {
+      "icon": "Award",
+      "label": "Premium Quality"
+    },
+    {
+      "icon": "Shield",
+      "label": "Safe & Secure"
+    },
+    {
+      "icon": "Heart",
+      "label": "Eco-Friendly"
+    }
+  ]
+}

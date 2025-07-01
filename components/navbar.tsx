@@ -18,15 +18,9 @@ import {
 } from "@/components/ui/drawer";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useTheme } from "next-themes";
+import navLinksData from "@/data/nav-links.json";
 
-const navLinks = [
-  { name: "Home", href: "/#home" },
-  { name: "About Us", href: "/#about" },
-  { name: "Destinations", href: "/#destinations" },
-  { name: "Trips", href: "/#trips" },
-  { name: "Campus Ambassador", href: "/#campus" },
-  { name: "Testimonials", href: "/#testimonials" },
-];
+const navLinks = navLinksData;
 
 const Navbar: React.FC = () => {
   // State for drawer (mobile menu) and scroll-based show/hide logic
@@ -66,7 +60,8 @@ const Navbar: React.FC = () => {
     <header
       className={`transition-transform duration-300 ease-in-out sticky top-0 z-50 ${
         showNavbar ? "translate-y-0" : "-translate-y-full"
-      } bg-yellow-400/90 backdrop-blur-md rounded-b-xl shadow-sm`}
+      } rounded-b-xl shadow-sm`}
+      style={{ backgroundColor: '#FDBE00' }} // Using solid bright color without transparency
     >
       <div className="container mx-auto max-w-7xl flex items-center justify-between px-2 py-2 sm:px-4 lg:px-6">
         {/* Logo Section */}
@@ -95,57 +90,113 @@ const Navbar: React.FC = () => {
           </Link>
         </div>
 
-        {/* Desktop Navigation & Theme Toggle */}
+        {/* Desktop Navigation */}
         {isDesktop ? (
-          <div className="flex items-center gap-6">
-            <nav className="flex items-center gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="text-sm font-medium text-gray-800 transition-colors hover:text-gray-600"
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </nav>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={toggleTheme}
-              aria-label="Toggle Dark Mode"
-            >
-              {mounted ? (
-                theme === "light" ? (
-                  <Moon className="h-5 w-5" />
-                ) : (
-                  <Sun className="h-5 w-5" />
-                )
-              ) : (
-                <div className="h-5 w-5" />
-              )}
-            </Button>
-          </div>
+          <>
+            <div className="flex items-center justify-center flex-1">
+              <nav className="flex items-center gap-8">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className="text-base font-semibold text-gray-800 transition-colors hover:text-gray-600"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+            
+            {/* Theme Toggle - Right Corner */}
+            <div className="flex items-center">
+              <button
+                onClick={toggleTheme}
+                aria-label="Toggle Dark Mode"
+                className="relative inline-flex items-center w-16 h-8 rounded-full transition-colors duration-300 focus:outline-none"
+                style={{
+                  backgroundColor: theme === "light" ? "#FF8C00" : "#1e40af"
+                }}
+              >
+                {/* Background Icons */}
+                <div className="absolute inset-0 flex items-center justify-between px-2">
+                  {/* Sun Icon */}
+                  <div className={`transition-opacity duration-300 ${theme === "light" ? "opacity-100" : "opacity-50"}`}>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-yellow-400">
+                      <circle cx="12" cy="12" r="5"/>
+                      <line x1="12" y1="1" x2="12" y2="3"/>
+                      <line x1="12" y1="21" x2="12" y2="23"/>
+                      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                      <line x1="1" y1="12" x2="3" y2="12"/>
+                      <line x1="21" y1="12" x2="23" y2="12"/>
+                      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                  </div>
+                  {/* Moon Icon */}
+                  <div className={`transition-opacity duration-300 ${theme === "dark" ? "opacity-100" : "opacity-50"}`}>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-yellow-200">
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                      <circle cx="18" cy="6" r="1" className="text-white"/>
+                      <circle cx="16" cy="4" r="0.5" className="text-white"/>
+                      <circle cx="20" cy="8" r="0.5" className="text-white"/>
+                    </svg>
+                  </div>
+                </div>
+                
+                {/* Toggle Circle */}
+                <div
+                  className={`absolute w-6 h-6 bg-white rounded-full shadow-lg transform transition-transform duration-300 ${
+                    theme === "light" ? "translate-x-1" : "translate-x-9"
+                  }`}
+                />
+              </button>
+            </div>
+          </>
         ) : (
           // Mobile Navigation: include both Theme Toggle and Drawer icon side by side
           <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="icon"
+            {/* Mobile Theme Toggle */}
+            <button
               onClick={toggleTheme}
               aria-label="Toggle Dark Mode"
-              className="mr-2"
+              className="relative inline-flex items-center w-12 h-6 rounded-full transition-colors duration-300 focus:outline-none mr-2"
+              style={{
+                backgroundColor: theme === "light" ? "#FF8C00" : "#1e40af"
+              }}
             >
-              {mounted ? (
-                theme === "light" ? (
-                  <Moon className="h-5 w-5" />
-                ) : (
-                  <Sun className="h-5 w-5" />
-                )
-              ) : (
-                <div className="h-5 w-5" />
-              )}
-            </Button>
+              {/* Background Icons */}
+              <div className="absolute inset-0 flex items-center justify-between px-1">
+                {/* Sun Icon */}
+                <div className={`transition-opacity duration-300 ${theme === "light" ? "opacity-100" : "opacity-50"}`}>
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor" className="text-yellow-400">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                  </svg>
+                </div>
+                {/* Moon Icon */}
+                <div className={`transition-opacity duration-300 ${theme === "dark" ? "opacity-100" : "opacity-50"}`}>
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor" className="text-yellow-200">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                  </svg>
+                </div>
+              </div>
+              
+              {/* Toggle Circle */}
+              <div
+                className={`absolute w-4 h-4 bg-white rounded-full shadow-lg transform transition-transform duration-300 ${
+                  theme === "light" ? "translate-x-1" : "translate-x-7"
+                }`}
+              />
+            </button>
+            
             <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
               <DrawerTrigger asChild>
                 <Button variant="outline" size="icon" aria-label="Toggle menu">
@@ -153,7 +204,10 @@ const Navbar: React.FC = () => {
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </DrawerTrigger>
-              <DrawerContent className="bg-yellow-400/90 backdrop-blur-md rounded-b-xl shadow-sm">
+              <DrawerContent 
+                className="rounded-b-xl shadow-sm"
+                style={{ backgroundColor: '#FDBE00' }} // Using solid bright color without transparency
+              >
                 <DrawerHeader>
                   <DrawerTitle className="text-gray-800">AllTripp</DrawerTitle>
                   <DrawerDescription className="text-gray-700">
@@ -166,7 +220,7 @@ const Navbar: React.FC = () => {
                       key={link.name}
                       href={link.href}
                       onClick={() => setIsDrawerOpen(false)}
-                      className="text-sm font-medium text-gray-800 transition-colors hover:text-gray-600"
+                      className="text-base font-semibold text-gray-800 transition-colors hover:text-gray-600 text-center"
                     >
                       {link.name}
                     </Link>

@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Free Trips",
+    "description": "Earn free trips to popular destinations across India based on your performance.",
+    "icon": "Award"
+  },
+  {
+    "title": "Internship Opportunities",
+    "description": "Get exclusive internship opportunities with AllTripp and partner companies.",
+    "icon": "Briefcase"
+  },
+  {
+    "title": "Certification",
+    "description": "Receive official certification recognizing your skills and contributions.",
+    "icon": "Certificate"
+  },
+  {
+    "title": "Exclusive Merchandise",
+    "description": "Get branded merchandise and special gifts as rewards for your efforts.",
+    "icon": "Gift"
+  }
+]

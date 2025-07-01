@@ -22,89 +22,26 @@ import {
   Car,
   Plane,
 } from "lucide-react";
+import itineraryData from "@/data/itinerary-himachal-cultural-trail.json";
 
 export default function HimachalCulturalTrailPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
-
-  const dayWiseItinerary = [
-    {
-      day: 1,
-      title: "Arrival - Gunehar Village (Bir Area)",
-      highlights: ["Boutique homestay", "Gunehar Waterfall", "Local homes", "Himachali dinner"],
-      timeline: [
-        { time: "Arrival", activity: "Arrive in Bir or Gunehar and check into a boutique homestay" },
-        { time: "Afternoon", activity: "Hike to Gunehar Waterfall, visit local homes" },
-        { time: "Optional", activity: "Explore ShopArt ArtShop (if available)" },
-        { time: "Evening", activity: "Evening bonfire and Himachali dinner" },
-      ],
-      meals: "Lunch, Dinner",
-      stay: "Boutique Homestay in Gunehar"
-    },
-    {
-      day: 2,
-      title: "Andretta & Palampur - Art & Tea Culture",
-      highlights: ["Artist Village", "Pottery workshop", "Tea gardens", "Folk music"],
-      timeline: [
-        { time: "Morning", activity: "Drive to Andretta Artist Village (~1.5 hrs)" },
-        { time: "Mid-Morning", activity: "Visit Sobha Singh Art Gallery & take a pottery workshop" },
-        { time: "Afternoon", activity: "Head to Palampur: visit tea gardens & factory" },
-        { time: "Evening", activity: "Return to Gunehar for stargazing or folk music session" },
-      ],
-      meals: "Breakfast, Lunch, Dinner",
-      stay: "Same Homestay in Gunehar"
-    },
-    {
-      day: 3,
-      title: "Monastery Visit & Departure",
-      highlights: ["Sherabling Monastery", "Chanting session", "Local cafe", "Departure"],
-      timeline: [
-        { time: "Early Morning", activity: "Visit Sherabling Monastery near Bir (join chanting if early)" },
-        { time: "Morning", activity: "Breakfast at a local cafe" },
-        { time: "Late Morning", activity: "Checkout and depart to Delhi via bus/flight/car" },
-      ],
-      meals: "Breakfast",
-      stay: "Departure to Delhi"
-    }
-  ];
-
-  const stayOptions = [
-    { name: "The Bunker, Bir", type: "Minimalist & peaceful stay for solo travelers" },
-    { name: "Gunehar Homestays or Camp Oak View", type: "Village-based experiences" },
-    { name: "Rakkh Resort or Surbhi Estate, Palampur", type: "Boutique stays with tea estate views" }
-  ];
-
-  const howToReach = [
-    { method: "Volvo Bus", details: "Overnight (~11-12 hrs) to Dharamshala or Bir" },
-    { method: "Flight", details: "Delhi to Gaggal (~1.5 hrs) + 1 hr cab" },
-    { method: "Car", details: "~9-10 hrs from Delhi via NH44/NH503" }
-  ];
-
-  const budgetEstimate = [
-    { item: "Travel (Volvo RT)", cost: "₹2,000-2,500" },
-    { item: "Stay (2N)", cost: "₹3,000-5,000" },
-    { item: "Food & Entry", cost: "₹1,000-1,500" },
-    { item: "Workshops/Extras", cost: "₹500-1,000" },
-    { item: "Total", cost: "₹6,500-10,000" }
-  ];
-
-  const culturalExperiences = [
-    "Sobha Singh Art Gallery - Famous artist's legacy",
-    "Pottery workshops in Andretta village",
-    "Tea plantation visits and factory tours",
-    "Buddhist monastery meditation sessions",
-    "Local Himachali folk music evenings",
-    "Traditional village homestay experiences"
-  ];
+  const { 
+    dayWiseItinerary, 
+    stayOptions, 
+    howToReach, 
+    budgetEstimate, 
+    culturalExperiences 
+  } = itineraryData;
 
   return (
     <div ref={ref} className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
-      {/* Hero Section */}
-      <section className="relative h-[70vh] overflow-hidden">        <Image
+      {/* Hero Section */}      <section className="relative h-[70vh] overflow-hidden">        <Image
           src="/Itenaries/Himachal Cultural.jpg"
           alt="Himachal Cultural Trail - Bir, Andretta & Palampur"
           fill
-          className="object-cover"
+          className="object-cover"  
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />

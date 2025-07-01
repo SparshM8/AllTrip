@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Kashmir Paradise",
+    "destination": "Kashmir",
+    "duration": "7 Days / 6 Nights",
+    "price": "₹35,000",
+    "highlights": ["Dal Lake", "Gulmarg", "Pahalgam", "Sonamarg"]
+  },
+  {
+    "name": "Kerala Backwaters",
+    "destination": "Kerala",
+    "duration": "6 Days / 5 Nights",
+    "price": "₹28,000",
+    "highlights": ["Alleppey", "Munnar", "Kochi", "Kumarakom"]
+  },
+  {
+    "name": "Royal Rajasthan",
+    "destination": "Rajasthan",
+    "duration": "8 Days / 7 Nights",
+    "price": "₹42,000",
+    "highlights": ["Jaipur", "Udaipur", "Jaisalmer", "Jodhpur"]
+  }
+]

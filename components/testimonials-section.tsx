@@ -5,41 +5,17 @@ import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
+import testimonialsData from "@/data/testimonials.json";
 
-const testimonials = [
-  {
-    name: "Priya Sharma",
-    location: "Delhi",
-    testimonial:
-      "My trip to Kashmir with AllTripp was absolutely magical. The team took care of everything, from accommodation to local experiences. I'll definitely be booking with them again!",
-    rating: 5,
-    image: "/testimonials/priya-sharma.jpg",
-  },
-  {
-    name: "Rahul Mehta",
-    location: "Mumbai",
-    testimonial:
-      "The Rajasthan tour was well-organized and gave us a perfect blend of luxury and authentic experiences. The local guides were knowledgeable and friendly.",
-    rating: 5,
-    image: "/testimonials/rahul-mehta.jpg",
-  },
-  {
-    name: "Ananya Patel",
-    location: "Bangalore",
-    testimonial:
-      "Kerala backwaters cruise was the highlight of our honeymoon. AllTripp arranged everything perfectly, and the houseboat experience was unforgettable.",
-    rating: 5,
-    image: "/testimonials/ananya-patel.jpg",
-  },
-  {
-    name: "Vikram Singh",
-    location: "Chandigarh",
-    testimonial:
-      "As a solo traveler, I was a bit apprehensive, but the AllTripp team made me feel safe and comfortable throughout my Himachal trip. Highly recommended!",
-    rating: 4,
-    image: "/testimonials/vikram-singh.jpg",
-  },
-];
+const testimonials = testimonialsData;
+
+// Hardcoded image mapping for testimonials
+const testimonialImages: { [key: string]: string } = {
+  "Priya Sharma": "/testimonials/priya-sharma.jpg",
+  "Rahul Mehta": "/testimonials/rahul-mehta.jpg",
+  "Ananya Patel": "/testimonials/ananya-patel.jpg",
+  "Vikram Singh": "/testimonials/vikram-singh.jpg",
+};
 
 export default function TestimonialsSection() {
   const ref = useRef(null);
@@ -92,7 +68,7 @@ export default function TestimonialsSection() {
                   <div className="flex items-center gap-4 mb-4">
                     <div className="relative h-12 w-12 overflow-hidden rounded-full">
                       <Image
-                        src={testimonial.image || "/placeholder.svg"}
+                        src={testimonialImages[testimonial.name] || "/placeholder.svg"}
                         alt={testimonial.name}
                         fill
                         className="object-cover"

@@ -1,5 +1,13 @@
 import { generateMetadata } from '@/lib/seo';
 import { Metadata } from 'next';
+import packagesData from '@/data/packages.json';
+
+// Hardcoded image mapping for packages
+const packageImages: { [key: string]: string } = {
+  "Kashmir Paradise": "/featured/kashmir-wonderland.jpg",
+  "Kerala Backwaters": "/featured/kerala-backwaters.webp",
+  "Royal Rajasthan": "/featured/rajasthan-heritage.jpg",
+};
 
 export const metadata: Metadata = generateMetadata({
   title: "India Tour Packages - Customized Travel Experiences by AllTripp",
@@ -23,40 +31,7 @@ export const metadata: Metadata = generateMetadata({
 });
 
 export default function PackagesPage() {
-  const packages = [
-    {
-      name: "Kashmir Paradise",
-      destination: "Kashmir",
-      duration: "7 Days / 6 Nights",
-      price: "₹35,000",
-      image: "/featured/kashmir-wonderland.jpg",
-      highlights: ["Dal Lake", "Gulmarg", "Pahalgam", "Sonamarg"]
-    },
-    {
-      name: "Kerala Backwaters",
-      destination: "Kerala", 
-      duration: "6 Days / 5 Nights",
-      price: "₹28,000",
-      image: "/featured/kerala-backwaters.webp",
-      highlights: ["Alleppey", "Munnar", "Kochi", "Kumarakom"]
-    },
-    {
-      name: "Royal Rajasthan",
-      destination: "Rajasthan",
-      duration: "8 Days / 7 Nights", 
-      price: "₹42,000",
-      image: "/featured/rajasthan-royal.jpg",
-      highlights: ["Jaipur", "Udaipur", "Jodhpur", "Jaisalmer"]
-    },
-    {
-      name: "Himachal Adventure",
-      destination: "Himachal Pradesh",
-      duration: "5 Days / 4 Nights",
-      price: "₹22,000", 
-      image: "/featured/himachal-pradesh.jpg",
-      highlights: ["Manali", "Solang Valley", "Rohtang Pass", "Kullu"]
-    }
-  ];
+  const packages = packagesData;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -76,7 +51,7 @@ export default function PackagesPage() {
               "name": pkg.name,
               "description": `${pkg.duration} package to ${pkg.destination}`,
               "url": `https://alltripp.com/packages/${pkg.name.toLowerCase().replace(/\s+/g, '-')}`,
-              "image": `https://alltripp.com${pkg.image}`,
+              "image": `https://alltripp.com${packageImages[pkg.name] || "/featured/default.jpg"}`,
               "offers": {
                 "@type": "Offer",
                 "price": pkg.price.replace('₹', ''),
@@ -103,9 +78,8 @@ export default function PackagesPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 mb-12">
             {packages.map((pkg, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div className="relative h-64">
-                  <img 
-                    src={pkg.image} 
+                <div className="relative h-64">                  <img 
+                    src={packageImages[pkg.name] || "/featured/default.jpg"} 
                     alt={`${pkg.name} - ${pkg.destination} tour package`}
                     className="w-full h-full object-cover"
                     loading={index < 2 ? "eager" : "lazy"}

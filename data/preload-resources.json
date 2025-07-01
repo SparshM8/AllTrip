@@ -1,0 +1,14 @@
+{
+  "criticalImages": [
+    "/destinations/kerala.jpg",
+    "/destinations/kashmir.jpg",
+    "/destinations/rajasthan.jpg",
+    "/himalayas.jpg"
+  ],
+  "criticalFonts": [
+    {
+      "href": "/fonts/inter-var.woff2",
+      "type": "font/woff2"
+    }
+  ]
+}

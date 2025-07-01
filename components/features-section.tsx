@@ -10,33 +10,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Star, Users, SlidersHorizontal, LifeBuoy } from "lucide-react";
+import featuresData from "@/data/features.json";
 
-const features = [
-  {
-    title: "Curated Experiences",
-    description:
-      "Discover hidden gems and immerse yourself in authentic local traditions for unforgettable journeys.",
-    icon: Star,
-  },
-  {
-    title: "Community",
-    description:
-      "Connect with like-minded travelers and build lasting friendships through shared adventures.",
-    icon: Users,
-  },
-  {
-    title: "Personalized Itineraries",
-    description:
-      "Enjoy trips tailored to your unique preferences, interests, and travel style.",
-    icon: SlidersHorizontal,
-  },
-  {
-    title: "Seamless Planning & Support",
-    description:
-      "Travel stress-free with our easy-to-use platform and dedicated support team by your side.",
-    icon: LifeBuoy,
-  },
-];
+// Icon mapping for dynamic icon selection
+const iconMap = {
+  Star,
+  Users,
+  SlidersHorizontal,
+  LifeBuoy,
+};
+
+const features = featuresData.map(feature => ({
+  ...feature,
+  icon: iconMap[feature.icon as keyof typeof iconMap]
+}));
 
 export default function WhyChooseSection() {
   const ref = useRef(null);

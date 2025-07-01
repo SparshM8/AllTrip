@@ -6,7 +6,6 @@ import DestinationsSection from "@/components/destinations-section";
 import ItinerariesSection from "@/components/trips-section";
 import CampusAmbassadorSection from "@/components/campus-ambassador-section";
 import TestimonialsSection from "@/components/testimonials-section";
-import EventSection from "@/components/event-section";
 import BlogSection from "@/components/blog-section";
 
 export const metadata: Metadata = {
@@ -57,7 +56,6 @@ export default function Home() {
       <FeaturesSection />
       <DestinationsSection />
       <ItinerariesSection />
-      <EventSection />
       <CampusAmbassadorSection />
       <TestimonialsSection />
       <BlogSection />

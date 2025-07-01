@@ -19,6 +19,14 @@ import {
 } from "lucide-react";
 import itinerariesData from "@/data/itineraries.json";
 
+// Hardcoded image mapping for itineraries
+const itineraryImages: { [key: string]: string } = {
+  "Offbeat Meghalaya - Kongthong": "/Itenaries/Meghalaya.jpg",
+  "Offbeat Meghalaya - Mawlyngbna": "/Itenaries/Mawlyngbna.jpg",
+  "Jibhi & Shoja Offbeat": "/Itenaries/Jibhi.jpg",
+  "Himachal Cultural Trail": "/Itenaries/Himachal Cultural.jpg",
+};
+
 // Helper function to map itinerary titles to their correct folder slugs
 const getItinerarySlug = (title: string): string => {
   const slugMap: Record<string, string> = {
@@ -34,7 +42,6 @@ const getItinerarySlug = (title: string): string => {
 type Trip = {
   title: string;
   description: string;
-  image: string;
   duration: string;
   price: number;
   originalPrice?: number;
@@ -91,7 +98,7 @@ export default function ItinerariesSection() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent mb-4">
-               ITINERARIES
+              ITINERARIES
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Discover India's hidden gems with our carefully crafted offbeat travel experiences
@@ -137,7 +144,7 @@ export default function ItinerariesSection() {
             {itineraries.map((itinerary, idx) => (
               <motion.div
                 key={idx}
-                className="snap-start flex-shrink-0 w-full sm:w-[400px] lg:w-[420px]"
+                className="snap-start flex-shrink-0 w-full sm:w-[300px] lg:w-[320px]"
                 initial={{ y: 50, opacity: 0 }}
                 animate={
                   isInView
@@ -155,97 +162,91 @@ export default function ItinerariesSection() {
                 onMouseEnter={() => setHoveredCard(idx)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                <Card className="group h-full bg-white dark:bg-slate-800 border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden rounded-2xl">
-                  {/* Extended Image Section with Overlay Content */}
-                  <div className="relative h-[550px] w-full overflow-hidden">
+                {/* Clean Compact Card Design */}
+                <div className="group bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                  {/* Image Section with Carousel Dots and Heart */}
+                  <div className="relative h-48 w-full overflow-hidden">
                     <Image
-                      src={itinerary.image}
+                      src={itineraryImages[itinerary.title] || "/Itenaries/default.jpg"}
                       alt={itinerary.title}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
                     
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    
-                    {/* Heart/Like Button */}
+                    {/* Heart/Like Icon - Top Right */}
                     <button
                       onClick={() => toggleLike(idx)}
-                      className="absolute top-4 right-4 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300"
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm hover:bg-white transition-all duration-300 flex items-center justify-center shadow-sm"
                     >
                       <Heart 
-                        size={20} 
-                        className={`${likedTrips.has(idx) ? 'fill-red-500 text-red-500' : 'text-white'} transition-colors duration-300`}
+                        size={16} 
+                        className={`${likedTrips.has(idx) ? 'fill-red-500 text-red-500' : 'text-gray-600'} transition-colors duration-300`}
                       />
                     </button>
 
-                    {/* Price Badge */}
-                    <div className="absolute top-4 left-4">
-                      <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                        {itinerary.originalPrice && (
-                          <span className="line-through text-white/80 mr-2">₹{itinerary.originalPrice.toLocaleString()}</span>
-                        )}
-                        ₹{itinerary.price.toLocaleString()}
-                      </div>
-                    </div>
-
-                    {/* Content Overlay - Positioned at Bottom */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <div className="bg-black/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 space-y-3">
-                        {/* Title and Location */}
-                        <div>
-                          <h3 className="text-lg font-bold text-white mb-1 group-hover:text-yellow-400 transition-colors duration-300 line-clamp-1">
-                            {itinerary.title}
-                          </h3>
-                          <div className="flex items-center text-white/90 text-sm mb-2">
-                            <MapPin size={14} className="mr-1 text-red-400" />
-                            <span className="line-clamp-1">{itinerary.location}</span>
-                          </div>
-                          <p className="text-white/80 text-sm line-clamp-2 mb-3">
-                            {itinerary.description}
-                          </p>
-                        </div>
-
-                        {/* Trip Details */}
-                        <div className="grid grid-cols-2 gap-3 text-sm mb-3">
-                          <div className="flex items-center text-white/90">
-                            <Calendar size={12} className="mr-1 text-blue-400" />
-                            <span className="text-xs">{itinerary.duration}</span>
-                          </div>
-                          <div className="flex items-center text-white/90">
-                            <Users size={12} className="mr-1 text-green-400" />
-                            <span className="text-xs">{itinerary.groupSize}</span>
-                          </div>
-                        </div>
-
-                        {/* Features */}
-                        <div className="flex flex-wrap gap-1 mb-3">
-                          {itinerary.features.slice(0, 3).map((feature, featureIdx) => (
-                            <span
-                              key={featureIdx}
-                              className="px-2 py-1 bg-white/20 backdrop-blur-sm text-white text-xs rounded-full"
-                            >
-                              {feature}
-                            </span>
-                          ))}
-                        </div>
-
-                        {/* Reserve Button */}
-                        <Button
-                          className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                          asChild
-                        >
-                          <a
-                            href={`/itineraries/${getItinerarySlug(itinerary.title)}`}
-                          >
-                            View Details
-                          </a>
-                        </Button>
-                      </div>
+                    {/* Carousel Dots - Bottom Center */}
+                    <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1.5">
+                      {[...Array(3)].map((_, dotIdx) => (
+                        <div
+                          key={dotIdx}
+                          className={`w-1.5 h-1.5 rounded-full ${dotIdx === 0 ? 'bg-white' : 'bg-white/60'}`}
+                        />
+                      ))}
                     </div>
                   </div>
-                </Card>
+
+                  {/* Content Section */}
+                  <div className="p-4 space-y-2">
+                    {/* Title Row */}
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-900 dark:text-white truncate text-base leading-tight">
+                          {itinerary.title}
+                        </h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 truncate mt-0.5">
+                          {itinerary.location}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Features Row */}
+                    <div className="flex items-center text-xs text-gray-600 dark:text-gray-300 space-x-3">
+                      <div className="flex items-center space-x-1">
+                        <Calendar size={16} className="text-black dark:text-white" />
+                        <span className="font-medium">{itinerary.duration}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Users size={16} className="text-black dark:text-white" />
+                        <span className="font-medium">Up to {itinerary.groupSize}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Camera size={16} className="text-black dark:text-white" />
+                        <span className="font-medium">Adventure</span>
+                      </div>
+                    </div>
+
+                    {/* Price and View Details Button */}
+                    <div className="flex items-center justify-between pt-2">
+                      <div>
+                        <span className="text-lg font-bold text-gray-900 dark:text-white">
+                          ₹{itinerary.price.toLocaleString()}
+                        </span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">
+                          per person
+                        </span>
+                      </div>
+                      <Button
+                        className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
+                        asChild
+                      >
+                        <a href={`/itineraries/${getItinerarySlug(itinerary.title)}`}>
+                          View Details
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>

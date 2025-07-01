@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Priya Sharma",
+    "location": "Delhi",
+    "testimonial": "My trip to Kashmir with AllTripp was absolutely magical. The team took care of everything, from accommodation to local experiences. I'll definitely be booking with them again!",
+    "rating": 5
+  },
+  {
+    "name": "Rahul Mehta",
+    "location": "Mumbai",
+    "testimonial": "The Rajasthan tour was well-organized and gave us a perfect blend of luxury and authentic experiences. The local guides were knowledgeable and friendly.",
+    "rating": 5
+  },
+  {
+    "name": "Ananya Patel",
+    "location": "Bangalore",
+    "testimonial": "Kerala backwaters cruise was the highlight of our honeymoon. AllTripp arranged everything perfectly, and the houseboat experience was unforgettable.",
+    "rating": 5
+  },
+  {
+    "name": "Vikram Singh",
+    "location": "Pune",
+    "testimonial": "The Himachal Pradesh trek was challenging yet rewarding. Great team support and beautiful mountain views made it an adventure of a lifetime.",
+    "rating": 5
+  }
+]

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import SearchBar from "@/components/search-bar";
 
 export default function HeroSection() {
   const ref = useRef(null);
@@ -38,11 +39,10 @@ export default function HeroSection() {
       section.scrollIntoView({ behavior: "smooth" });
     }
   };
-
   return (
-    <section ref={ref} className="relative h-screen w-full overflow-hidden" style={{ marginTop: '-60px', paddingTop: '60px' }}>
+    <section ref={ref} className="relative h-screen w-full overflow-hidden flex items-center justify-center" style={{ marginTop: '-60px' }}>
       <Image
-        src="/himalayas.jpg"
+        src="/5.jpg"
         alt="Scenic view of Himalayas/Kashmir"
         fill
         priority
@@ -50,13 +50,13 @@ export default function HeroSection() {
       />
       <div className="absolute inset-0 bg-black/40" /> {/* Overlay */}
       <motion.div
-        className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white px-4 pt-20"
+        className="relative z-10 flex flex-col items-center justify-center text-center text-white px-4 w-full max-w-6xl mx-auto"
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
       >
         <motion.h1
-          className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl max-w-4xl"
+          className="mb-6 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl max-w-4xl"
           variants={itemVariants}
         >
           One Solution For All Your{" "}
@@ -64,7 +64,7 @@ export default function HeroSection() {
         </motion.h1>
 
         <motion.p
-          className="mt-6 max-w-xl text-base sm:text-lg"
+          className="mb-8 max-w-xl text-base sm:text-lg"
           variants={itemVariants}
         >
           Discover the beauty of India with AllTripp. We offer premium travel
@@ -72,25 +72,12 @@ export default function HeroSection() {
           of Kerala.
         </motion.p>
 
-        <motion.div
+        {/* Search Bar below subtitle */}
+        <motion.div 
+          className="w-full flex justify-center"
           variants={itemVariants}
-          className="mt-8 flex flex-row gap-4"
         >
-          <Button
-            asChild
-            size="lg"
-            className="bg-[#FDBE00] text-black hover:bg-[#FDBE00]/90 font-medium"
-          >
-            <Link href="#destinations">Explore More</Link>
-          </Button>
-
-          <Button
-            size="lg"
-            onClick={() => scrollToSection("events")}
-            className="bg-white text-black hover:bg-white/90 dark:bg-transparent dark:text-white dark:border dark:border-white dark:hover:bg-white/10"
-          >
-            Events
-          </Button>
+          <SearchBar />
         </motion.div>
       </motion.div>
     </section>

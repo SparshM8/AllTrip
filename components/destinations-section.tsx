@@ -5,65 +5,22 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import destinationsData from "@/data/destinations.json";
 
-const destinations = [
-	{
-		name: "Goa",
-		shortDescription: "Goa is a mesmerizing city that boasts stunning beaches, magnificent churches, and impressive forts. It's a perfect romantic getaway for beach lovers.",
-		detailedDescription: "Experience the perfect blend of Portuguese heritage and tropical paradise. From pristine beaches to vibrant nightlife, Goa offers an unforgettable coastal experience with water sports, beach shacks, and sunset views.",
-		image: "/destinations/goa.jpg",
-		badge: "POPULAR"
-	},
-	{
-		name: "Rishikesh",
-		shortDescription: "Rishikesh is a city in India renowned for its temples, ashrams, yoga centers, and natural beauty including waterfalls and greenery. It's also a hub for adventure activities.",
-		detailedDescription: "Known as the 'Yoga Capital of the World', Rishikesh offers spiritual awakening alongside thrilling adventures like river rafting, bungee jumping, and trekking in the foothills of the Himalayas.",
-		image: "/destinations/kashmir.jpg",
-		badge: "POPULAR"
-	},
-	{
-		name: "Jim Corbett",
-		shortDescription: "Jim Corbett National Park is a wildlife sanctuary located in Uttarakhand, India. It offers a perfect weekend getaway with adventure activities, wildlife sightings, and mysterious stories.",
-		detailedDescription: "India's oldest national park, home to the majestic Bengal tiger. Experience thrilling jungle safaris, bird watching, and stay in luxury resorts while exploring the rich biodiversity of the Terai region.",
-		image: "/destinations/Uttarakhand.jpg",
-		badge: "POPULAR"
-	},
-	{
-		name: "Amritsar",
-		shortDescription: "Amritsar, the heart of Punjab, is a revered site for Sikhs and a pilgrimage destination for many due to the presence of the Golden Temple.",
-		detailedDescription: "Explore historical landmarks such as Jallianwala Bagh and Wagah Border, as well as the Harke Bird Sanctuary. Experience the spiritual ambiance of the Golden Temple and taste authentic Punjabi cuisine.",
-		image: "/destinations/himachal-pradesh.jpg",
-		badge: "POPULAR"
-	},
-	{
-		name: "Kerala",
-		shortDescription: "Kerala, known as 'God's Own Country', offers backwaters, hill stations, and pristine beaches with unique cultural experiences.",
-		detailedDescription: "Cruise through serene backwaters in traditional houseboats, explore spice plantations in Munnar, and experience Ayurvedic treatments in this tropical paradise.",
-		image: "/destinations/kerala.jpg",
-		badge: "POPULAR"
-	},
-	{
-		name: "Rajasthan",
-		shortDescription: "The land of kings, featuring magnificent palaces, desert landscapes, and rich cultural heritage.",
-		detailedDescription: "Explore majestic forts and palaces, experience camel safaris in the Thar Desert, and immerse yourself in the vibrant culture of royal Rajasthan.",
-		image: "/destinations/rajasthan.jpg",
-		badge: "POPULAR"
-	},
-	{
-		name: "Ladakh",
-		shortDescription: "A high-altitude desert offering breathtaking landscapes, monasteries, and adventure activities.",
-		detailedDescription: "Discover the moonlike landscapes of Ladakh, visit ancient Buddhist monasteries, and experience thrilling mountain adventures in the Himalayas.",
-		image: "/destinations/Ladakh.jpg",
-		badge: "POPULAR"
-	},
-	{
-		name: "Himachal Pradesh",
-		shortDescription: "Hill stations with snow-capped mountains, apple orchards, and pleasant weather year-round.",
-		detailedDescription: "Enjoy the cool mountain air of Shimla and Manali, experience adventure sports, and witness stunning Himalayan landscapes.",
-		image: "/destinations/himachal.jpg",
-		badge: "POPULAR"
-	}
-];
+const destinations = destinationsData;
+
+// Hardcoded image mapping for destinations
+const destinationImages: { [key: string]: string } = {
+  "Goa": "/destinations/goa.jpg",
+  "Rishikesh": "/destinations/kashmir.jpg",
+  "Jim Corbett": "/destinations/Uttarakhand.jpg",
+  "Amritsar": "/destinations/himachal-pradesh.jpg",
+  "Kashmir": "/destinations/kashmir.jpg",
+  "Kerala": "/destinations/kerala.jpg",
+  "Rajasthan": "/destinations/rajasthan.jpg",
+  "Ladakh": "/destinations/Ladakh.jpg",
+  "Himachal Pradesh": "/destinations/himachal.jpg",
+};
 
 export default function DestinationsSection() {
 	const ref = useRef<HTMLElement>(null);
@@ -133,9 +90,8 @@ export default function DestinationsSection() {
 				key={`${destination.name}-${currentStartIndex}-${index}`}
 				className="group relative h-96 rounded-2xl overflow-hidden cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
 			>
-				<div className="absolute inset-0">
-					<Image
-						src={destination.image}
+				<div className="absolute inset-0">					<Image
+						src={destinationImages[destination.name] || "/destinations/default.jpg"}
 						alt={destination.name}
 						fill
 						priority={index === 0}
@@ -176,9 +132,22 @@ export default function DestinationsSection() {
 		<section 
 			id="destinations" 
 			ref={ref} 
-			className="py-20 bg-gradient-to-b from-gray-50 to-white"
+			className="relative py-20 bg-gradient-to-b from-gray-50 to-white overflow-hidden"
 		>
-			<div className="container mx-auto px-6">				{/* Section Header */}
+			{/* Map Background with Minimal Blur Effect from Bottom */}
+			<div className="absolute inset-0 w-full h-full">
+				<Image
+					src="/map.jpg"
+					alt="Map Background"
+					fill
+					className="object-cover opacity-30"
+				/>
+				{/* Minimal blur gradient from bottom */}
+				<div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
+				<div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-white/50 via-white/20 to-transparent" />
+			</div>
+			
+			<div className="container mx-auto px-6 relative z-10">				{/* Section Header */}
 				<motion.div
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 30 }}

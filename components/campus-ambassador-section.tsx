@@ -6,33 +6,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Award, Briefcase, BadgeIcon as Certificate, Gift } from "lucide-react";
 import Link from "next/link";
+import campusBenefitsData from "@/data/campus-benefits.json";
 
-const benefits = [
-  {
-    title: "Free Trips",
-    description:
-      "Earn free trips to popular destinations across India based on your performance.",
-    icon: Award,
-  },
-  {
-    title: "Internship Opportunities",
-    description:
-      "Get exclusive internship opportunities with AllTripp and partner companies.",
-    icon: Briefcase,
-  },
-  {
-    title: "Certification",
-    description:
-      "Receive official certification recognizing your skills and contributions.",
-    icon: Certificate,
-  },
-  {
-    title: "Exclusive Merchandise",
-    description:
-      "Get branded merchandise and special gifts as rewards for your efforts.",
-    icon: Gift,
-  },
-];
+// Icon mapping for dynamic icon selection
+const iconMap = {
+  Award,
+  Briefcase,
+  Certificate,
+  Gift,
+};
+
+const benefits = campusBenefitsData.map(benefit => ({
+  ...benefit,
+  icon: iconMap[benefit.icon as keyof typeof iconMap]
+}));
 
 export default function CampusAmbassadorSection() {
   const ref = useRef(null);

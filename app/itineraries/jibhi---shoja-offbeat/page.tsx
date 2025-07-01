@@ -22,71 +22,13 @@ import {
   Car,
   Plane,
 } from "lucide-react";
+import itineraryData from "@/data/itinerary-jibhi-shoja.json";
 
 export default function JibhiShojaOffbeatPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
 
-  const dayWiseItinerary = [
-    {
-      day: 1,
-      title: "Delhi to Jibhi",
-      highlights: ["Arrival in Jibhi", "Riverside stay", "Jibhi Waterfall", "Pine forest walk"],
-      timeline: [
-        { time: "Morning/Noon", activity: "Arrive in Jibhi" },
-        { time: "Check-in", activity: "Check-in to a riverside or treehouse stay" },
-        { time: "Afternoon", activity: "Explore Jibhi Waterfall and local cafes" },
-        { time: "Evening", activity: "Evening walk in the pine forest and bonfire" },
-      ],
-      meals: "Lunch, Dinner",
-      stay: "Riverside/Treehouse Stay in Jibhi"
-    },
-    {
-      day: 2,
-      title: "Shoja and Serolsar Lake Trek",
-      highlights: ["Serolsar Lake trek", "Budhi Nagin Temple", "Mountain views", "Moderate trekking"],
-      timeline: [
-        { time: "Early Morning", activity: "Early drive to Shoja (30 min)" },
-        { time: "Morning", activity: "Begin moderate trek to Serolsar Lake (~5 km one way)" },
-        { time: "Afternoon", activity: "Visit Budhi Nagin Temple at the lake" },
-        { time: "Evening", activity: "Return by evening, relax at your stay" },
-      ],
-      meals: "Breakfast, Lunch, Dinner",
-      stay: "Same Stay in Jibhi"
-    },
-    {
-      day: 3,
-      title: "Jalori Pass Viewpoint and Return",
-      highlights: ["Sunrise at Jalori Pass", "Meadow exploration", "Return journey"],
-      timeline: [
-        { time: "Early Morning", activity: "Early morning drive to Jalori Pass for sunrise view" },
-        { time: "Morning", activity: "Light hike around the pass and explore the meadows" },
-        { time: "Late Morning", activity: "Return to Jibhi, check out and depart to Delhi" },
-      ],
-      meals: "Breakfast",
-      stay: "Departure to Delhi"
-    }
-  ];
-
-  const stayOptions = [
-    { name: "The Hidden Burrow, Jibhi", type: "Treehouse experience" },
-    { name: "Raju Bharti's Guest House", type: "Homely and authentic" },
-    { name: "Jibhi Heaven", type: "Budget-friendly riverside cottage" }
-  ];
-
-  const howToReach = [
-    { method: "By Car", details: "10-12 hrs drive via Mandi" },
-    { method: "By Bus", details: "Volvo till Aut Tunnel, then local cab to Jibhi (~1 hr)" },
-    { method: "Nearest Airport", details: "Bhuntar (~3 hrs by road)" }
-  ];
-
-  const budgetEstimate = [
-    { item: "Travel (Bus/Car RT)", cost: "₹2,000-3,000" },
-    { item: "Stay (2N)", cost: "₹3,000-4,500" },
-    { item: "Food & Entry", cost: "₹1,000-1,500" },
-    { item: "Extras", cost: "₹500-1,000" },
-    { item: "Total", cost: "₹6,500-10,000" }
-  ];
+  const { dayWiseItinerary, stayOptions, howToReach, budgetEstimate } = itineraryData;
 
   return (
     <div ref={ref} className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
