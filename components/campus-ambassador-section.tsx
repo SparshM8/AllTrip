@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Award, Briefcase, BadgeIcon as Certificate, Gift } from "lucide-react";
 import Link from "next/link";
@@ -29,9 +28,7 @@ export default function CampusAmbassadorSection() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
+      transition: { staggerChildren: 0.1, delayChildren: 0.3 },
     },
   };
 
@@ -40,74 +37,82 @@ export default function CampusAmbassadorSection() {
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
+      transition: { duration: 0.5, ease: "easeOut" },
     },
   };
 
   return (
-    <section id="campus" ref={ref} className="py-20 bg-soft-rose/20">
-      <div className="container px-4 md:px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight mb-4">
-            Campus Ambassador Program
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Join our Campus Ambassador Program and become a travel influencer
-            while earning exciting rewards.
-          </p>
-        </div>
+    <section 
+      id="campus" 
+      ref={ref} 
+      className="relative py-20 md:py-32 overflow-hidden bg-cover bg-center bg-fixed"
+      style={{ backgroundImage: "url('/background_itenary1.png')" }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600/70 via-black/60 to-blue-600/70 z-0" />
 
-        <motion.div
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-12"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        className="container relative z-10 px-4 md:px-6"
+      >
+        <motion.div variants={itemVariants} className="text-center mb-16">
+          <h2 className="text-5xl md:text-7xl font-extrabold text-white tracking-tighter uppercase">
+            Campus Ambassador
+          </h2>
+          <div className="flex items-center justify-center mt-4">
+            <div className="w-16 h-px bg-yellow-400"></div>
+            <p className="text-lg md:text-xl text-white/80 mx-4">
+              Join the tribe, lead the journey
+            </p>
+            <div className="w-16 h-px bg-yellow-400"></div>
+          </div>
+        </motion.div>
+
+        <motion.div 
+          variants={itemVariants}
+          className="max-w-5xl mx-auto bg-black/20 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl"
         >
-          {benefits.map((benefit, index) => (
-            <motion.div key={index} variants={itemVariants}>
-              <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <CardHeader className="pb-2">
-                  <div className="w-12 h-12 rounded-full bg-soft-rose/30 flex items-center justify-center mb-4">
-                    <benefit.icon className="w-6 h-6" />
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 mb-12">
+            {benefits.map((benefit, index) => (
+              <div key={index} className="text-center text-white">
+                <div className="flex justify-center mb-4">
+                  <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                    <benefit.icon className="w-8 h-8 text-yellow-400" strokeWidth={1.5} />
                   </div>
-                  <CardTitle>{benefit.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{benefit.description}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-        <motion.div
-          className="flex flex-col sm:flex-row justify-center gap-4"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          <Button
-            asChild
-            className="bg-green-600 hover:bg-emerald-700 rounded-lg shadow-md"
-          >
-            <Link
-              href="https://chat.whatsapp.com/LSCvkKHKeVj0tighxr2C4m"
-              target="_blank"
+                </div>
+                <h3 className="text-lg font-semibold mb-1">{benefit.title}</h3>
+                <p className="text-white/70 text-sm">{benefit.description}</p>
+              </div>
+            ))}
+          </div>
+          
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
+            <Button
+              asChild
+              size="lg"
+              className="bg-yellow-400 text-black font-bold hover:bg-yellow-500 transition-all duration-300 transform hover:scale-105 shadow-lg w-full sm:w-auto"
             >
-              Join WhatsApp Group
-            </Link>
-          </Button>
-          <Button
-            asChild
-            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-lg shadow-md"
-          >
-            <Link href="https://www.instagram.com/alltripp_/" target="_blank">
-              Follow on Instagram
-            </Link>
-          </Button>
+              <Link
+                href="https://chat.whatsapp.com/LSCvkKHKeVj0tighxr2C4m"
+                target="_blank"
+              >
+                Join WhatsApp Group
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="bg-transparent border-white/50 text-white hover:bg-white/10 hover:text-white transition-all duration-300 w-full sm:w-auto"
+            >
+              <Link href="https://www.instagram.com/alltripp_/" target="_blank">
+                Follow on Instagram
+              </Link>
+            </Button>
+          </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

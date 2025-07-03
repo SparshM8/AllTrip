@@ -2,13 +2,6 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Star, Users, SlidersHorizontal, LifeBuoy } from "lucide-react";
 import featuresData from "@/data/features.json";
 
@@ -25,7 +18,7 @@ const features = featuresData.map(feature => ({
   icon: iconMap[feature.icon as keyof typeof iconMap]
 }));
 
-export default function WhyChooseSection() {
+export default function FeaturesSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
@@ -33,74 +26,74 @@ export default function WhyChooseSection() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1 },
+      transition: { staggerChildren: 0.15, delayChildren: 0.3 },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.5 },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
   };
 
-  const bgColors = [
-    "bg-blue-600/20",
-    "bg-pink-600/20",
-    "bg-yellow-500/20",
-    "bg-green-600/20",
-  ];
-  const iconTextColors = [
-    "text-blue-600",
-    "text-pink-600",
-    "text-yellow-500",
-    "text-green-600",
-  ];
-
   return (
-    <section id="why-choose" ref={ref} className="py-20">
-      <div className="container px-4 md:px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight mb-4">
-            Why Choose Us?
+    <section 
+      id="features" 
+      ref={ref} 
+      className="relative py-20 md:py-32 bg-cover bg-center"
+      style={{ backgroundImage: "url('/map.jpg')" }}
+    >
+      <div className="absolute inset-0 bg-black/70 z-0" />
+      
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        className="container relative z-10 px-4 md:px-6"
+      >
+        <motion.div variants={itemVariants} className="text-center mb-16">
+          <h2 className="text-5xl md:text-7xl font-extrabold text-white tracking-tighter uppercase">
+            The AllTripp Advantage
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Choose AllTripp because we go the extra mile to craft experiences
-            you'll cherish forever.
-          </p>
-        </div>
+          <div className="flex items-center justify-center mt-4">
+            <div className="w-16 h-px bg-yellow-400"></div>
+            <p className="text-lg md:text-xl text-white/80 mx-4">
+              Experiences you'll cherish forever
+            </p>
+            <div className="w-16 h-px bg-yellow-400"></div>
+          </div>
+        </motion.div>
 
         <motion.div
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
           variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4"
         >
           {features.map((feature, index) => (
-            <motion.div key={index} variants={itemVariants}>
-              <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <CardHeader className="pb-2">
-                  <div
-                    className={`w-12 h-12 rounded-full ${bgColors[index]} flex items-center justify-center mb-4`}
-                  >
-                    <feature.icon
-                      className={`w-6 h-6 ${iconTextColors[index]}`}
-                    />
-                  </div>
-                  <CardTitle>{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base">
-                    {feature.description}
-                  </CardDescription>
-                </CardContent>
-              </Card>
+            <motion.div 
+              key={index} 
+              variants={itemVariants}
+              className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center text-white border border-white/10
+                         transform transition-all duration-300 hover:bg-white/20 hover:-translate-y-2 hover:shadow-2xl"
+            >
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 rounded-full bg-yellow-400/10 flex items-center justify-center">
+                  <feature.icon
+                    className="w-8 h-8 text-yellow-400"
+                    strokeWidth={1.5}
+                  />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+              <p className="text-white/80 text-sm leading-relaxed">
+                {feature.description}
+              </p>
             </motion.div>
           ))}
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

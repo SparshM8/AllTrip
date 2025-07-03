@@ -2,6 +2,20 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Hide default scrollbar */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+body {
+  overflow-x: hidden;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,6 +34,18 @@ html {
   /* Remove unwanted spacing between sections */
   section {
     margin: 0;
+    padding: 0;
+  }
+  
+  /* Ensure hero section stretches fully */
+  main {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Remove any default spacing */
+  * {
+    box-sizing: border-box;
   }
   
   /* Add line-clamp utility if not available */
@@ -48,7 +74,7 @@ html {
 @layer base {
   :root {
     /* Base Colors */
-    --background: 0 0% 100%; /* White */
+    --background: 240 8% 97%; /* #F5F5F7 */
     --foreground: 222.2 84% 4.9%; /* Dark text (almost black) */
 
     --card: 0 0% 100%;

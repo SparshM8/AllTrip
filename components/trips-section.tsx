@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
@@ -61,6 +61,14 @@ export default function ItinerariesSection() {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [likedTrips, setLikedTrips] = useState<Set<number>>(new Set());
+  const [scrollY, setScrollY] = useState(0);
+
+  // Track scroll position for parallax effect
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleLike = (idx: number) => {
     setLikedTrips(prev => {
@@ -89,20 +97,35 @@ export default function ItinerariesSection() {
   };
 
   return (
-    <section id="itineraries" ref={ref} className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800">
-      <div className="container px-4 md:px-6">
-        <div className="text-center mb-8">
+    <section 
+      id="itineraries" 
+      ref={ref} 
+      className="relative py-20 overflow-hidden bg-cover bg-center"
+      style={{ backgroundImage: "url('/background_itenary1.png')" }}
+    >
+      {/* Content with slide-up animation */}
+      <motion.div 
+        className="relative z-10 container px-4 md:px-6"
+        initial={{ y: 100, opacity: 0 }}
+        animate={isInView ? { y: 0, opacity: 1 } : {}}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
+        <div className="text-center mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent mb-4">
+            <h2 className="text-5xl md:text-7xl font-extrabold text-black tracking-tighter uppercase">
               ITINERARIES
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover India's hidden gems with our carefully crafted offbeat travel experiences
-            </p>
+            <div className="flex items-center justify-center mt-4">
+                <div className="w-16 h-px bg-gray-400"></div>
+                <p className="text-lg md:text-xl text-gray-600 mx-4">
+                    that beckon every traveller
+                </p>
+                <div className="w-16 h-px bg-gray-400"></div>
+            </div>
           </motion.div>
         </div>
 
@@ -112,7 +135,7 @@ export default function ItinerariesSection() {
             variant="outline"
             size="icon"
             onClick={scrollPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border-2 border-yellow-500 bg-yellow-500 text-white hover:bg-yellow-600 transition-all duration-300 shadow-lg -ml-16"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border-2 border-[#FDBE00] bg-[#FDBE00] text-black hover:bg-[#FDBE00]/90 transition-all duration-300 shadow-lg -ml-16"
           >
             <ChevronLeft className="h-5 w-5" />
           </Button>
@@ -122,7 +145,7 @@ export default function ItinerariesSection() {
             variant="outline"
             size="icon"
             onClick={scrollNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border-2 border-yellow-500 bg-yellow-500 text-white hover:bg-yellow-600 transition-all duration-300 shadow-lg -mr-16"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border-2 border-[#FDBE00] bg-[#FDBE00] text-black hover:bg-[#FDBE00]/90 transition-all duration-300 shadow-lg -mr-16"
           >
             <ChevronRight className="h-5 w-5" />
           </Button>
@@ -165,7 +188,7 @@ export default function ItinerariesSection() {
                 {/* Clean Compact Card Design */}
                 <div className="group bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
                   {/* Image Section with Carousel Dots and Heart */}
-                  <div className="relative h-48 w-full overflow-hidden">
+                  <div className="relative h-56 w-full overflow-hidden">
                     <Image
                       src={itineraryImages[itinerary.title] || "/Itenaries/default.jpg"}
                       alt={itinerary.title}
@@ -197,7 +220,7 @@ export default function ItinerariesSection() {
                   </div>
 
                   {/* Content Section */}
-                  <div className="p-4 space-y-2">
+                  <div className="p-4 space-y-3">
                     {/* Title Row */}
                     <div className="flex items-start justify-between">
                       <div className="flex-1 min-w-0">
@@ -211,18 +234,10 @@ export default function ItinerariesSection() {
                     </div>
 
                     {/* Features Row */}
-                    <div className="flex items-center text-xs text-gray-600 dark:text-gray-300 space-x-3">
+                    <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
                       <div className="flex items-center space-x-1">
                         <Calendar size={16} className="text-black dark:text-white" />
                         <span className="font-medium">{itinerary.duration}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Users size={16} className="text-black dark:text-white" />
-                        <span className="font-medium">Up to {itinerary.groupSize}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Camera size={16} className="text-black dark:text-white" />
-                        <span className="font-medium">Adventure</span>
                       </div>
                     </div>
 
@@ -237,8 +252,8 @@ export default function ItinerariesSection() {
                         </span>
                       </div>
                       <Button
-                        className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
                         asChild
+                        className="bg-[#FDBE00] text-black hover:bg-[#FDBE00]/90 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
                       >
                         <a href={`/itineraries/${getItinerarySlug(itinerary.title)}`}>
                           View Details
@@ -252,7 +267,7 @@ export default function ItinerariesSection() {
           </div>
         </motion.div>
       </div>
-    </div>
+    </motion.div>
     </section>
   );
 }
