@@ -1,16 +1,5 @@
 {
-  "stats": [
-    {
-      "number": "50K+",
-      "label": "Happy Travelers",
-      "icon": "Users"
-    },
-    {
-      "number": "500+",
-      "label": "Premium Destinations",
-      "icon": "MapPin"
-    }
-  ],
+  "stats": [],
   "features": [
     {
       "icon": "Award",

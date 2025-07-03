@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Users, MapPin, Award, Shield } from "lucide-react";
+import { Users, MapPin, Award, Shield, LucideProps } from "lucide-react";
 import aboutData from "@/data/about-data.json";
 
 // Icon mapping for dynamic icon selection
@@ -13,13 +13,21 @@ const iconMap = {
   Shield,
 };
 
+// Define a type for the stat object from the JSON file
+interface Stat {
+  number: string;
+  label: string;
+  icon: keyof typeof iconMap;
+}
+
 export default function AboutSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  const stats = aboutData.stats.map(stat => ({
+  // Cast the imported data and then map it, letting TypeScript infer the final type
+  const stats = (aboutData.stats as Stat[]).map(stat => ({
     ...stat,
-    icon: iconMap[stat.icon as keyof typeof iconMap]
+    icon: iconMap[stat.icon]
   }));
 
   const containerVariants = {
@@ -62,7 +70,7 @@ export default function AboutSection() {
           <div className="flex items-center justify-center mt-4">
             <div className="w-16 h-px bg-yellow-400"></div>
             <p className="text-lg md:text-xl text-white/80 mx-4">
-              Crafting Authentic Journeys Since 2018
+              Crafting Authentic Journeys Since 2024
             </p>
             <div className="w-16 h-px bg-yellow-400"></div>
           </div>
@@ -82,22 +90,24 @@ export default function AboutSection() {
         </motion.div>
 
         {/* Stats Grid */}
-        <motion.div
-          variants={containerVariants}
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-5xl mx-auto"
-        >
-          {stats.map((stat, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              className="text-center text-white"
-            >
-              <stat.icon className="mx-auto mb-3 h-10 w-10 text-yellow-400" strokeWidth={1.5} />
-              <p className="text-3xl md:text-4xl font-bold">{stat.number}</p>
-              <p className="text-sm text-white/70 uppercase tracking-wider">{stat.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
+        {stats.length > 0 && (
+          <motion.div
+            variants={containerVariants}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-5xl mx-auto"
+          >
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className="text-center text-white"
+              >
+                <stat.icon className="mx-auto mb-3 h-10 w-10 text-yellow-400" strokeWidth={1.5} />
+                <p className="text-3xl md:text-4xl font-bold">{stat.number}</p>
+                <p className="text-sm text-white/70 uppercase tracking-wider">{stat.label}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
       </motion.div>
     </section>
   );
