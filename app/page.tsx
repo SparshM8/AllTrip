@@ -6,6 +6,7 @@ import DestinationsSection from "@/components/destinations-section";
 import ItinerariesSection from "@/components/trips-section";
 import CampusAmbassadorSection from "@/components/campus-ambassador-section";
 import TestimonialsSection from "@/components/testimonials-section";
+import InstagramSection from "@/components/instagram-section";
 import BlogSection from "@/components/blog-section";
 
 export const metadata: Metadata = {
@@ -52,12 +53,12 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <AboutSection />
       <FeaturesSection />
       <DestinationsSection />
       <ItinerariesSection />
-      <CampusAmbassadorSection />
       <TestimonialsSection />
+      <InstagramSection />
+      <CampusAmbassadorSection />
       <BlogSection />
     </>
   );

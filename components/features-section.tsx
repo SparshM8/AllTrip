@@ -44,9 +44,9 @@ export default function FeaturesSection() {
       id="features" 
       ref={ref} 
       className="relative py-20 md:py-32 bg-cover bg-center"
-      style={{ backgroundImage: "url('/map.jpg')" }}
+      style={{ backgroundImage: "url('/gradient.svg')" }}
     >
-      <div className="absolute inset-0 bg-black/70 z-0" />
+      <div className="absolute inset-0 bg-black/30 z-0" />
       
       <motion.div 
         variants={containerVariants}
@@ -75,7 +75,7 @@ export default function FeaturesSection() {
             <motion.div 
               key={index} 
               variants={itemVariants}
-              className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center text-white border border-white/10
+              className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 text-center text-white border border-white/10
                          transform transition-all duration-300 hover:bg-white/20 hover:-translate-y-2 hover:shadow-2xl"
             >
               <div className="flex justify-center mb-4">
