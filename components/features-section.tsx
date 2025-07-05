@@ -44,9 +44,9 @@ export default function FeaturesSection() {
       id="features" 
       ref={ref} 
       className="relative py-20 md:py-32 bg-cover bg-center"
-      style={{ backgroundImage: "url('/gradient.svg')" }}
+style={{ backgroundImage: "url('/gradient1.jpg')" }}
     >
-      <div className="absolute inset-0 bg-black/30 z-0" />
+<div className="absolute inset-0 bg-black/10 z-0" />
       
       <motion.div 
         variants={containerVariants}
@@ -55,12 +55,12 @@ export default function FeaturesSection() {
         className="container relative z-10 px-4 md:px-6"
       >
         <motion.div variants={itemVariants} className="text-center mb-16">
-          <h2 className="text-5xl md:text-7xl font-extrabold text-white tracking-tighter uppercase">
-            The AllTripp Advantage
+<h2 className="text-5xl md:text-7xl font-extrabold text-black tracking-wide uppercase">
+Why Choose Us ?
           </h2>
           <div className="flex items-center justify-center mt-4">
             <div className="w-16 h-px bg-yellow-400"></div>
-            <p className="text-lg md:text-xl text-white/80 mx-4">
+<p className="text-lg md:text-xl text-black mx-4">
               Experiences you'll cherish forever
             </p>
             <div className="w-16 h-px bg-yellow-400"></div>
@@ -75,19 +75,19 @@ export default function FeaturesSection() {
             <motion.div 
               key={index} 
               variants={itemVariants}
-              className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 text-center text-white border border-white/10
-                         transform transition-all duration-300 hover:bg-white/20 hover:-translate-y-2 hover:shadow-2xl"
+className="bg-white/10 backdrop-blur-2xl rounded-2xl p-6 text-center text-white border border-white/10
+                         transform transition-all duration-300"
             >
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 rounded-full bg-yellow-400/10 flex items-center justify-center">
                   <feature.icon
-                    className="w-8 h-8 text-yellow-400"
+className="w-8 h-8 text-black"
                     strokeWidth={1.5}
                   />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-              <p className="text-white/80 text-sm leading-relaxed">
+<h3 className="text-xl font-bold mb-2 text-black">{feature.title}</h3>
+<p className="text-black text-sm leading-relaxed">
                 {feature.description}
               </p>
             </motion.div>

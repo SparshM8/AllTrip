@@ -1,22 +1,22 @@
 [
   {
-    "title": "Curated Experiences",
-    "description": "Discover hidden gems and immerse yourself in authentic local traditions for unforgettable journeys.",
-    "icon": "Star"
-  },
-  {
-    "title": "Community",
-    "description": "Connect with like-minded travelers and build lasting friendships through shared adventures.",
-    "icon": "Users"
-  },
-  {
-    "title": "Personalized Itineraries",
-    "description": "Enjoy trips tailored to your unique preferences, interests, and travel style.",
+    "title": "Custom-Made Travel Plans",
+    "description": "We design trips that reflect your travel style from romantic getaways to adrenaline-packed adventures.",
     "icon": "SlidersHorizontal"
   },
   {
-    "title": "Seamless Planning & Support",
-    "description": "Travel stress-free with our easy-to-use platform and dedicated support team by your side.",
+    "title": "Hidden Gems, Offbeat Trails",
+    "description": "Explore lesser-known destinations and local cultures you won’t find in typical travel brochures.",
+    "icon": "Star"
+  },
+  {
+    "title": "End-to-End Planning & Support",
+    "description": "From booking to return, we handle every detail so you can travel worry-free.",
     "icon": "LifeBuoy"
+  },
+  {
+    "title": "Authentic Local Connections",
+    "description": "Meet real people, taste homegrown flavors, and experience each place like a true insider.",
+    "icon": "Users"
   }
 ]
