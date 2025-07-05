@@ -3,10 +3,24 @@ import React from "react";
 import policies from "@/data/policies.json";
 
 export default function RefundPage() {
+  const renderContent = (content: string) => {
+    return content.split('\n').map((line, index) => {
+      if (line.startsWith('- ')) {
+        return <li key={index} className="ml-6 list-disc">{line.substring(2)}</li>;
+      }
+      if (line.endsWith(':')) {
+        return <h2 key={index} className="text-2xl font-semibold mt-6 mb-2">{line}</h2>;
+      }
+      return <p key={index} className="mb-4">{line}</p>;
+    });
+  };
+
   return (
-    <main className="max-w-2xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-4">Refund Policy</h1>
-      <p className="text-lg">{policies.refund}</p>
+    <main className="max-w-4xl mx-auto py-12 px-4">
+      <h1 className="text-4xl font-bold mb-4 text-center">Refund Policy</h1>
+      <div className="prose lg:prose-xl max-w-none">
+        {renderContent(policies.refund)}
+      </div>
     </main>
   );
 }
