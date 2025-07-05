@@ -14,5 +14,9 @@
   {
     "name": "Trips",
     "href": "/#trips"
+  },
+  {
+    "name": "Checkout",
+    "href": "/checkout"
   }
 ]
