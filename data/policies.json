@@ -1,6 +1,104 @@
 {
-  "policies": "Our travel policies ensure a safe, enjoyable, and transparent experience for all customers. We are committed to providing accurate information, fair pricing, and responsive customer service. All bookings are subject to availability and confirmation. Please review our terms, refund, and privacy policies for detailed information.",
-  "terms": "Click on the links below for details:\n\n- APPLICABILITY\n- ELIGIBILITY TO USE\n- CONTENT\n- WEBSITE\n- BOOKINGS BY TRAVEL AGENTS\n- LIMITED LIABILITY OF ALLTRIPP\n- USER'S RESPONSIBILITY\n- SECURITY AND ACCOUNT RELATED INFORMATION\n- FEES AND PAYMENT\n- USAGE OF THE MOBILE NUMBER, COMMUNICATION DETAILS OF THE USER BY ALLTRIPP\n- INSURANCE\n- TCS COMPLIANCE\n- COMPLIANCE OF LIBERALIZED REMITTANCE SCHEME (LRS)\n- OBLIGATION TO OBTAIN VISA\n- FORCE MAJEURE\n- ADVERTISERS ON ALLTRIPP, AND LINKED WEBSITES\n- RIGHT TO REFUSE\n- RIGHT TO CANCEL\n- FAKE CALLS AND OTHER SIMILAR PHISHING, SPAMMING OR FRAUDULENT ACTIVITIES\n- INDEMNIFICATION\n- COVID-19 RELATED TERMS & CONDITIONS\n- UPI RELATED TERMS & CONDITIONS\n- TRIPMONEY\n- CONTENT MODERATION\n- RECOMMENDATION SYSTEM\n- MISCELLANEOUS\n\nAPPLICABILITY:\nThis User Agreement along with Terms Of Service (collectively, the \"User Agreement\") forms the terms and conditions for the use of services and products of AllTripp.\n\nAny person (\"User\") who inquiries about or purchases any products or services of AllTripp through its websites, mobile applications, sales persons, offices, call centers, branch offices, franchisees, agents etc. (all the aforesaid platforms collectively referred to as \"Sales Channels\") agree to be governed by this User Agreement. The websites and the mobile applications of AllTripp are collectively referred to as 'Website'.\n\nBoth User and AllTripp are individually referred to as 'Party' and collectively referred to as 'Parties' to the User Agreement.\n\n\"Terms of Service\" available on AllTripp's website details out terms & conditions applicable on various services or products facilitated by AllTripp. The User should refer to the relevant Terms of Service applicable for the given product or service as booked by the User. Such Terms of Service are binding on the User.\n\nELIGIBILITY TO USE:\nThe User must be at least 18 years of age and must possess the legal authority to enter into an agreement so as become a User and use the services of AllTripp. If you are a minor or are below the age of 18 years, you shall not register as a User of the Website and shall not transact on or use the Website.\n\nAs a minor if you wish to use or transact on the Website, such use or transaction shall only be made by a person of legal contracting age (legal guardian or parents). We reserve the right to terminate your membership and/or block access to the Website if it is discovered that you are a minor or incompetent to contract according to the law or any information pertaining to your age entered at the time of creation of account is false.\n\nBefore using the Website, approaching any Sales Channels or procuring the services of AllTripp, the Users shall compulsorily read and understand this User Agreement, and shall be deemed to have accepted this User Agreement as a binding document that governs User's dealings and transactions with AllTripp. If the User does not agree with any part of this Agreement, then the User must not avail AllTripp's services and must not access or approach the Sales Channels of AllTripp.\n\nAll rights and liabilities of the User and AllTripp with respect to any services or product facilitated by AllTripp shall be restricted to the scope of this User Agreement.\n\nCONTENT:\nAll content provided through various Sales Channels, including but not limited to audio, images, software, text, icons and such similar content (\"Content\"), are registered by AllTripp and protected under applicable intellectual property laws. User cannot use this Content for any other purpose, except as specified herein.\n\nUser agrees to follow all instructions provided by AllTripp which will prescribe the way such User may use the Content.\n\nThere are a number of proprietary logos, service marks and trademarks displayed on the Website and through other Sales Channels of AllTripp, as may be applicable. AllTripp does not grant the User a license, right or authority to utilize such proprietary logos, service marks, or trademarks in any manner. Any unauthorized use of the Content, will be in violation of the applicable law.\n\n(Additional sections will follow the same structure.)",
-  "refund": "Refunds are processed as per our cancellation policy:\n\n- Cancellations made 30 days before departure are eligible for a full refund minus processing fees.\n- Cancellations made 15-29 days before departure receive a 50% refund.\n- No refunds for cancellations within 14 days of departure.\n- Refunds are processed and credited within 7-10 business days.\n- Refund requests must be submitted in writing, and supporting documents may be required.\n\nAdditional Points:\n- Refunds for transactions older than 6 months may take longer due to banking regulations.\n- Refunds are subject to verification of payment details and compliance with our policies.\n- Refunds will be credited to the original payment method used during booking.\n\nPlease contact our support team for assistance.",
-  "privacy": "We value your privacy and are committed to protecting your personal information. Here are the key points of our privacy policy:\n\n- We collect only necessary data to process bookings and improve our services.\n- Your information is never sold to third parties.\n- We use secure technologies to safeguard your data.\n- You may request access, correction, or deletion of your data at any time.\n\nAdditional Points:\n- We may use anonymized data for analytics and service improvement.\n- Our website uses cookies to enhance user experience; you can manage cookie preferences in your browser settings.\n- We comply with applicable data protection laws and regularly review our practices to ensure compliance.\n- If you have concerns about your privacy, please contact our support team for assistance.\n\nFor more details, please review our full privacy policy."
+  "terms": {
+    "title": "Terms & Conditions",
+    "lastUpdated": "July 6, 2025",
+    "sections": [
+      {
+        "title": "1. Introduction",
+        "content": "These Terms & Conditions ('Terms') govern your use of alltripp.com ('Website') and all services provided by AllTripp Tours & Travels ('we', 'our', 'us'). By accessing the Website or booking our services, you agree to be bound by these Terms. If you do not agree with any part of these terms, you must not use our Website or services."
+      },
+      {
+        "title": "2. Services Overview",
+        "content": "We are a travel facilitator, offering services such as booking flights, hotels, and transportation; organizing guided tours and activities; and providing travel assistance. We partner with third-party suppliers (e.g., airlines, hotels, tour operators). Your booking is subject to the terms and conditions of these third-party suppliers."
+      },
+      {
+        "title": "3. Booking and Payment",
+        "content": "To make a booking, you must provide accurate and complete information. A deposit or full payment may be required at the time of booking. Prices are subject to change until the booking is confirmed. We accept various payment methods, which will be specified at the time of booking."
+      },
+      {
+        "title": "4. User Responsibilities",
+        "content": "You are responsible for ensuring that you have valid passports, visas, and any other required travel documents. You must also comply with all health and safety regulations. It is your responsibility to arrive on time for all departures and activities. Any disruptive behavior may result in termination of your trip without a refund."
+      },
+      {
+        "title": "5. Limitation of Liability",
+        "content": "Our liability is limited to the total amount you paid for the service. We are not liable for any indirect or consequential damages, or for any loss or damage caused by third-party suppliers. We are not responsible for events outside our control, such as natural disasters, strikes, or political unrest (Force Majeure)."
+      },
+      {
+        "title": "6. Intellectual Property",
+        "content": "All content on our Website, including text, images, and logos, is the property of AllTripp or its licensors and is protected by copyright and trademark laws. You may not use any content from our Website without our prior written permission."
+      },
+      {
+        "title": "7. Governing Law and Dispute Resolution",
+        "content": "These Terms are governed by the laws of India. Any disputes arising from these Terms will be subject to the exclusive jurisdiction of the courts in Delhi, India."
+      },
+      {
+        "title": "8. Changes to These Terms",
+        "content": "We reserve the right to update these Terms at any time. Any changes will be posted on our Website, and your continued use of our services after such changes constitutes your acceptance of the new Terms."
+      }
+    ]
+  },
+  "refund": {
+    "title": "Refund & Cancellation Policy",
+    "lastUpdated": "July 6, 2025",
+    "sections": [
+      {
+        "title": "1. Cancellation by You",
+        "content": "If you wish to cancel your booking, you must notify us in writing. The following cancellation fees apply: \n- 30 days or more before departure: Full refund minus a 10% processing fee. \n- 15-29 days before departure: 50% refund. \n- Less than 15 days before departure: No refund. \nCertain bookings may be non-refundable; this will be specified at the time of booking."
+      },
+      {
+        "title": "2. Cancellation by Us",
+        "content": "We reserve the right to cancel your booking for reasons such as safety concerns, insufficient demand, or other unforeseen circumstances. In such cases, we will offer you the choice of a full refund or an alternative trip of equivalent value."
+      },
+      {
+        "title": "3. Refund Process",
+        "content": "Refunds will be processed within 7-10 business days of the cancellation confirmation. All refunds will be credited to the original method of payment. Please note that it may take additional time for the refund to appear on your statement, depending on your bank."
+      },
+      {
+        "title": "4. Non-Refundable Items",
+        "content": "Certain items are non-refundable, including but not limited to: \n- Flights and other transportation tickets, unless otherwise specified. \n- Travel insurance premiums. \n- Booking and processing fees. \n- Any services already used."
+      },
+      {
+        "title": "5. Contact Information",
+        "content": "For any questions regarding our refund and cancellation policy, please contact us at refund@alltripp.com or call us at +91-9266602470."
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "July 6, 2025",
+    "sections": [
+      {
+        "title": "1. Introduction",
+        "content": "This Privacy Policy explains how AllTripp Tours & Travels ('we', 'our', 'us') collects, uses, and protects your personal information when you use our Website and services. We are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner."
+      },
+      {
+        "title": "2. Information We Collect",
+        "content": "We may collect the following types of personal information: \n- Contact information, such as your name, email address, phone number, and mailing address. \n- Booking information, such as your travel dates, destination, and payment details. \n- Passport and visa information. \n- Any other information you provide to us when you make a booking or contact us for support."
+      },
+      {
+        "title": "3. How We Use Your Information",
+        "content": "We use your personal information to: \n- Process your bookings and payments. \n- Communicate with you about your bookings and provide customer support. \n- Send you marketing communications, if you have opted in to receive them. \n- Improve our Website and services."
+      },
+      {
+        "title": "4. How We Protect Your Information",
+        "content": "We use a variety of security measures to protect your personal information, including encryption and secure servers. We restrict access to your personal information to authorized employees and third-party service providers who need to know the information to provide our services."
+      },
+      {
+        "title": "5. Sharing Your Information",
+        "content": "We may share your personal information with third-party service providers, such as airlines, hotels, and tour operators, to fulfill your booking. We will not sell or rent your personal information to third parties for their marketing purposes without your explicit consent."
+      },
+      {
+        "title": "6. Your Rights",
+        "content": "You have the right to access, correct, or delete your personal information at any time. You can also object to the processing of your personal information or request that we restrict the processing of your personal information. To exercise these rights, please contact us at privacy@alltripp.com."
+      },
+      {
+        "title": "7. Cookies",
+        "content": "Our Website uses cookies to improve your browsing experience. You can choose to disable cookies in your browser settings, but this may affect the functionality of our Website."
+      },
+      {
+        "title": "8. Changes to This Privacy Policy",
+        "content": "We may update this Privacy Policy from time to time. Any changes will be posted on our Website, and your continued use of our services after such changes constitutes your acceptance of the new Privacy Policy."
+      }
+    ]
+  }
 }
