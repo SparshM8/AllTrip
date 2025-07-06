@@ -1,37 +1,25 @@
 "use client";
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import policies from "@/data/policies.json";
 
 export default function PrivacyPage() {
-  const { title, lastUpdated, sections } = policies.privacy;
+  const renderContent = (content: string) => {
+    return content.split('\n').map((line, index) => {
+      if (line.startsWith('- ')) {
+        return <li key={index} className="ml-6 list-disc">{line.substring(2)}</li>;
+      }
+      if (line.endsWith(':')) {
+        return <h2 key={index} className="text-2xl font-semibold mt-6 mb-2">{line}</h2>;
+      }
+      return <p key={index} className="mb-4">{line}</p>;
+    });
+  };
 
   return (
-    <main className="container mx-auto py-12 px-4">
-      <div className="text-center mb-10">
-        <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
-          {title}
-        </h1>
-        <p className="mt-2 text-lg text-muted-foreground">
-          Last Updated: {lastUpdated}
-        </p>
-      </div>
-
-      <div className="space-y-8">
-        {sections.map((section, index) => (
-          <Card key={index} className="overflow-hidden">
-            <CardHeader>
-              <CardTitle className="text-2xl">{section.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="prose max-w-none text-muted-foreground">
-                {section.content.split('\\n').map((paragraph, pIndex) => (
-                  <p key={pIndex}>{paragraph}</p>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+    <main className="max-w-4xl mx-auto py-12 px-4">
+      <h1 className="text-4xl font-bold mb-4 text-center">Privacy Policy</h1>
+      <div className="prose lg:prose-xl max-w-none">
+        {renderContent(policies.privacy)}
       </div>
     </main>
   );
