@@ -138,9 +138,8 @@ const BlogSection: React.FC = () => {
     <section 
       id="blog"
       className="relative py-20 md:py-32 bg-cover bg-center bg-fixed"
-      style={{ backgroundImage: "url('/background_itenary1.png')" }}
+      style={{ backgroundImage: "url('/adventure.jpg')" }}
     >
-      <div className="absolute inset-0 bg-black/70 z-0" />
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-7xl font-extrabold text-white tracking-tighter uppercase">

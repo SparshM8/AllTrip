@@ -13,6 +13,13 @@ const iconMap = {
   LifeBuoy,
 };
 
+const featureImages: { [key: string]: string } = {
+  "Custom-Made Travel Plans": "/feature1.png",
+  "Hidden Gems, Offbeat Trails": "/feature2.jpg",
+  "End-to-End Planning & Support": "/feature3.png",
+  "Authentic Local Connections": "/feature4.jpg",
+};
+
 const features = featuresData.map(feature => ({
   ...feature,
   icon: iconMap[feature.icon as keyof typeof iconMap]
@@ -43,27 +50,24 @@ export default function FeaturesSection() {
     <section 
       id="features" 
       ref={ref} 
-      className="relative py-20 md:py-32 bg-cover bg-center"
-style={{ backgroundImage: "url('/gradient1.jpg')" }}
+      className="relative py-20 md:py-32 overflow-hidden"
+      style={{ backgroundColor: "#fff" }}
     >
-<div className="absolute inset-0 bg-black/10 z-0" />
-      
       <motion.div 
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         className="container relative z-10 px-4 md:px-6"
       >
-        <motion.div variants={itemVariants} className="text-center mb-16">
-<h2 className="text-5xl md:text-7xl font-extrabold text-black tracking-wide uppercase">
-Why Choose Us ?
+        <motion.div variants={itemVariants} className="text-left mb-16">
+          <h2 className="text-5xl md:text-7xl font-extrabold text-black tracking-wide uppercase">
+            Why Choose Us ?
           </h2>
-          <div className="flex items-center justify-center mt-4">
-            <div className="w-16 h-px bg-yellow-400"></div>
-<p className="text-lg md:text-xl text-black mx-4">
+          <div className="mt-4">
+            <p className="text-lg md:text-xl text-black">
               Experiences you'll cherish forever
             </p>
-            <div className="w-16 h-px bg-yellow-400"></div>
+            <div className="mt-4 h-0.5 bg-yellow-400"></div>
           </div>
         </motion.div>
 
@@ -75,21 +79,34 @@ Why Choose Us ?
             <motion.div 
               key={index} 
               variants={itemVariants}
-className="bg-white/10 backdrop-blur-2xl rounded-2xl p-6 text-center text-white border border-white/10
-                         transform transition-all duration-300"
+              className={`rounded-2xl p-0 text-center border shadow-lg bg-white transform transition-all duration-300 ${featureImages[feature.title] ? "flex flex-row min-h-[220px]" : "p-6"}`}
             >
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 rounded-full bg-yellow-400/10 flex items-center justify-center">
-                  <feature.icon
-className="w-8 h-8 text-black"
-                    strokeWidth={1.5}
-                  />
-                </div>
-              </div>
-<h3 className="text-xl font-bold mb-2 text-black">{feature.title}</h3>
-<p className="text-black text-sm leading-relaxed">
-                {feature.description}
-              </p>
+              {featureImages[feature.title] ? (
+                <>
+                  <div className="w-1/3 h-full rounded-l-2xl overflow-hidden">
+                    <img
+                      src={featureImages[feature.title]}
+                      alt={feature.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="w-2/3 flex flex-col justify-center items-start p-6 text-left">
+                    <h3 className="text-xl font-bold mb-2 text-black">{feature.title}</h3>
+                    <p className="text-black text-sm leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex flex-col justify-center items-start text-left p-2">
+                    <h3 className="text-xl font-bold mb-2 text-black">{feature.title}</h3>
+                    <p className="text-black text-sm leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
+                </>
+              )}
             </motion.div>
           ))}
         </motion.div>

@@ -1,76 +1,54 @@
 "use client";
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const InstagramSection = () => {
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = "//www.instagram.com/embed.js";
-    script.async = true;
-    document.body.appendChild(script);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-    return () => {
-      document.body.removeChild(script);
-    }
-  }, []);
+  const reels = [
+    "https://www.instagram.com/reel/DEH9yk6ytjO/?utm_source=ig_embed&utm_campaign=loading",
+    "https://www.instagram.com/reel/DDM-rGWyWek/?utm_source=ig_embed&utm_campaign=loading",
+    "https://www.instagram.com/reel/DEpomBRyjWV/?utm_source=ig_embed&utm_campaign=loading",
+  ];
+
+useEffect(() => {
+    const playCurrentVideo = () => {
+      if (videoRefs.current[currentIndex]) {
+        videoRefs.current[currentIndex].play();
+      }
+    };
+
+    playCurrentVideo();
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % reels.length);
+    }, 15000); // Move to next reel every 15 seconds
+
+    return () => clearInterval(interval);
+  }, [currentIndex, reels.length]);
 
   return (
-    <section className="py-12 md:py-20 bg-gradient-to-b from-yellow-100 to-transparent">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
-          @AllTripp
-        </h2>
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-items-center" style={{ height: '800px', overflowY: 'auto' }}>
-          <blockquote
-            className="instagram-media"
-            data-instgrm-captioned
-            data-instgrm-permalink="https://www.instagram.com/reel/DEH9yk6ytjO/?utm_source=ig_embed&utm_campaign=loading"
-            data-instgrm-version="14"
-            style={{
-              background: '#FFFFFF',
-              border: '1px solid #e6e6e6',
-              borderRadius: '8px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-              margin: '1px',
-              width: '350px',
-              height: '480px',
-              padding: '0',
+    <div className="carousel-container flex overflow-x-scroll snap-x snap-mandatory">
+      {reels.map((reel, index) => (
+        <div
+          key={index}
+          className={`carousel-item snap-center flex-shrink-0 w-full ${
+            index === currentIndex ? "scale-110" : "scale-90"
+          } transition-transform duration-300`}
+        >
+          <video
+            ref={(el) => {
+              if (el) {
+                videoRefs.current[index] = el;
+              }
             }}
-          ></blockquote>
-          <blockquote
-            className="instagram-media"
-            data-instgrm-captioned
-            data-instgrm-permalink="https://www.instagram.com/reel/DEpomBRyjWV/?utm_source=ig_embed&utm_campaign=loading"
-            data-instgrm-version="14"
-            style={{
-              background: '#FFFFFF',
-              border: '1px solid #e6e6e6',
-              borderRadius: '8px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-              margin: '1px',
-              width: '350px',
-              height: '480px',
-              padding: '0',
-            }}
-          ></blockquote>
-          <blockquote
-            className="instagram-media"
-            data-instgrm-captioned
-            data-instgrm-permalink="https://www.instagram.com/reel/DDM-rGWyWek/?utm_source=ig_embed&utm_campaign=loading"
-            data-instgrm-version="14"
-            style={{
-              background: '#FFFFFF',
-              border: '1px solid #e6e6e6',
-              borderRadius: '8px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-              margin: '1px',
-              width: '350px',
-              height: '480px',
-              padding: '0',
-            }}
-          ></blockquote>
+            src={reel}
+            muted
+            className="w-full h-auto"
+          />
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
   );
 };
 

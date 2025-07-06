@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Pacifico, Montserrat, Roboto } from "next/font/google"
 import "./globals.css"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -9,7 +9,21 @@ import Footer from "@/components/footer"
 import { Analytics } from "@vercel/analytics/react"
 import ClientPerformance from "@/components/client-performance"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const pacifico = Pacifico({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-pacifico",
+})
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+})
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-roboto",
+})
 
 export const metadata: Metadata = {
   title: {
@@ -109,7 +123,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-<body className={`${inter.className} m-0 p-0`}>
+<body className={`${inter.variable} ${pacifico.variable} ${montserrat.variable} ${roboto.variable} font-sans m-0 p-0`} style={{ backgroundColor: "#fff" }}>
         <SpeedInsights />
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <Navbar />

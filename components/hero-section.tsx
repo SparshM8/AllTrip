@@ -2,9 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import SearchBar from "@/components/search-bar";
 
 export default function HeroSection() {
@@ -46,14 +44,6 @@ export default function HeroSection() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Function to handle smooth scroll to sections
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <>
       {/* Custom Scroll Indicator */}
@@ -68,49 +58,47 @@ export default function HeroSection() {
 
       <section
         ref={ref}
-        className="relative w-full overflow-hidden"
-        style={{
-          height: 'calc(100vh + 100px)',
-          marginTop: '-100px',
-          zIndex: 1,
-        }}
+        className="hero relative w-full h-screen overflow-hidden flex items-center"
       >
         <Image
-          src="/5.jpg"
+          src="/1.jpg"
           alt="Scenic view of Himalayas/Kashmir"
           fill
           priority
           className="object-cover"
           style={{ objectPosition: 'center center' }}
         />
-        <div className="absolute inset-0 bg-black/40" /> {/* Overlay */}
+        {/* The ::before pseudo-element will handle the overlay */}
         
-        {/* Content Container - Dead Center */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* Content Container - Top Left */}
+        <div 
+          className="content relative z-10 flex flex-col items-start text-left text-white w-full max-w-6xl"
+          style={{
+            paddingLeft: '10vw',
+          }}
+        >
           <motion.div
-            className="relative z-10 flex flex-col items-center justify-center text-center text-white px-4 w-full max-w-6xl mx-auto"
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
           >
-            <motion.h1
-              className="mb-6 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl max-w-4xl"
-              variants={itemVariants}
-            >
-              One Solution For All Your{" "}
-              <span className="text-[#FDBE00]">Travel Needs</span>
+            <motion.h1 variants={itemVariants}>
+              One Solution
             </motion.h1>
+            <motion.div className="headline-sans" variants={itemVariants}>
+              For All Your <span>Travel</span> Needs
+            </motion.div>
 
             <motion.p
-              className="mb-12 max-w-2xl text-lg sm:text-xl leading-relaxed"
+              className="max-w-md"
               variants={itemVariants}
             >
               Experience the magic of India with AllTripp. From mountain escapes to coastal retreats, we bring you curated journeys that celebrate culture, connection, and unforgettable moments.
             </motion.p>
 
-            {/* Search Bar below subtitle */}
+            {/* Search Bar - Below subtitle */}
             <motion.div 
-              className="w-full flex justify-center"
+              className="mt-8"
               variants={itemVariants}
             >
               <SearchBar />

@@ -58,20 +58,19 @@ const Navbar: React.FC = () => {
 
   return (
     <header
-      className={`transition-all duration-300 ease-in-out sticky top-0 z-50 ${
+      className={`transition-all duration-300 ease-in-out fixed top-0 left-0 right-0 z-50 ${
         showNavbar ? "translate-y-0" : "-translate-y-full"
       }`}
     >
       {/* Main Navbar Container with modern design */}
-      <div className="mx-4 mt-3 mb-0">
-        <nav 
-          className="rounded-2xl shadow-lg backdrop-blur-sm border border-gray-200/20"
-          style={{ 
-            backgroundColor: '#FDBE00',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)'
-          }}
-        >
-          <div className="container mx-auto max-w-5xl flex items-center justify-between px-4 py-2">
+      <nav 
+        className="shadow-lg backdrop-blur-lg border-b border-white/10"
+        style={{ 
+          backgroundColor: 'rgba(253, 190, 0, 0.8)',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+        }}
+      >
+        <div className="container mx-auto max-w-7xl flex items-center justify-between px-4 py-2">
             {/* Logo Section - Left */}
             <div className="flex items-center gap-2">
               <Link
@@ -112,11 +111,11 @@ const Navbar: React.FC = () => {
                       >
                         <Link
                           href={link.href}
-                          className="relative text-lg font-medium text-gray-800 transition-all duration-300 hover:text-gray-600 group py-1 px-1 font-sans"
+                          className="relative text-lg font-semibold text-black transition-all duration-300 group py-1 px-1 font-sans"
                         >
                           {link.name}
                           {/* Hover underline effect */}
-                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-700 transition-all duration-300 group-hover:w-full rounded-full"></span>
+                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full rounded-full"></span>
                         </Link>
                       </motion.div>
                     ))}
@@ -288,7 +287,6 @@ const Navbar: React.FC = () => {
             )}
           </div>
         </nav>
-      </div>
     </header>
   );
 };

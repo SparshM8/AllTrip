@@ -38,13 +38,11 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section 
+<section 
       id="testimonials" 
       ref={ref} 
-      className="relative py-20 md:py-32 bg-cover bg-center bg-fixed"
-      style={{ backgroundImage: "url('/map.jpg')" }}
+      className="relative py-20 md:py-32"
     >
-      <div className="absolute inset-0 bg-slate-800/80 z-0" />
       
       <motion.div 
         variants={containerVariants}
@@ -52,16 +50,14 @@ export default function TestimonialsSection() {
         animate={isInView ? "visible" : "hidden"}
         className="container relative z-10 px-4 md:px-6"
       >
-        <motion.div variants={itemVariants} className="text-center mb-16">
-          <h2 className="text-5xl md:text-7xl font-extrabold text-white tracking-tighter uppercase">
+        <motion.div variants={itemVariants} className="text-left mb-16">
+<h2 className="text-5xl md:text-7xl font-extrabold text-black tracking-tighter uppercase">
             From Our Travellers
           </h2>
-          <div className="flex items-center justify-center mt-4">
-            <div className="w-16 h-px bg-yellow-400"></div>
-            <p className="text-lg md:text-xl text-white/80 mx-4">
+          <div className="flex items-center mt-4">
+<p className="text-lg md:text-xl text-black">
               Real stories from the AllTripp family
             </p>
-            <div className="w-16 h-px bg-yellow-400"></div>
           </div>
         </motion.div>
 
@@ -73,18 +69,18 @@ export default function TestimonialsSection() {
             <motion.div 
               key={index} 
               variants={itemVariants}
-              className="bg-black/20 backdrop-blur-lg rounded-2xl p-6 flex flex-col h-full border border-white/10
-                         transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+              className="bg-[#b8860b] backdrop-blur-lg rounded-2xl p-6 flex flex-col h-full border border-[#ddb400]
+                         transform transition-all duration-300 hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:-translate-y-2 hover:bg-[#c8961b]"
             >
-              <Quote className="w-10 h-10 text-yellow-400/50 mb-4" strokeWidth={1.5} />
+<Quote className="w-10 h-10 text-[#fdbe00] mb-4" strokeWidth={1.5} />
               
-              <p className="text-white/80 mb-6 italic text-sm leading-relaxed flex-grow">
+<blockquote className="text-white mb-6 italic text-base flex-grow" style={{ lineHeight: '1.6', letterSpacing: '0.5px' }}>
                 "{testimonial.testimonial}"
-              </p>
+              </blockquote>
 
-              <div className="mt-auto">
+              <footer className="mt-auto">
                 <div className="flex items-center gap-4">
-                  <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-yellow-400/50">
+<div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-white/50">
                     <Image
                       src={testimonialImages[testimonial.name] || "/placeholder.svg"}
                       alt={testimonial.name}
@@ -93,25 +89,25 @@ export default function TestimonialsSection() {
                     />
                   </div>
                   <div className="text-white">
-                    <h3 className="font-semibold">{testimonial.name}</h3>
-                    <p className="text-sm text-white/70">
+<cite className="font-semibold not-italic" style={{ lineHeight: '1.2', letterSpacing: '0.2px', color: 'rgba(255,255,255,0.9)' }}>{testimonial.name}</cite>
+<p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
                       {testimonial.location}
                     </p>
                   </div>
                 </div>
                 <div className="flex mt-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star
+<Star
                       key={i}
                       className={`w-5 h-5 ${
                         i < testimonial.rating
-                          ? "text-yellow-400 fill-yellow-400"
-                          : "text-yellow-400/30"
+                          ? "text-[#fdbe00] fill-[#fdbe00]"
+                          : "text-gray-500"
                       }`}
                     />
                   ))}
                 </div>
-              </div>
+              </footer>
             </motion.div>
           ))}
         </motion.div>

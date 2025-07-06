@@ -134,35 +134,36 @@ export default function DestinationsSection() {
     <section 
       id="destinations" 
       ref={ref} 
-      className="relative py-20 overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: "url('/background_destination.png')" }}
+      className="relative py-20 overflow-hidden"
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-white/50 dark:bg-slate-900/50" />
-
       <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 30 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+        {/* Card container with background image, white overlay, rounded corners, and padding */}
+        <div
+          className="relative rounded-2xl shadow-lg p-8 overflow-hidden"
+          style={{
+            backgroundImage: "url('/background_destination.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         >
-          <h2 className="text-5xl md:text-7xl font-extrabold text-black tracking-tighter uppercase">
-            Destinations
-          </h2>
-          <div className="flex items-center justify-center mt-4">
-              <div className="w-16 h-px bg-gray-400"></div>
-              <p className="text-lg md:text-xl text-gray-600 mx-4">
-                  that beckon every traveller
-              </p>
-              <div className="w-16 h-px bg-gray-400"></div>
-          </div>
-        </motion.div>
-
-        {/* Glassmorphism container for cards */}
-        <div className="bg-white/30 dark:bg-black/20 rounded-2xl shadow-lg p-8 backdrop-blur-lg">
-          {/* Destinations Grid */}
+<div className="absolute inset-0 bg-white/80 rounded-2xl pointer-events-none" />
+          <div className="relative z-10">
+            {/* Section Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 30 }}
+              transition={{ duration: 0.8 }}
+className="text-left mb-12"
+            >
+              <h2 className="text-5xl md:text-7xl font-extrabold text-black tracking-tighter uppercase">
+                Destinations
+              </h2>
+              <div className="mt-4">
+                <p className="text-lg md:text-xl text-black">
+                  That Beckon Every Traveller
+                </p>
+              </div>
+            </motion.div>
           <div
             className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transition-opacity duration-300 ${fade ? 'opacity-0' : 'opacity-100'}`}
           >
@@ -196,6 +197,7 @@ export default function DestinationsSection() {
               ))}
             </div>
           </motion.div>
+          </div>
         </div>
       </div>
     </section>

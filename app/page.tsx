@@ -4,17 +4,17 @@ import AboutSection from "@/components/about-section";
 import FeaturesSection from "@/components/features-section";
 import DestinationsSection from "@/components/destinations-section";
 import ItinerariesSection from "@/components/trips-section";
-import CampusAmbassadorSection from "@/components/campus-ambassador-section";
 import TestimonialsSection from "@/components/testimonials-section";
-import InstagramSection from "@/components/instagram-section";
-import BlogSection from "@/components/blog-section";
+// ...existing code...
+import ScrollOverlapSection from "@/components/scroll-overlap-section";
 
 export const metadata: Metadata = {
   title: "AllTripp - Discover India's Hidden Gems | Premium Travel Experiences",
   description: "Explore incredible India with AllTripp's curated travel experiences. From Kashmir's snow-capped mountains to Kerala's backwaters, discover authentic cultural tours, adventure trips, and customized holiday packages across India.",
   keywords: [
     "India travel packages",
-    "cultural tours India",
+    "all trip",
+    "alltrip",
     "adventure travel India",
     "holiday packages India",
     "Kashmir tours",
@@ -57,9 +57,8 @@ export default function Home() {
       <DestinationsSection />
       <ItinerariesSection />
       <TestimonialsSection />
-      <InstagramSection />
-      <CampusAmbassadorSection />
-      <BlogSection />
+      {/* InstagramSection removed */}
+      <ScrollOverlapSection />
     </>
   );
 }

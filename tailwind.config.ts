@@ -19,25 +19,20 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-inter)"],
+        script: ["var(--font-pacifico)"],
+        montserrat: ["var(--font-montserrat)"],
+        roboto: ["var(--font-roboto)"],
+      },
       colors: {
+        accent: {
+          DEFAULT: "#FDBE00",
+          dark: "#E7AF04",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        // Accent is now a subtle grey
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -54,14 +49,13 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom colors based on the provided palette
-        "light-sky-blue": "hsl(var(--light-sky-blue))", // #CEF4F8
-        lavender: "hsl(var(--lavender))", // #D1CCEB
-        "soft-rose": "hsl(var(--soft-rose))", // #FED3D9 → now used for warning
-        "creamy-sand": "hsl(var(--creamy-sand))", // #FDF0D7
-        "mint-green": "hsl(var(--mint-green))", // #C5EBD5
-        success: "hsl(var(--mint-green))", // #C5EBD5
-        warning: "hsl(var(--soft-rose))", // #FED3D9
+        "light-sky-blue": "hsl(var(--light-sky-blue))",
+        lavender: "hsl(var(--lavender))",
+        "soft-rose": "hsl(var(--soft-rose))",
+        "creamy-sand": "hsl(var(--creamy-sand))",
+        "mint-green": "hsl(var(--mint-green))",
+        success: "hsl(var(--mint-green))",
+        warning: "hsl(var(--soft-rose))",
       },
       borderRadius: {
         lg: "var(--radius)",
