@@ -11,7 +11,6 @@
         { "time": "Check-in", "activity": "Check-in at Mawlyngbna community homestay / Traveller's Nest / Ialong Stay" },
         { "time": "Evening", "activity": "Explore nearby viewpoints or relax at the stay" }
       ],
-      "meals": "Lunch, Dinner",
       "stay": "Mawlyngbna Homestay"
     },
     {
@@ -24,7 +23,6 @@
         { "time": "Optional", "activity": "Optional visit to Ritymmen Cave" },
         { "time": "Evening", "activity": "Return to homestay for lunch, evening bonfire or stargazing" }
       ],
-      "meals": "Breakfast, Lunch, Dinner",
       "stay": "Mawlyngbna Homestay"
     },
     {
@@ -36,7 +34,6 @@
         { "time": "Departure", "activity": "Start return journey to Guwahati (6–7 hrs)" },
         { "time": "Evening", "activity": "Reach Guwahati by 6–7 PM for late train/flight" }
       ],
-      "meals": "Breakfast",
       "stay": "Departure"
     }
   ],
@@ -48,13 +45,11 @@
   "budgetBreakdown": [
     { "item": "Private Cab (3 days)", "cost": "₹9,000 total" },
     { "item": "Homestay (2 nights)", "cost": "₹3,000 pp" },
-    { "item": "Food (All meals)", "cost": "₹1,200" },
     { "item": "Entry + Activities", "cost": "₹500–800" },
     { "item": "Total", "cost": "₹7,500–8,500 per person" }
   ],
   "packageIncludes": [
     "2 nights accommodation in eco homestay",
-    "All meals as per itinerary",
     "Private transportation from Guwahati",
     "Kayaking at Umkhakoi Reservoir",
     "Entry fees to Fossil Park and caves",

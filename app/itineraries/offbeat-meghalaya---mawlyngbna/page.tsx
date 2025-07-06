@@ -62,10 +62,6 @@ export default function OffbeatMeghalayaMawlyngbnaPage() {
                 <Users className="mr-2" size={18} />
                 <span>2-6 People</span>
               </div>
-              <div className="flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2">
-                <Star className="mr-2 text-yellow-400 fill-yellow-400" size={18} />
-                <span>4.8 Rating</span>
-              </div>
             </div>
           </motion.div>
         </div>
@@ -187,7 +183,6 @@ export default function OffbeatMeghalayaMawlyngbnaPage() {
                           </div>
                           
                           <div className="space-y-2 text-sm text-gray-600">
-                            <div><strong>Meals:</strong> {day.meals}</div>
                             <div><strong>Stay:</strong> {day.stay}</div>
                           </div>
                         </div>

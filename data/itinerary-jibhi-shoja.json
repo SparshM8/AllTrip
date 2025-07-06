@@ -10,7 +10,6 @@
         { "time": "Afternoon", "activity": "Explore Jibhi Waterfall and local cafes" },
         { "time": "Evening", "activity": "Evening walk in the pine forest and bonfire" }
       ],
-      "meals": "Lunch, Dinner",
       "stay": "Riverside/Treehouse Stay in Jibhi"
     },
     {
@@ -23,7 +22,6 @@
         { "time": "Afternoon", "activity": "Visit Budhi Nagin Temple at the lake" },
         { "time": "Evening", "activity": "Return by evening, relax at your stay" }
       ],
-      "meals": "Breakfast, Lunch, Dinner",
       "stay": "Same Stay in Jibhi"
     },
     {
@@ -35,7 +33,6 @@
         { "time": "Morning", "activity": "Light hike around the pass and explore the meadows" },
         { "time": "Late Morning", "activity": "Return to Jibhi, check out and depart to Delhi" }
       ],
-      "meals": "Breakfast",
       "stay": "Departure to Delhi"
     }
   ],

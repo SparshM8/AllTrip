@@ -11,7 +11,6 @@
         { "time": "Afternoon", "activity": "Guided village walk in Kongthong • Learn about the whistling tradition • Explore local bamboo craft and forest surroundings" },
         { "time": "Evening", "activity": "Local Khasi-style dinner • Optional bonfire and music with villagers" }
       ],
-      "meals": "Lunch, Dinner",
       "stay": "Homestay in Kongthong"
     },
     {
@@ -23,7 +22,6 @@
         { "time": "Afternoon", "activity": "Visit Krem Diengjem or Krem Mawblang Caves - Limestone cave exploration with local guides" },
         { "time": "Evening", "activity": "Return to Kongthong • Relax with tea and sunset views • Optional: storytelling or local games" }
       ],
-      "meals": "Breakfast, Lunch, Dinner",
       "stay": "Same Homestay in Kongthong"
     },
     {
@@ -35,7 +33,6 @@
         { "time": "On the way back", "activity": "Stop at Laitlum Canyon (early visit = peaceful)" },
         { "time": "Return Journey", "activity": "Drive to Guwahati Airport (~6 hrs) or Shillong (~4 hrs)" }
       ],
-      "meals": "Breakfast",
       "stay": "Departure"
     }
   ],
@@ -47,7 +44,6 @@
   ],
   "packageIncludes": [
     "2 nights accommodation in eco homestay",
-    "All meals as per itinerary",
     "Private transportation from Guwahati",
     "Local guide for village walks and caves",
     "Entry fees to caves and viewpoints",

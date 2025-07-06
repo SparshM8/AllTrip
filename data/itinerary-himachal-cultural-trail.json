@@ -10,7 +10,6 @@
         { "time": "Optional", "activity": "Explore ShopArt ArtShop (if available)" },
         { "time": "Evening", "activity": "Evening bonfire and Himachali dinner" }
       ],
-      "meals": "Lunch, Dinner",
       "stay": "Boutique Homestay in Gunehar"
     },
     {
@@ -23,7 +22,6 @@
         { "time": "Afternoon", "activity": "Head to Palampur: visit tea gardens & factory" },
         { "time": "Evening", "activity": "Return to Gunehar for stargazing or folk music session" }
       ],
-      "meals": "Breakfast, Lunch, Dinner",
       "stay": "Same Homestay in Gunehar"
     },
     {
@@ -35,7 +33,6 @@
         { "time": "Morning", "activity": "Breakfast at a local cafe" },
         { "time": "Late Morning", "activity": "Checkout and depart to Delhi via bus/flight/car" }
       ],
-      "meals": "Breakfast",
       "stay": "Departure to Delhi"
     }
   ],

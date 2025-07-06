@@ -57,7 +57,6 @@ export default function Home() {
       <DestinationsSection />
       <ItinerariesSection />
       <TestimonialsSection />
-      {/* InstagramSection removed */}
       <ScrollOverlapSection />
     </>
   );
