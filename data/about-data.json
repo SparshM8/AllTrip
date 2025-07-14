@@ -2,16 +2,19 @@
   "stats": [],
   "features": [
     {
-      "icon": "Award",
-      "label": "Premium Quality"
+      "icon": "Users",
+      "title": "Great team work",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tempor nunc non neque euismod, nec porttitor. Nullam lacus est, tincidunt eget sapien eget, maximus convallis massa. Curabitur quis tellus a tortor egestas viverra."
     },
     {
-      "icon": "Shield",
-      "label": "Safe & Secure"
+      "icon": "Rocket",
+      "title": "Our vision",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
     },
     {
-      "icon": "Heart",
-      "label": "Eco-Friendly"
+      "icon": "LineChart",
+      "title": "Our mission",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
     }
   ]
 }

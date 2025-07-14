@@ -1,57 +1,63 @@
-[  {
+[
+  {
     "name": "Goa",
+    "location": "India",
     "shortDescription": "Goa is a mesmerizing city that boasts stunning beaches, magnificent churches, and impressive forts. It's a perfect romantic getaway for beach lovers.",
     "detailedDescription": "Experience the perfect blend of Portuguese heritage and tropical paradise. From pristine beaches to vibrant nightlife, Goa offers an unforgettable coastal experience with water sports, beach shacks, and sunset views.",
     "badge": "POPULAR"
   },
   {
     "name": "Rishikesh",
+    "location": "Uttarakhand, India",
     "shortDescription": "Rishikesh is a city in India renowned for its temples, ashrams, yoga centers, and natural beauty including waterfalls and greenery. It's also a hub for adventure activities.",
     "detailedDescription": "Known as the 'Yoga Capital of the World', Rishikesh offers spiritual awakening alongside thrilling adventures like river rafting, bungee jumping, and trekking in the foothills of the Himalayas.",
     "badge": "POPULAR"
   },
   {
     "name": "Jim Corbett",
+    "location": "Uttarakhand, India",
     "shortDescription": "Jim Corbett National Park is a wildlife sanctuary located in Uttarakhand, India. It offers a perfect weekend getaway with adventure activities, wildlife sightings, and mysterious stories.",
     "detailedDescription": "India's oldest national park, home to the majestic Bengal tiger. Experience thrilling jungle safaris, bird watching, and stay in luxury resorts while exploring the rich biodiversity of the Terai region.",
     "badge": "POPULAR"
-  },  {
+  },
+  {
     "name": "Amritsar",
+    "location": "Punjab, India",
     "shortDescription": "Amritsar, the heart of Punjab, is a revered site for Sikhs and a pilgrimage destination for many due to the presence of the Golden Temple.",
     "detailedDescription": "Explore historical landmarks such as Jallianwala Bagh and Wagah Border, as well as the Harke Bird Sanctuary. Experience the spiritual ambiance of the Golden Temple and taste authentic Punjabi cuisine.",
     "badge": "POPULAR"
   },
   {
     "name": "Kashmir",
-    "shortDescription": "Often called 'Paradise on Earth', Kashmir offers stunning valleys, pristine lakes, and snow-capped mountains.",
-    "detailedDescription": "Experience the enchanting beauty of Dal Lake, explore Mughal gardens, and enjoy shikara rides in this Himalayan paradise.",
-    "badge": "POPULAR"
-  },{
-    "name": "Kashmir",
+    "location": "Jammu and Kashmir, India",
     "shortDescription": "Often called 'Paradise on Earth', Kashmir offers stunning valleys, pristine lakes, and snow-capped mountains.",
     "detailedDescription": "Experience the enchanting beauty of Dal Lake, explore Mughal gardens, and enjoy shikara rides in this Himalayan paradise.",
     "badge": "POPULAR"
   },
   {
     "name": "Kerala",
+    "location": "India",
     "shortDescription": "Kerala, known as 'God's Own Country', offers backwaters, hill stations, and pristine beaches with unique cultural experiences.",
     "detailedDescription": "Cruise through serene backwaters in traditional houseboats, explore spice plantations in Munnar, and experience Ayurvedic treatments in this tropical paradise.",
     "badge": "POPULAR"
   },
   {
     "name": "Rajasthan",
+    "location": "India",
     "shortDescription": "The land of kings, featuring magnificent palaces, desert landscapes, and rich cultural heritage.",
     "detailedDescription": "Explore majestic forts and palaces, experience camel safaris in the Thar Desert, and immerse yourself in the vibrant culture of royal Rajasthan.",
     "badge": "POPULAR"
   },
   {
     "name": "Ladakh",
+    "location": "India",
     "shortDescription": "A high-altitude desert offering breathtaking landscapes, monasteries, and adventure activities.",
     "detailedDescription": "Discover the moonlike landscapes of Ladakh, visit ancient Buddhist monasteries, and experience thrilling mountain adventures in the Himalayas.",
     "badge": "POPULAR"
   },
   {
     "name": "Himachal Pradesh",
+    "location": "India",
     "shortDescription": "Hill stations with snow-capped mountains, apple orchards, and pleasant weather year-round.",
     "detailedDescription": "Enjoy the cool mountain air of Shimla and Manali, experience adventure sports, and witness stunning Himalayan landscapes.",
     "badge": "POPULAR"

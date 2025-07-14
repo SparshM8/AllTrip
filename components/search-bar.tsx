@@ -106,7 +106,7 @@ export default function SearchBar() {
       <div ref={searchBarRef} className={`relative w-full max-w-3xl mx-auto z-50 transition-transform duration-300 ease-in-out ${isOverlayActive ? '-translate-y-64' : ''}`}>
         <motion.div
           layout
-          className={`bg-white/90 backdrop-blur-md rounded-full shadow-2xl flex items-center transition-all duration-300 ease-in-out p-2 border ${activeField ? 'ring-2 ring-[#FDBE00]' : 'border-transparent'}`}
+          className={`bg-white rounded-lg shadow-2xl flex items-center transition-all duration-300 ease-in-out p-4 border ${activeField ? 'ring-2 ring-[#FDBE00]' : 'border-transparent'}`}
         >
           {/* Destination/Itinerary Search */}
           <div className="flex-1 group" onClick={() => handleFieldActivation('location')}>
@@ -181,7 +181,7 @@ export default function SearchBar() {
           <motion.button
             layout
             onClick={handleSearch}
-            className="bg-[#FDBE00] text-black rounded-full p-3 hover:bg-yellow-500 transition-colors duration-200 flex items-center justify-center"
+            className="bg-[#FDBE00] text-black rounded-md p-3 hover:bg-yellow-500 transition-colors duration-200 flex items-center justify-center"
           >
             <Search className="h-5 w-5" />
           </motion.button>
@@ -195,14 +195,14 @@ export default function SearchBar() {
               animate={{ opacity: 1, y: 10 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-0 right-0 mt-2 bg-white rounded-3xl shadow-2xl border p-4"
+              className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-2xl border p-4"
             >
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search destinations or itineraries"
-                  className="w-full pl-10 pr-4 py-2 border rounded-full focus:ring-2 focus:ring-[#FDBE00] outline-none"
+                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#FDBE00] outline-none"
                   onChange={(e) => debouncedSetSearchTerm(e.target.value)}
                   autoFocus
                 />

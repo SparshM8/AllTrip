@@ -58,10 +58,10 @@ export default function HeroSection() {
 
       <section
         ref={ref}
-        className="hero relative w-full h-screen overflow-hidden flex items-center"
+        className="hero relative w-full h-screen overflow-hidden flex items-center justify-center"
       >
         <Image
-          src="/1.jpg"
+          src="/4.png"
           alt="Scenic view of Himalayas/Kashmir"
           fill
           priority
@@ -70,40 +70,34 @@ export default function HeroSection() {
         />
         {/* The ::before pseudo-element will handle the overlay */}
         
-        {/* Content Container - Top Left */}
-        <div 
-          className="content relative z-10 flex flex-col items-start text-left text-white w-full max-w-6xl"
-          style={{
-            paddingLeft: '10vw',
-          }}
-        >
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-          >
-            <motion.h1 variants={itemVariants}>
-              One Solution
-            </motion.h1>
-            <motion.div className="headline-sans" variants={itemVariants}>
-              For All Your <span>Travel</span> Needs
-            </motion.div>
-
-            <motion.p
-              className="max-w-md"
-              variants={itemVariants}
+        {/* Content Container - Centered */}
+        <div className="content relative z-10 flex flex-col items-center text-center text-white">
+          <div>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
             >
-              Experience the magic of India with AllTripp. From mountain escapes to coastal retreats, we bring you curated journeys that celebrate culture, connection, and unforgettable moments.
-            </motion.p>
+              <motion.h1 className="text-2xl md:text-3xl font-bold" variants={itemVariants}>
+                One Solution For All Your <span className="text-yellow-400">Travel</span> <br /> <span className="text-yellow-400">Needs</span>
+              </motion.h1>
 
-            {/* Search Bar - Below subtitle */}
-            <motion.div 
-              className="mt-8"
-              variants={itemVariants}
-            >
-              <SearchBar />
+              <motion.p
+                className="max-w-lg mt-4 text-sm md:text-base mx-auto"
+                variants={itemVariants}
+              >
+                Experience the magic of India with AllTripp. From mountain escapes to coastal retreats, we bring you curated journeys that celebrate culture, connection, and unforgettable moments.
+              </motion.p>
+
+              {/* Search Bar - Below subtitle */}
+              <motion.div 
+                className="mt-8"
+                variants={itemVariants}
+              >
+                <SearchBar />
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </>

@@ -61,14 +61,6 @@ export default function ItinerariesSection() {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [likedTrips, setLikedTrips] = useState<Set<number>>(new Set());
-  const [scrollY, setScrollY] = useState(0);
-
-  // Track scroll position for parallax effect
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const toggleLike = (idx: number) => {
     setLikedTrips(prev => {
@@ -82,45 +74,22 @@ export default function ItinerariesSection() {
     });
   };
 
-  const scrollNext = () => {
-    carouselRef.current?.scrollBy({
-      left: carouselRef.current.clientWidth,
-      behavior: "smooth",
-    });
-  };
-
-  const scrollPrev = () => {
-    carouselRef.current?.scrollBy({
-      left: -carouselRef.current.clientWidth,
-      behavior: "smooth",
-    });
-  };
 
   return (
     <section 
       id="itineraries" 
       ref={ref} 
-      className="relative py-20 overflow-hidden"
+      className="py-20"
     >
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Card container with background image, white overlay, rounded corners, and padding */}
-        <div
-          className="relative rounded-2xl shadow-lg p-8 overflow-hidden"
-          style={{
-            backgroundImage: "url('/background_itenary1.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div className="relative z-10">
-            {/* Section Header */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+      <div className="container mx-auto px-6">
+        {/* Section Header */}
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
-              className="text-left mb-20"
+              className="text-left mb-10"
             >
-              <h2 className="text-5xl md:text-7xl font-extrabold text-black tracking-tighter uppercase">
+              <h2 className="text-5xl md:text-5xl font-extrabold text-black tracking-tighter uppercase">
                 ITINERARIES
               </h2>
               <p className="text-lg md:text-xl text-black mt-4">
@@ -128,14 +97,6 @@ export default function ItinerariesSection() {
               </p>
             </motion.div>
             <div className="flex items-center">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={scrollPrev}
-                className="w-12 h-12 rounded-full border-2 border-black bg-black text-white hover:bg-black/90 transition-all duration-300 shadow-lg mr-4 flex-shrink-0"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
               <motion.div
                 className="overflow-hidden flex-1"
                 initial={{ opacity: 0 }}
@@ -147,7 +108,7 @@ export default function ItinerariesSection() {
               >
                 <div
                   ref={carouselRef}
-                  className="flex space-x-4 overflow-x-auto snap-x snap-mandatory py-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                  className="flex space-x-4 overflow-x-hidden snap-x snap-mandatory py-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                 >
                   {itineraries.map((itinerary, idx) => (
                     <motion.div
@@ -219,22 +180,10 @@ export default function ItinerariesSection() {
                           </div>
 
                           {/* Features Row */}
-                          <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                          <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-300 w-full">
                             <div className="flex items-center space-x-1">
                               <Calendar size={16} className="text-black dark:text-white" />
                               <span className="font-medium">{itinerary.duration}</span>
-                            </div>
-                          </div>
-
-                          {/* Price and View Details Button */}
-                          <div className="flex items-center justify-between pt-2">
-                            <div>
-                              <span className="text-lg font-bold text-gray-900 dark:text-white">
-                                ₹{itinerary.price.toLocaleString()}
-                              </span>
-                              <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">
-                                per person
-                              </span>
                             </div>
                             <Button
                               asChild
@@ -251,18 +200,8 @@ export default function ItinerariesSection() {
                   ))}
                 </div>
               </motion.div>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={scrollNext}
-                className="w-12 h-12 rounded-full border-2 border-black bg-black text-white hover:bg-black/90 transition-all duration-300 shadow-lg ml-4 flex-shrink-0"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </Button>
             </div>
           </div>
-        </div>
-      </div>
     </section>
   );
 }

@@ -51,7 +51,7 @@ export default function TestimonialsSection() {
         className="container relative z-10 px-4 md:px-6"
       >
         <motion.div variants={itemVariants} className="text-left mb-16">
-<h2 className="text-5xl md:text-7xl font-extrabold text-black tracking-tighter uppercase">
+<h2 className="text-5xl md:text-5xl font-extrabold text-black tracking-tighter uppercase">
             From Our Travellers
           </h2>
           <div className="flex items-center mt-4">

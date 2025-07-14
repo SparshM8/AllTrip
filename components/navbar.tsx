@@ -64,9 +64,9 @@ const Navbar: React.FC = () => {
     >
       {/* Main Navbar Container with modern design */}
       <nav 
-        className="shadow-lg backdrop-blur-lg border-b border-white/10"
+        className="shadow-lg border-b border-gray-200"
         style={{ 
-          backgroundColor: 'rgba(253, 190, 0, 0.8)',
+          backgroundColor: '#FDBE00',
           boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
         }}
       >
@@ -111,7 +111,7 @@ const Navbar: React.FC = () => {
                       >
                         <Link
                           href={link.href}
-                          className="relative text-lg font-semibold text-black transition-all duration-300 group py-1 px-1 font-sans"
+                          className="relative text-lg text-black transition-all duration-300 group py-1 px-1 font-sans"
                         >
                           {link.name}
                           {/* Hover underline effect */}

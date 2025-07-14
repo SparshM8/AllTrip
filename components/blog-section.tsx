@@ -137,7 +137,7 @@ const BlogSection: React.FC = () => {
   return (
     <section 
       id="blog"
-      className="relative py-20 md:py-32 bg-cover bg-center bg-fixed"
+      className="relative py-20 md:py-32 bg-cover bg-center bg-fixed rounded-t-3xl"
       style={{ backgroundImage: "url('/adventure.jpg')" }}
     >
       <div className="container relative z-10 mx-auto px-4 md:px-6">

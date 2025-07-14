@@ -6,18 +6,11 @@ import { Star, Users, SlidersHorizontal, LifeBuoy } from "lucide-react";
 import featuresData from "@/data/features.json";
 
 // Icon mapping for dynamic icon selection
-const iconMap = {
+const iconMap: { [key: string]: React.ElementType } = {
   Star,
   Users,
   SlidersHorizontal,
   LifeBuoy,
-};
-
-const featureImages: { [key: string]: string } = {
-  "Custom-Made Travel Plans": "/feature1.png",
-  "Hidden Gems, Offbeat Trails": "/feature2.jpg",
-  "End-to-End Planning & Support": "/feature3.png",
-  "Authentic Local Connections": "/feature4.jpg",
 };
 
 const features = featuresData.map(feature => ({
@@ -50,8 +43,7 @@ export default function FeaturesSection() {
     <section 
       id="features" 
       ref={ref} 
-      className="relative py-20 md:py-32 overflow-hidden"
-      style={{ backgroundColor: "#fff" }}
+      className="relative py-20 md:py-28 overflow-hidden bg-white"
     >
       <motion.div 
         variants={containerVariants}
@@ -59,56 +51,39 @@ export default function FeaturesSection() {
         animate={isInView ? "visible" : "hidden"}
         className="container relative z-10 px-4 md:px-6"
       >
-        <motion.div variants={itemVariants} className="text-left mb-16">
-          <h2 className="text-5xl md:text-7xl font-extrabold text-black tracking-wide uppercase">
-            Why Choose Us ?
+        <motion.div variants={itemVariants} className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-black tracking-wide">
+            WHY CHOOSE US?
           </h2>
-          <div className="mt-4">
-            <p className="text-lg md:text-xl text-black">
-              Experiences you'll cherish forever
-            </p>
-            <div className="mt-4 h-0.5 bg-yellow-400"></div>
-          </div>
+          <p className="text-lg md:text-xl text-gray-600 mt-4 max-w-2xl mx-auto">
+            Experiences you'll cherish forever
+          </p>
         </motion.div>
 
         <motion.div
           variants={containerVariants}
           className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4"
         >
-          {features.map((feature, index) => (
-            <motion.div 
-              key={index} 
-              variants={itemVariants}
-              className={`rounded-2xl p-0 text-center border shadow-lg bg-white transform transition-all duration-300 ${featureImages[feature.title] ? "flex flex-row min-h-[220px]" : "p-6"}`}
-            >
-              {featureImages[feature.title] ? (
-                <>
-                  <div className="w-1/3 h-full rounded-l-2xl overflow-hidden">
-                    <img
-                      src={featureImages[feature.title]}
-                      alt={feature.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="w-2/3 flex flex-col justify-center items-start p-6 text-left">
-                    <h3 className="text-xl font-bold mb-2 text-black">{feature.title}</h3>
-                    <p className="text-black text-sm leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="flex flex-col justify-center items-start text-left p-2">
-                    <h3 className="text-xl font-bold mb-2 text-black">{feature.title}</h3>
-                    <p className="text-black text-sm leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </div>
-                </>
-              )}
-            </motion.div>
-          ))}
+          {features.map((feature, index) => {
+            const Icon = feature.icon;
+            return (
+              <motion.div 
+                key={index} 
+                variants={itemVariants}
+                className="card text-center p-8 bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300"
+              >
+                <div className="card-icon flex justify-center items-center mb-5">
+                  <Icon className="w-16 h-16 text-gray-800" strokeWidth={1.5} />
+                </div>
+                <h3 className="card-title text-xl font-bold text-gray-900 mb-3">
+                  {feature.title}
+                </h3>
+                <p className="card-text text-gray-600 leading-relaxed text-sm">
+                  {feature.description}
+                </p>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </motion.div>
     </section>

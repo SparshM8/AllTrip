@@ -102,7 +102,7 @@ body::-webkit-scrollbar {
 .hero h1 {
   font-family: var(--font-pacifico), cursive;
   font-size: 5rem;
-  color: #000000;
+  color: #ffffff;
   line-height: 1.2;
   margin-bottom: 0.2em;
 }
@@ -111,17 +111,17 @@ body::-webkit-scrollbar {
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 800;
   font-size: 3rem;
-  color: #000000;
+  color: #ffffff;
 }
 
 .hero .headline-sans span {
-  color: #FDBE00;
+  color: #ffffff;
 }
 
 .hero p {
   font-family: var(--font-roboto), sans-serif;
   font-size: 1rem;
-  color: #000000;
+  color: #ffffff;
   line-height: 1.5;
   margin-top: 1em;
   margin-bottom: 2em;
@@ -138,4 +138,48 @@ body::-webkit-scrollbar {
 .hero .content {
   position: relative;
   z-index: 1;
+}
+
+.popular-destinations {
+  padding: 2rem;
+}
+
+.popular-destinations h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.destinations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.destination-card {
+  text-align: left;
+}
+
+.destination-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  display: block;
+}
+
+.destination-info {
+  margin-top: 0.5rem;
+}
+
+.destination-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.destination-location {
+  font-size: 0.875rem;
+  color: #6B7280;
+  margin: 0.25rem 0 0;
 }
