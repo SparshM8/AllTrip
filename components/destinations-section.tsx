@@ -21,9 +21,9 @@ const allUniqueDestinations = Array.from(
 // Corrected image mapping based on available files
 const destinationImages: { [key: string]: string } = {
     "Goa": "/destinations/goa.jpg",
-    "Rishikesh": "/destinations/rishikesh.jpg",
-    "Jim Corbett": "/destinations/jim_corbett.png",
-    "Amritsar": "/destinations/amritsar.jpg",
+    "Rishikesh": "/destinations/Rishikesh.jpg",
+    "Jim Corbett": "/destinations/Jim_Corbett.png",
+    "Amritsar": "/destinations/Amritsar.jpg",
     "Kashmir": "/destinations/kashmir.jpg",
     "Kerala": "/destinations/kerala.jpg",
     "Rajasthan": "/destinations/rajasthan.jpg",
