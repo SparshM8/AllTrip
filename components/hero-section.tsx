@@ -78,12 +78,12 @@ export default function HeroSection() {
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
             >
-              <motion.h1 className="text-2xl md:text-3xl font-bold" variants={itemVariants}>
+              <motion.h1 className="text-5xl md:text-7xl font-bold text-white tracking-tighter " variants={itemVariants}>
                 One Solution For All Your <span className="text-yellow-400">Travel</span> <br /> <span className="text-yellow-400">Needs</span>
               </motion.h1>
 
               <motion.p
-                className="max-w-lg mt-4 text-sm md:text-base mx-auto"
+                className="max-w-2xl mt-4 text-sm md:text-base mx-auto"
                 variants={itemVariants}
               >
                 Experience the magic of India with AllTripp. From mountain escapes to coastal retreats, we bring you curated journeys that celebrate culture, connection, and unforgettable moments.

@@ -99,14 +99,6 @@ body::-webkit-scrollbar {
   }
 }
 
-.hero h1 {
-  font-family: var(--font-pacifico), cursive;
-  font-size: 5rem;
-  color: #ffffff;
-  line-height: 1.2;
-  margin-bottom: 0.2em;
-}
-
 .hero .headline-sans {
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 800;
