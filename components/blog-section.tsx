@@ -3,41 +3,111 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
+import { Heart } from "lucide-react";
+import { trackBlogInteraction, usePerformanceTracking } from "@/hooks/use-analytics";
 
-type Blog = {
+interface BlogPost {
   title: string;
   slug: string;
-  category: string;
-  excerpt: string;
-};
+  fileType: string;
+  image: string;
+  likes: number;
+  comments: number;
+}
 
-const blogs: Blog[] = [
-  {
-    slug: "hidden-valleys-nepal",
-    title: "Hidden Valleys of Nepal",
-    category: "Adventure | Nature",
-    excerpt: "Explore the untouched beauty of Nepal’s hidden gems tucked away from the crowd.",
-  },
-  {
-    slug: "beach-vibes-bali",
-    title: "Bali’s Beach Vibes",
-    category: "Relaxation | Travel",
-    excerpt: "From white sands to surfing waves—Bali is every traveler’s dreamy escape.",
-  },
-  {
-    slug: "city-breaks-europe",
-    title: "Charming City Breaks",
-    category: "Culture | Urban",
-    excerpt: "Wander through cobblestone streets and sip coffee in Europe’s coziest corners.",
-  },
-];
+const BlogSection: React.FC = () => {
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [liked, setLiked] = useState<{ [slug: string]: boolean }>({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-const placeholderImage =
-  "https://www.purevacations.com/wp-content/uploads/2023/01/Freedom-and-Happiness-in-the-Manang-Valley-Nepal.jpg";
+  usePerformanceTracking();
 
-export default function BlogSection() {
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch("/api/blogs");
+        if (!res.ok) throw new Error('Failed to fetch blogs');
+        const data = await res.json();
+        setBlogs(data);
+        setError(null);
+      } catch (err) {
+        setError('Failed to load blogs');
+        console.error('Error fetching blogs:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlogs();
+  }, []);
+
+  const handleLike = useCallback((e: React.MouseEvent, index: number, slug: string) => {
+    e.preventDefault();
+    const updatedBlogs = [...blogs];
+    const isLiked = liked[slug];
+    updatedBlogs[index].likes += isLiked ? -1 : 1;
+    setBlogs(updatedBlogs);
+    setLiked(prev => ({ ...prev, [slug]: !isLiked }));
+    trackBlogInteraction(isLiked ? 'unlike' : 'like', slug);
+  }, [blogs, liked]);
+
+  const handleBlogClick = useCallback((slug: string) => {
+    trackBlogInteraction('click', slug);
+  }, []);
+
+  const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength ? text.slice(0, maxLength - 3) + '...' : text;
+  };
+
+  const blogCards = useMemo(() => {
+    return blogs.slice(0, 3).map((post, index) => (
+      <motion.div
+        key={post.slug}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.1 }}
+        className="rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
+        style={{
+          background: "linear-gradient(to bottom right, #fceabb, #f8b500, #e38e00)"
+        }}
+      >
+        <div className="relative w-full h-56">
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="p-6 flex flex-col flex-grow backdrop-blur-sm bg-white/60">
+          <p className="text-sm text-[#7c552f]">Adventure</p>
+          <h3 className="text-xl font-semibold text-[#4d2e10] mt-3">
+            {truncateText(post.title, 56)}
+          </h3>
+          <div className="flex justify-between items-center mt-4">
+            <Link href={`/blog/${post.slug}`}>
+              <button className="bg-[#5a3e2b] text-white px-4 py-2 rounded-full w-fit hover:scale-105 transition-all">
+                Read More
+              </button>
+            </Link>
+            <button
+              onClick={(e) => handleLike(e, index, post.slug)}
+              className={`flex items-center gap-1 text-sm ${liked[post.slug] ? "text-red-400" : "text-[#5a3e2b]"} hover:text-red-400 transition-colors`}
+              aria-label={`Like ${post.title}`}
+            >
+              <Heart size={16} className={liked[post.slug] ? "fill-current" : ""} />
+              {post.likes}
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    ));
+  }, [blogs, liked, handleLike]);
+
   return (
-    <section className="px-6 pt-48 pb-16 max-w-7xl mx-auto">
+    <section className="px-6 pt-52 pb-16 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-4">
         <div>
           <h2 className="text-4xl md:text-5xl font-bold text-[#5a3e2b]">Tips & Article</h2>
@@ -53,36 +123,10 @@ export default function BlogSection() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-10">
-        {blogs.map((blog, i) => (
-          <motion.div
-            key={blog.slug}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 bg-gradient-to-br from-[#fceabb] via-[#f8b500] to-[#e38e00]"
-          >
-
-            <div className="relative w-full h-56">
-              <Image
-                src={placeholderImage}
-                alt={blog.title}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="p-6 flex flex-col flex-grow backdrop-blur-sm bg-white/60">
-              <p className="text-sm text-[#7c552f]">{blog.category}</p>
-              <h3 className="text-xl font-semibold text-[#4d2e10] mt-1">{blog.title}</h3>
-              <p className="text-sm text-[#5a3e2b] mt-2 mb-4 flex-grow">{blog.excerpt}</p>
-              <Link href={`/blog/${blog.slug}`}>
-                <button className="bg-[#5a3e2b] text-white px-4 py-2 rounded-full w-fit hover:scale-105 transition-all mt-auto">
-                  Read More
-                </button>
-              </Link>
-            </div>
-          </motion.div>
-        ))}
+        {blogCards}
       </div>
     </section>
   );
-}
+};
+
+export default BlogSection;
