@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Icon } from "@iconify/react";
 import { Menu, Sun, Moon, MapPin, MessageCircle } from "lucide-react";
 import {
   Drawer,
@@ -21,6 +22,14 @@ import { useTheme } from "next-themes";
 import navLinksData from "@/data/nav-links.json";
 
 const navLinks = navLinksData;
+
+const iconMap: { [key: string]: string } = {
+  Home: "mdi:home",
+  "About Us": "mdi:information",
+  Destinations: "mdi:map-marker",
+  Trips: "mdi:airplane",
+  Checkout: "mdi:cart",
+};
 
 const Navbar: React.FC = () => {
   // State for drawer (mobile menu) and scroll-based show/hide logic
@@ -70,13 +79,13 @@ const Navbar: React.FC = () => {
           boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
         }}
       >
-        <div className="container mx-auto max-w-7xl flex items-center justify-between px-4 py-2">
+        <div className="container mx-auto max-w-7xl flex items-center justify-between px-2 sm:px-4 py-2">
             {/* Logo Section - Left */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               <Link
                 href="/"
                 aria-label="AllTripp Home"
-                className="font-bold text-xl font-sans"
+                className="font-bold text-lg sm:text-xl font-sans"
               >
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -111,8 +120,9 @@ const Navbar: React.FC = () => {
                       >
                         <Link
                           href={link.href}
-                          className="relative text-lg text-black transition-all duration-300 group py-1 px-1 font-sans"
+                          className="relative text-lg text-black transition-all duration-300 group py-1 px-1 font-sans flex items-center gap-2"
                         >
+                          <Icon icon={iconMap[link.name]} className="w-5 h-5" />
                           {link.name}
                           {/* Hover underline effect */}
                           <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full rounded-full"></span>

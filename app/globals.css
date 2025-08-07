@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'lenis/dist/lenis.css';
 
 @layer base {
   :root {
@@ -70,7 +71,7 @@
   * {
     @apply border-border;
   }
-  html,
+html,
 body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
@@ -79,6 +80,19 @@ body {
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
+}
+
+/* Lenis smooth scrolling styles */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 }
 

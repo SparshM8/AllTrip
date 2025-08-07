@@ -68,7 +68,7 @@ const BlogSection: React.FC = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.1 }}
-        className="rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
+        className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
         style={{
           background: "linear-gradient(to bottom right, #fceabb, #f8b500, #e38e00)"
         }}
@@ -107,7 +107,7 @@ const BlogSection: React.FC = () => {
   }, [blogs, liked, handleLike]);
 
   return (
-    <section className="px-6 pt-52 pb-16 max-w-7xl mx-auto">
+    <section className="px-6 pt-20 pb-16 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-4">
         <div>
           <h2 className="text-4xl md:text-5xl font-bold text-[#5a3e2b]">Tips & Article</h2>

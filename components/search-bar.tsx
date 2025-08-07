@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
 import { Calendar as CalendarIcon, Search, User, MapPin, ChevronDown } from "lucide-react";
 import destinationsDataRaw from "@/data/destinations.json";
 import itinerariesDataRaw from "@/data/itineraries.json";
@@ -29,6 +30,7 @@ export default function SearchBar() {
   const [guests, setGuests] = useState(1);
   const [isOverlayActive, setIsOverlayActive] = useState(false);
   const searchBarRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
 
   const destinationsData = Array.from(new Map(destinationsDataRaw.map((d) => [d.name, d])).values());
   const itinerariesData = Array.from(new Map(itinerariesDataRaw.map((i) => [i.title, i])).values());
@@ -103,25 +105,25 @@ export default function SearchBar() {
           />
         )}
       </AnimatePresence>
-      <div ref={searchBarRef} className={`relative w-full max-w-3xl mx-auto z-50 transition-transform duration-300 ease-in-out ${isOverlayActive ? '-translate-y-64' : ''}`}>
+      <div ref={searchBarRef} className={`relative w-full z-50 transition-transform duration-300 ease-in-out ${isOverlayActive ? '-translate-y-64' : ''}`}>
         <motion.div
           layout
-          className={`bg-white rounded-lg shadow-2xl flex items-center transition-all duration-300 ease-in-out p-4 border ${activeField ? 'ring-2 ring-[#FDBE00]' : 'border-transparent'}`}
+          className={`bg-white dark:bg-gray-800 rounded-lg shadow-2xl flex items-center transition-all duration-300 ease-in-out p-4 border ${activeField ? 'ring-2 ring-[#FDBE00]' : 'border-transparent dark:border-gray-600'}`}
         >
           {/* Destination/Itinerary Search */}
           <div className="flex-1 group" onClick={() => handleFieldActivation('location')}>
             <div className="flex items-center pl-4 pr-2 cursor-pointer">
               <MapPin className="h-6 w-6 text-[#FDBE00] mr-3" />
               <div>
-                <label className="text-sm font-semibold text-gray-700">Location</label>
-                <div className="text-base text-gray-600 truncate">
+                <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Location</label>
+                <div className="text-base text-gray-600 dark:text-gray-400 truncate">
                   {selection ? selection.value : "Where are you going?"}
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="h-10 w-px bg-gray-200" />
+          <div className="h-10 w-px bg-gray-200 dark:bg-gray-600" />
 
           {/* Date Picker */}
           <Popover onOpenChange={(open) => handleFieldActivation(open ? 'dates' : null)}>
@@ -130,8 +132,8 @@ export default function SearchBar() {
                 <div className="flex items-center px-4 cursor-pointer">
                   <CalendarIcon className="h-6 w-6 text-[#FDBE00] mr-3" />
                   <div>
-                    <label className="text-sm font-semibold text-gray-700">Dates</label>
-                    <div className="text-base text-gray-600">
+                    <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Dates</label>
+                    <div className="text-base text-gray-600 dark:text-gray-400">
                       {date.from && date.to ? `${format(date.from, "LLL dd")} - ${format(date.to, "LLL dd")}` : "Add dates"}
                     </div>
                   </div>
@@ -150,7 +152,7 @@ export default function SearchBar() {
             </PopoverContent>
           </Popover>
 
-          <div className="h-10 w-px bg-gray-200" />
+          <div className="h-10 w-px bg-gray-200 dark:bg-gray-600" />
 
           {/* Guests */}
           <Popover onOpenChange={(open) => handleFieldActivation(open ? 'guests' : null)}>
@@ -159,14 +161,14 @@ export default function SearchBar() {
                 <div className="flex items-center px-4 cursor-pointer">
                   <User className="h-6 w-6 text-[#FDBE00] mr-3" />
                   <div>
-                    <label className="text-sm font-semibold text-gray-700">Guests</label>
-                    <div className="text-base text-gray-600">{guests} guest{guests > 1 ? 's' : ''}</div>
+                    <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Guests</label>
+                    <div className="text-base text-gray-600 dark:text-gray-400">{guests} guest{guests > 1 ? 's' : ''}</div>
                   </div>
                 </div>
               </div>
             </PopoverTrigger>
-            <PopoverContent className="w-48 p-4" align="end">
-              <div className="flex items-center justify-between">
+            <PopoverContent className="w-48 p-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600" align="end">
+              <div className="flex items-center justify-between text-black dark:text-white">
                 <span className="font-semibold">Guests</span>
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setGuests(Math.max(1, guests - 1))}>-</Button>
@@ -195,26 +197,26 @@ export default function SearchBar() {
               animate={{ opacity: 1, y: 10 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-2xl border p-4"
+              className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-2xl border dark:border-gray-600 p-4"
             >
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search destinations or itineraries"
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#FDBE00] outline-none"
+                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#FDBE00] outline-none bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600"
                   onChange={(e) => debouncedSetSearchTerm(e.target.value)}
                   autoFocus
                 />
               </div>
               <div className="max-h-60 overflow-y-auto mt-4 custom-scrollbar">
                 {/* Itineraries */}
-                <h3 className="font-bold text-gray-800 px-2 pt-2">Itineraries</h3>
+                <h3 className="font-bold text-gray-800 dark:text-gray-200 px-2 pt-2">Itineraries</h3>
                 {filteredItineraries.length > 0 ? (
                   filteredItineraries.map((item) => (
                     <div
                       key={item.title}
-                      className="flex items-center gap-4 p-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+                      className="flex items-center gap-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                       onClick={() => {
                         setSelection({ type: 'itin', value: item.title });
                         handleFieldActivation(null);
@@ -223,20 +225,20 @@ export default function SearchBar() {
                       <div className="bg-emerald-100 text-emerald-700 rounded-lg p-2">
                         <MapPin className="h-5 w-5" />
                       </div>
-                      <span className="text-black">{item.title}</span>
+                      <span className="text-black dark:text-white">{item.title}</span>
                     </div>
                   ))
                 ) : (
-                  <p className="text-gray-500 p-2">No itineraries found.</p>
+                  <p className="text-gray-500 dark:text-gray-400 p-2">No itineraries found.</p>
                 )}
 
                 {/* Destinations */}
-                <h3 className="font-bold text-gray-800 px-2 pt-4">Destinations</h3>
+                <h3 className="font-bold text-gray-800 dark:text-gray-200 px-2 pt-4">Destinations</h3>
                 {filteredDestinations.length > 0 ? (
                   filteredDestinations.map((item) => (
                     <div
                       key={item.name}
-                      className="flex items-center gap-4 p-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+                      className="flex items-center gap-4 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                       onClick={() => {
                         setSelection({ type: 'dest', value: item.name });
                         handleFieldActivation(null);
@@ -245,11 +247,11 @@ export default function SearchBar() {
                       <div className="bg-blue-100 text-blue-700 rounded-lg p-2">
                         <MapPin className="h-5 w-5" />
                       </div>
-                      <span className="text-black">{item.name}</span>
+                      <span className="text-black dark:text-white">{item.name}</span>
                     </div>
                   ))
                 ) : (
-                  <p className="text-gray-500 p-2">No destinations found.</p>
+                  <p className="text-gray-500 dark:text-gray-400 p-2">No destinations found.</p>
                 )}
               </div>
             </motion.div>

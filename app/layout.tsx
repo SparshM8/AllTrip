@@ -8,6 +8,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Analytics } from "@vercel/analytics/react"
 import ClientPerformance from "@/components/client-performance"
+import LenisProvider from "@/components/lenis-provider"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const pacifico = Pacifico({
@@ -126,9 +127,11 @@ export default function RootLayout({
 <body className={`${inter.variable} ${pacifico.variable} ${montserrat.variable} ${roboto.variable} font-sans m-0 p-0`} style={{ backgroundColor: "#fff" }}>
         <SpeedInsights />
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <Navbar />
-          <main className="m-0 p-0">{children}</main>
-          <Footer />
+          <LenisProvider>
+            <Navbar />
+            <main className="m-0 p-0">{children}</main>
+            <Footer />
+          </LenisProvider>
         </ThemeProvider>
         <Analytics />
         <ClientPerformance />

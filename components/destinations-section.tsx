@@ -71,7 +71,7 @@ const DestinationCard = ({ destination }: { destination: any }) => {
 export default function DestinationsSection() {
   return (
     <section id="destinations" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 md:px-16 lg:px-20">
         <Carousel
           opts={{
             align: "start",

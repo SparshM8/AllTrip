@@ -6,7 +6,7 @@ import BlogSection from "@/components/blog-section";
 export default function ScrollOverlapSection() {
   return (
     <div className="relative">
-      <div className="shadow-2xl">
+      <div>
         <CampusAmbassadorSection />
       </div>
       <div className="relative z-10 -mt-12">

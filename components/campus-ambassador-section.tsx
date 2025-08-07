@@ -45,42 +45,46 @@ export default function CampusAmbassadorSection() {
     <section 
       id="campus" 
       ref={ref} 
-      className="relative py-20 md:py-32"
+      className="relative py-12 sm:py-16 md:py-20 lg:py-32"
     >
       <motion.div 
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="container relative z-10 px-4 md:px-6"
+        className="container relative z-10 px-4 sm:px-6 md:px-8 md:px-16 lg:px-20"
       >
-        <motion.div variants={itemVariants} className="text-center mb-16">
-          <h2 className="text-5xl md:text-7xl font-extrabold text-black tracking-tighter uppercase">
-            Campus Ambassador
-          </h2>
-          <div className="flex items-center justify-center mt-4">
-            <div className="w-16 h-px bg-black"></div>
-            <p className="text-lg md:text-xl text-black mx-4">
-              Join the tribe, lead the journey
-            </p>
-            <div className="w-16 h-px bg-black"></div>
-          </div>
-        </motion.div>
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-12 gap-8 lg:gap-0">
+          <motion.div variants={itemVariants}>
+            <p className="text-lg text-gray-500 font-semibold">CAMPUS AMBASSADOR</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mt-4">
+              Join the tribe,
+              <br />
+              lead the journey
+            </h2>
+          </motion.div>
+        </div>
 
         <motion.div 
           variants={itemVariants}
-          className="max-w-5xl mx-auto bg-gradient-to-br from-[#fdbe00] to-[#b8860b] backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-[#ddb400] shadow-2xl"
+          className="bg-gradient-to-br from-yellow-400/10 to-yellow-500/10 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-white/20 shadow-lg"
         >
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 mb-12">
             {benefits.map((benefit, index) => (
-              <div key={index} className="bg-white/20 backdrop-blur-sm rounded-xl p-6 shadow-lg text-center text-black">
+              <motion.div 
+                key={index}
+                whileHover={{ scale: 1.05, y: -5 }}
+                transition={{ duration: 0.3 }}
+                style={{ backgroundColor: '#FDBE00' }}
+                className="rounded-xl p-6 shadow-lg text-center text-black"
+              >
                 <div className="flex justify-center mb-4">
-                  <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center border border-white/30">
+                  <div className="w-16 h-16 rounded-full bg-white/30 flex items-center justify-center border border-white/40">
                     <benefit.icon className="w-8 h-8 text-black" strokeWidth={1.5} />
                   </div>
                 </div>
                 <h3 className="text-lg font-semibold mb-1">{benefit.title}</h3>
                 <p className="text-black/70 text-sm">{benefit.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
           

@@ -81,7 +81,7 @@ export default function ItinerariesSection() {
       ref={ref} 
       className="py-20"
     >
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 md:px-16 lg:px-20">
         {/* Section Header */}
         <motion.div
             initial={{ opacity: 0, y: 20 }}
