@@ -4,8 +4,8 @@ import packagesData from '@/data/packages.json';
 
 // Hardcoded image mapping for packages
 const packageImages: { [key: string]: string } = {
-  "Kashmir Paradise": "/featured/kashmir-wonderland.jpg",
-  "Kerala Backwaters": "/featured/kerala-backwaters.webp",
+  "Kashmir Paradise": "/destinations/kashmir-wonderland.jpg",
+  "Kerala Backwaters": "/destinations/kerala-backwaters.webp",
   "Royal Rajasthan": "/featured/rajasthan-heritage.jpg",
 };
 
