@@ -88,13 +88,13 @@ export default async function BlogPage({ params }: BlogPageProps) {
   }
   
   return (
-    <article className="min-h-screen bg-gray-50">
+    <article className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header with back navigation */}
-      <div className="bg-white border-b">
+      <div className="bg-white dark:bg-gray-800 border-b border-border">
         <div className="container mx-auto px-6 py-4">
-          <Link 
-            href="/" 
-            className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+          <Link
+            href="/"
+            className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
           >
             <ArrowLeft size={20} className="mr-2" />
             Back to Home
@@ -104,7 +104,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
 
       {/* Main content */}
       <main className="container mx-auto px-6 py-12 max-w-4xl">
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-2xl overflow-hidden">
           {/* Hero image */}
           <div className="relative h-96 w-full">
             <Image
@@ -116,30 +116,30 @@ export default async function BlogPage({ params }: BlogPageProps) {
               sizes="(max-width: 1200px) 100vw, 1200px"
             />
           </div>
-          
+
           {/* Content */}
           <div className="p-8">
-            <h1 className="text-4xl font-bold mb-6 text-gray-900">{blog.title}</h1>
-            
-            <div className="prose prose-lg max-w-none">
-              <div className="whitespace-pre-line text-gray-700 leading-relaxed">
+            <h1 className="text-4xl font-bold mb-6 text-foreground">{blog.title}</h1>
+
+            <div className="prose prose-lg max-w-none dark:prose-invert">
+              <div className="whitespace-pre-line text-muted-foreground leading-relaxed">
                 {blog.content}
               </div>
             </div>
-            
+
             {/* Footer actions */}
-            <div className="mt-12 pt-8 border-t border-gray-200 flex justify-between items-center">
+            <div className="mt-12 pt-8 border-t border-border dark:border-border flex justify-between items-center">
               <Link
                 href="/"
-                className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
               >
                 <ArrowLeft size={16} className="mr-1" />
                 Back to Home
               </Link>
-              
+
               <Link
                 href="/blog"
-                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
               >
                 View All Blogs
               </Link>

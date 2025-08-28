@@ -54,10 +54,10 @@ const DestinationCard = ({ destination }: { destination: any }) => {
         className="object-cover rounded-lg shadow-lg"
       />
       <div className="destination-info mt-2">
-        <h3 className="destination-name text-lg font-semibold">{destination.name}</h3>
+        <h3 className="destination-name text-lg font-semibold text-black dark:text-white">{destination.name}</h3>
         <div className="flex items-center justify-between mt-1 h-12">
-          <p className="destination-location text-sm text-gray-500">{destination.location}</p>
-          <Button asChild className="bg-black text-white rounded-full hover:bg-gray-800 transition-colors duration-300 text-xs py-1 px-3 h-auto">
+          <p className="destination-location text-sm text-gray-500 dark:text-gray-300">{destination.location}</p>
+          <Button asChild className="bg-black dark:bg-white text-white dark:text-black rounded-full hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors duration-300 text-xs py-1 px-3 h-auto">
             <a href={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-')}`}>
               View Details
             </a>
@@ -69,41 +69,47 @@ const DestinationCard = ({ destination }: { destination: any }) => {
 };
 
 export default function DestinationsSection() {
-  return (
-    <section id="destinations" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-6 md:px-16 lg:px-20">
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full"
-        >
-          <div className="flex justify-between items-center mb-20">
-            <div className="text-left">
-              <h2 className="text-5xl md:text-5xl font-extrabold text-black tracking-tighter uppercase">
-                Popular Destination
-              </h2>
-              <p className="text-lg md:text-xl text-black mt-4">
-                Explore our top-rated destinations
-              </p>
-            </div>
-            <div className="flex items-center space-x-2">
-              <CarouselPrevious />
-              <CarouselNext />
-            </div>
-          </div>
-          <CarouselContent>
-            {allUniqueDestinations.map((destination) => (
-              <CarouselItem key={destination.name} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6">
-                <div className="p-1">
-                  <DestinationCard destination={destination} />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </div>
-    </section>
-  );
-}
+   return (
+     <section id="destinations" className="py-20 bg-gray-50 dark:bg-gray-900">
+       <div className="container mx-auto px-6 md:px-16 lg:px-20">
+         <Carousel
+           opts={{
+             align: "start",
+             loop: true,
+           }}
+           className="w-full"
+         >
+           <div className="mb-12 md:mb-20">
+             <div className="text-left">
+               <h2 className="text-3xl md:text-5xl font-extrabold text-black dark:text-white tracking-tighter uppercase">
+                 Popular Destination
+               </h2>
+               <div className="flex justify-between items-center mt-2 md:mt-4">
+                 <p className="text-base md:text-lg md:text-xl text-black dark:text-white flex-1">
+                   Explore our top-rated destinations
+                 </p>
+                 <div className="flex items-center space-x-2 sm:hidden ml-4">
+                   <CarouselPrevious className="static translate-y-0 translate-x-0" />
+                   <CarouselNext className="static translate-y-0 translate-x-0" />
+                 </div>
+               </div>
+             </div>
+             <div className="hidden sm:flex items-center space-x-2 justify-end mt-4">
+               <CarouselPrevious />
+               <CarouselNext />
+             </div>
+           </div>
+           <CarouselContent className="-ml-2 md:-ml-4">
+             {allUniqueDestinations.map((destination) => (
+               <CarouselItem key={destination.name} className="basis-1/2 pl-2 md:pl-4 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6">
+                 <div className="p-1">
+                   <DestinationCard destination={destination} />
+                 </div>
+               </CarouselItem>
+             ))}
+           </CarouselContent>
+         </Carousel>
+       </div>
+     </section>
+   );
+ }

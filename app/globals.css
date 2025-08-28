@@ -189,3 +189,67 @@ html.lenis {
   color: #6B7280;
   margin: 0.25rem 0 0;
 }
+
+.dark .destination-location {
+  color: #D1D5DB;
+}
+
+.destination-name {
+  color: #000000;
+}
+
+.dark .destination-name {
+  color: #FFFFFF;
+}
+
+/* Blog dark mode styles */
+.dark .blog-card-gradient {
+  background: linear-gradient(to bottom right, #2a1810, #4a2c1a, #6b3f2a) !important;
+}
+
+.dark .prose {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4,
+.dark .prose h5,
+.dark .prose h6 {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose p,
+.dark .prose li,
+.dark .prose dd {
+  color: hsl(var(--muted-foreground));
+}
+
+.dark .prose strong {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose a {
+  color: hsl(var(--primary));
+}
+
+.dark .prose a:hover {
+  color: hsl(var(--primary));
+  opacity: 0.8;
+}
+
+.dark .prose code {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+}
+
+.dark .prose pre {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+}
+
+.dark .prose blockquote {
+  border-left-color: hsl(var(--border));
+  color: hsl(var(--muted-foreground));
+}

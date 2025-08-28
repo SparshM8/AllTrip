@@ -81,13 +81,13 @@ const BookDetailsSection = () => {
   };
 
   return (
-    <section className="py-12 relative">
+    <section className="py-12 relative bg-gray-50 dark:bg-gray-900">
       <ConfettiCanvas trigger={showConfetti} origins={confettiOrigins} />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 ml-4 sm:ml-6 md:ml-16 lg:ml-20">
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="lg:w-1/2 mb-10 lg:mb-0">
-            <p className="text-lg text-gray-500 font-semibold">Easy and Fast</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mt-4 mb-8">
+            <p className="text-lg text-gray-500 dark:text-gray-400 font-semibold">Easy and Fast</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mt-4 mb-8">
               Book your next trip <br />
               in 4 easy steps
             </h2>
@@ -99,8 +99,8 @@ const BookDetailsSection = () => {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-bold text-gray-600">Choose Destination</h3>
-                  <p className="text-gray-500 mt-1">
+                  <h3 className="text-lg font-bold text-gray-600 dark:text-gray-300">Choose Destination</h3>
+                  <p className="text-gray-500 dark:text-gray-400 mt-1">
                     Select your preferred destination from our curated list of amazing travel experiences.
                   </p>
                 </div>
@@ -115,8 +115,8 @@ const BookDetailsSection = () => {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-bold text-gray-600">Give Enquiry</h3>
-                  <p className="text-gray-500 mt-1">
+                  <h3 className="text-lg font-bold text-gray-600 dark:text-gray-300">Give Enquiry</h3>
+                  <p className="text-gray-500 dark:text-gray-400 mt-1">
                     Submit your travel enquiry via WhatsApp and our team will contact you for personalized assistance.
                   </p>
                 </div>
@@ -128,8 +128,8 @@ const BookDetailsSection = () => {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-bold text-gray-600">Give Advance</h3>
-                  <p className="text-gray-500 mt-1">
+                  <h3 className="text-lg font-bold text-gray-600 dark:text-gray-300">Give Advance</h3>
+                  <p className="text-gray-500 dark:text-gray-400 mt-1">
                     Secure your booking with a small advance payment to confirm your travel dates.
                   </p>
                 </div>
@@ -141,8 +141,8 @@ const BookDetailsSection = () => {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-bold text-gray-600">End to End Assistance</h3>
-                  <p className="text-gray-500 mt-1">
+                  <h3 className="text-lg font-bold text-gray-600 dark:text-gray-300">End to End Assistance</h3>
+                  <p className="text-gray-500 dark:text-gray-400 mt-1">
                     On the day of your trip, we provide complete guidance and assistance, including meet and onboarding support throughout your travel journey.
                   </p>
                 </div>
@@ -171,7 +171,20 @@ const BookDetailsSection = () => {
 // Ongoing Trips Carousel Component
 const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.MouseEvent) => void }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  
+  const [lastClickTime, setLastClickTime] = useState<number>(0);
+  const [clickCount, setClickCount] = useState<number>(0);
+  const [globalHighestProgress, setGlobalHighestProgress] = useState<number>(25);
+  const [rateLimitActive, setRateLimitActive] = useState<boolean>(false);
+  const [timeUntilNextClick, setTimeUntilNextClick] = useState<number>(0);
+
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [zoomLevel, setZoomLevel] = useState<number>(1);
+  const [panPosition, setPanPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
   const [trips, setTrips] = useState([
     {
       image: "/ongoing/trip-to-goa.png",
@@ -180,12 +193,130 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
       percentage: 25
     },
     {
-      image: "/ongoing/trip-to-himachal.png", 
+      image: "/ongoing/trip-to-himachal.png",
       title: "Trip to Himachal",
       status: "20% completed",
       percentage: 20
     }
   ]);
+
+  // Load data from localStorage on component mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Load trips data
+      const savedTrips = localStorage.getItem('bookDetailsTrips');
+      if (savedTrips) {
+        setTrips(JSON.parse(savedTrips));
+      }
+
+      // Load click count
+      const savedClickCount = localStorage.getItem('bookDetailsClickCount');
+      if (savedClickCount) {
+        setClickCount(parseInt(savedClickCount, 10));
+      }
+
+      // Load global highest progress
+      const savedHighestProgress = localStorage.getItem('globalHighestProgress');
+      if (savedHighestProgress) {
+        setGlobalHighestProgress(parseInt(savedHighestProgress, 10));
+      }
+
+      // Load last click time
+      const savedLastClickTime = localStorage.getItem('lastClickTime');
+      if (savedLastClickTime) {
+        setLastClickTime(parseInt(savedLastClickTime, 10));
+      }
+
+      // Analytics logging
+      console.log('🚀 Book Details Section loaded!');
+      console.log(`📊 Current stats: ${clickCount} total clicks, ${globalHighestProgress}% highest progress`);
+      console.log(`🎯 Trips data:`, trips);
+    }
+  }, []);
+
+  // Save trips data to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('bookDetailsTrips', JSON.stringify(trips));
+    }
+  }, [trips]);
+
+  // Save click count to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('bookDetailsClickCount', clickCount.toString());
+    }
+  }, [clickCount]);
+
+  // Save global highest progress to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('globalHighestProgress', globalHighestProgress.toString());
+    }
+  }, [globalHighestProgress]);
+
+  // Countdown timer for rate limit
+  useEffect(() => {
+    if (rateLimitActive) {
+      const interval = setInterval(() => {
+        const now = Date.now();
+        const timeLeft = Math.max(0, 40000 - (now - lastClickTime));
+        setTimeUntilNextClick(Math.ceil(timeLeft / 1000));
+
+        if (timeLeft <= 0) {
+          setRateLimitActive(false);
+          setTimeUntilNextClick(0);
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [rateLimitActive, lastClickTime]);
+
+  // Keyboard support and wheel prevention for modal
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case 'Escape':
+          closeModal();
+          break;
+        case '+':
+        case '=':
+          e.preventDefault();
+          zoomIn();
+          break;
+        case '-':
+          e.preventDefault();
+          zoomOut();
+          break;
+        case '0':
+          e.preventDefault();
+          resetZoom();
+          break;
+      }
+    };
+
+    const preventWheel = (e: WheelEvent) => {
+      // Only prevent wheel events when modal is open and not over the image
+      if (isModalOpen) {
+        const target = e.target as HTMLElement;
+        const modalContent = document.querySelector('[data-modal-content]');
+        if (!modalContent?.contains(target)) {
+          e.preventDefault();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('wheel', preventWheel, { passive: false });
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('wheel', preventWheel);
+    };
+  }, [isModalOpen]);
 
   // Auto rotation effect (reduced speed by 15% total - from 4000ms to 4600ms)
   useEffect(() => {
@@ -204,13 +335,152 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
     setCurrentIndex((prev) => (prev + 1) % trips.length);
   };
 
+  // Modal functions
+  const openModal = (imageSrc: string) => {
+    setSelectedImage(imageSrc);
+    setIsModalOpen(true);
+    setZoomLevel(1);
+    setPanPosition({ x: 0, y: 0 });
+    // Prevent background scroll and wheel events
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.top = `-${window.scrollY}px`;
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage('');
+    setZoomLevel(1);
+    setPanPosition({ x: 0, y: 0 });
+    // Restore background scroll
+    const scrollY = document.body.style.top;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.overflow = '';
+    document.body.style.width = '';
+    window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+  };
+
+  const zoomIn = () => {
+    setZoomLevel(prev => Math.min(prev + 0.25, 3));
+  };
+
+  const zoomOut = () => {
+    setZoomLevel(prev => Math.max(prev - 0.25, 0.25));
+  };
+
+  const resetZoom = () => {
+    setZoomLevel(1);
+    setPanPosition({ x: 0, y: 0 });
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (zoomLevel > 1) {
+      setIsDragging(true);
+      setDragStart({ x: e.clientX - panPosition.x, y: e.clientY - panPosition.y });
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDragging && zoomLevel > 1) {
+      setPanPosition({
+        x: e.clientX - dragStart.x,
+        y: e.clientY - dragStart.y
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // More responsive zoom with better delta handling
+    const delta = e.deltaY * -0.001;
+    const newZoom = Math.max(0.25, Math.min(3, zoomLevel + delta));
+
+    // Only update if there's a meaningful change
+    if (Math.abs(newZoom - zoomLevel) > 0.01) {
+      setZoomLevel(newZoom);
+    }
+  };
+
+  // Touch support for mobile
+  const [touchStartDistance, setTouchStartDistance] = useState<number>(0);
+  const [touchStartZoom, setTouchStartZoom] = useState<number>(1);
+
+  const getTouchDistance = (touches: React.TouchList) => {
+    if (touches.length < 2) return 0;
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      setTouchStartDistance(getTouchDistance(e.touches));
+      setTouchStartZoom(zoomLevel);
+    } else if (e.touches.length === 1 && zoomLevel > 1) {
+      setIsDragging(true);
+      setDragStart({
+        x: e.touches[0].clientX - panPosition.x,
+        y: e.touches[0].clientY - panPosition.y
+      });
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault();
+
+    if (e.touches.length === 2 && touchStartDistance > 0) {
+      // Pinch to zoom
+      const currentDistance = getTouchDistance(e.touches);
+      const scale = currentDistance / touchStartDistance;
+      const newZoom = Math.max(0.25, Math.min(3, touchStartZoom * scale));
+      setZoomLevel(newZoom);
+    } else if (e.touches.length === 1 && isDragging && zoomLevel > 1) {
+      // Pan
+      setPanPosition({
+        x: e.touches[0].clientX - dragStart.x,
+        y: e.touches[0].clientY - dragStart.y
+      });
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    setTouchStartDistance(0);
+  };
+
   const handleProgressClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent event bubbling
-    
+
+    const now = Date.now();
+    const timeSinceLastClick = now - lastClickTime;
+
+    // Rate limiting: Only allow one click per 40 seconds
+    if (timeSinceLastClick < 40000) {
+      const remainingTime = Math.ceil((40000 - timeSinceLastClick) / 1000);
+      setRateLimitActive(true);
+      setTimeUntilNextClick(remainingTime);
+      console.log(`⏰ Rate limited! Please wait ${remainingTime} seconds before clicking again.`);
+      return;
+    }
+
+    // Update click count and log
+    const newClickCount = clickCount + 1;
+    setClickCount(newClickCount);
+    console.log(`🎯 Progress clicked! Total clicks: ${newClickCount}`);
+    console.log(`📊 Click timestamp: ${new Date(now).toLocaleString()}`);
+
     setTrips(prevTrips => {
       const newTrips = [...prevTrips];
       const currentTrip = newTrips[currentIndex];
-      
+
       // Increase percentage by 1% (max 100%)
       const newPercentage = Math.min(currentTrip.percentage + 1, 100);
       newTrips[currentIndex] = {
@@ -218,9 +488,21 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
         percentage: newPercentage,
         status: `${newPercentage}% completed`
       };
-      
+
+      // Update global highest progress if this is higher
+      if (newPercentage > globalHighestProgress) {
+        setGlobalHighestProgress(newPercentage);
+        console.log(`🏆 New highest progress achieved: ${newPercentage}%`);
+      }
+
       return newTrips;
     });
+
+    // Update last click time
+    setLastClickTime(now);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('lastClickTime', now.toString());
+    }
 
     // Trigger confetti
     onProgressClick(e);
@@ -244,8 +526,9 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
                 alt={trip.title}
                 width={370}
                 height={420}
-                className="w-full h-[420px] object-cover object-center transition-transform duration-300 hover:scale-105"
+                className="w-full h-[420px] object-cover object-center transition-transform duration-300 hover:scale-105 cursor-pointer"
                 priority={index === 0}
+                onClick={() => openModal(trip.image)}
               />
             </div>
           ))}
@@ -257,10 +540,10 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
             e.stopPropagation();
             goToPrevious();
           }}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-gray-700/80 hover:bg-white dark:hover:bg-gray-600 p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 18L9 12L15 6" stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M15 18L9 12L15 6" stroke="#374151" className="dark:stroke-gray-300" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
         
@@ -269,10 +552,10 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
             e.stopPropagation();
             goToNext();
           }}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-gray-700/80 hover:bg-white dark:hover:bg-gray-600 p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 18L15 12L9 6" stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M9 18L15 12L9 6" stroke="#374151" className="dark:stroke-gray-300" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
         
@@ -294,8 +577,12 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
       </div>
       
       {/* Status Box */}
-      <div 
-        className="absolute -bottom-8 -left-16 bg-white p-4 rounded-xl shadow-lg w-64 cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-102 transform-gpu"
+      <div
+        className={`absolute -bottom-8 -left-16 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg w-64 transition-all duration-300 transform-gpu ${
+          rateLimitActive
+            ? 'cursor-not-allowed opacity-75'
+            : 'cursor-pointer hover:shadow-xl hover:scale-102'
+        }`}
         onClick={handleProgressClick}
       >
         <div className="flex items-center">
@@ -305,19 +592,129 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
             </span>
           </div>
           <div className="ml-3">
-            <p className="font-semibold transition-all duration-300">{trips[currentIndex].title}</p>
-            <p className="text-sm text-gray-500 transition-all duration-300">{trips[currentIndex].status}</p>
-            <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1 overflow-hidden progress-bar-container">
-              <div 
-                className="bg-gradient-to-r from-purple-600 to-blue-500 h-1.5 rounded-full transition-all duration-700 ease-out transform-gpu" 
-                style={{ 
-                  width: `${trips[currentIndex].percentage}%`
+            <p className="font-semibold text-gray-900 dark:text-gray-100 transition-all duration-300">{trips[currentIndex].title}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 transition-all duration-300">
+              {rateLimitActive ? (
+                <>⏰ Wait {timeUntilNextClick}s | Global Best: {globalHighestProgress}%</>
+              ) : (
+                <>Global Best: {globalHighestProgress}%</>
+              )}
+            </p>
+            <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-1.5 mt-1 overflow-hidden progress-bar-container">
+              <div
+                className="bg-gradient-to-r from-purple-600 to-blue-500 h-1.5 rounded-full transition-all duration-700 ease-out transform-gpu"
+                style={{
+                  width: `${globalHighestProgress}%`
                 }}
               ></div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Click to show interest text */}
+      <div className="absolute -bottom-16 -left-16 w-64 text-center">
+        <p className="text-sm text-blue-600 dark:text-blue-400 font-medium animate-pulse">
+          Click to show interest ✨
+        </p>
+      </div>
+
+      {/* Full Screen Image Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+          onClick={closeModal}
+          onWheel={(e) => e.preventDefault()} // Prevent background scrolling
+        >
+          <div
+            className="relative max-w-[90vw] max-h-[90vh] p-4"
+            onClick={(e) => e.stopPropagation()}
+            data-modal-content
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute -top-16 right-0 text-white hover:text-gray-300 transition-colors bg-black/50 p-2 rounded-full"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+
+            {/* Zoom Controls */}
+            <div className="absolute -top-16 left-0 flex space-x-2">
+              <button
+                onClick={zoomOut}
+                className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+                title="Zoom Out"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </button>
+              <button
+                onClick={resetZoom}
+                className="bg-black/50 hover:bg-black/70 text-white px-3 py-2 rounded-full text-sm transition-colors"
+                title="Reset Zoom"
+              >
+                {Math.round(zoomLevel * 100)}%
+              </button>
+              <button
+                onClick={zoomIn}
+                className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+                title="Zoom In"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </button>
+            </div>
+
+            {/* Image Container */}
+            <div
+              className="relative overflow-hidden bg-white rounded-lg shadow-2xl touch-none"
+              style={{
+                width: 'min(90vw, 800px)',
+                height: 'min(90vh, 600px)',
+                cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'
+              }}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              onWheel={handleWheel}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              <Image
+                src={selectedImage}
+                alt="Full screen view"
+                fill
+                className="object-contain"
+                style={{
+                  transform: `scale(${zoomLevel}) translate(${panPosition.x / zoomLevel}px, ${panPosition.y / zoomLevel}px)`,
+                  transition: isDragging ? 'none' : 'transform 0.1s ease-out'
+                }}
+                draggable={false}
+              />
+            </div>
+
+            {/* Zoom Hint */}
+            <div className="absolute -bottom-12 left-0 right-0 text-center">
+              <p className="text-white/70 text-sm">
+                {zoomLevel > 1
+                  ? 'Drag to pan • Scroll to zoom • Pinch to zoom on mobile'
+                  : 'Scroll to zoom • Click and drag when zoomed • Pinch to zoom on mobile'
+                }
+              </p>
+              <p className="text-white/50 text-xs mt-1">
+                Press ESC to close • + to zoom in • - to zoom out • 0 to reset
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

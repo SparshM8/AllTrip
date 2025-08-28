@@ -2,13 +2,12 @@ import React from 'react';
 
 const StayRedirect = () => {
   return (
-    <section className="bg-[#FFFFFF] py-16">
+    <section className="bg-background dark:bg-gray-900 py-16">
       <div className="container mx-auto px-7">
         <div
           className="relative bg-cover bg-center rounded-lg overflow-hidden"
           style={{ backgroundImage: "url('/placeholderstay.png')" }}
         >
-          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           <div className="relative z-10 p-12 md:p-24 text-white">
             <h2 className="text-4xl md:text-5xl font-bold font-serif mb-6 max-w-xl">
               Nourish the mind, body, and spirit.

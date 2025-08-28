@@ -92,7 +92,19 @@ export default function HeroSection() {
                   Experience the magic of India with AllTripp. From mountain escapes to coastal retreats, we bring you curated journeys that celebrate culture, connection, and unforgettable moments. Whether you seek serene backwaters, majestic peaks, or vibrant cityscapes, our bespoke packages are designed to fulfill your every travel desire, ensuring a seamless and enriching adventure from start to finish.
                 </motion.p>
 
-                <motion.div className="mt-6 flex items-center justify-start space-x-8" variants={itemVariants}>
+                <motion.div
+                  className="mt-6 flex items-center justify-start space-x-8 cursor-pointer"
+                  variants={itemVariants}
+                  onClick={() => {
+                    const testimonialsSection = document.getElementById('testimonials');
+                    if (testimonialsSection) {
+                      testimonialsSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                      });
+                    }
+                  }}
+                >
                   <div className="flex items-center space-x-2">
                     <div className="flex space-x-2">
                       <Image

@@ -20,7 +20,7 @@ export default function FeaturesSection() {
   return (
     <section
       id="features"
-      className="relative py-20 md:py-28 overflow-hidden bg-white"
+      className="relative py-20 md:py-28 overflow-hidden bg-white dark:bg-gray-900"
       style={{
         backgroundImage: 'url(/why-choose-bg.png)',
         backgroundSize: 'cover',
@@ -30,10 +30,10 @@ export default function FeaturesSection() {
     >
       <div className="container relative z-10 px-4 md:px-6">
         <div className="text-center mb-16 rounded-xl p-4">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-black tracking-wide">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-black dark:text-white tracking-wide">
             WHY CHOOSE US?
           </h2>
-          <p className="text-lg md:text-xl text-black-600 mt-4 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mt-4 max-w-2xl mx-auto">
             Experiences you'll cherish forever
           </p>
         </div>
@@ -44,15 +44,15 @@ export default function FeaturesSection() {
             return (
               <div
                 key={index}
-                className="card text-center p-8 rounded-xl shadow-xl transition-shadow duration-300 bg-white/60 backdrop-blur-md border border-white/50"
+                className="card text-center p-8 rounded-xl shadow-xl transition-shadow duration-300 bg-white/60 dark:bg-gray-800/60 backdrop-blur-md border border-white/50 dark:border-gray-700/50"
               >
                 <div className="card-icon flex justify-center items-center mb-5">
-                  <Icon className="w-16 h-16 text-gray-800" strokeWidth={1.5} />
+                  <Icon className="w-16 h-16 text-gray-800 dark:text-gray-200" strokeWidth={1.5} />
                 </div>
-                <h3 className="card-title text-xl font-bold text-gray-900 mb-3">
+                <h3 className="card-title text-xl font-bold text-gray-900 dark:text-white mb-3">
                   {feature.title}
                 </h3>
-                <p className="card-text text-gray-700 leading-relaxed text-sm">
+                <p className="card-text text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
                   {feature.description}
                 </p>
               </div>
@@ -62,7 +62,7 @@ export default function FeaturesSection() {
       </div>
 
       {/* Optional overlay for top-level blur */}
-      <div className="absolute inset-0 bg-white/40 backdrop-blur-sm z-0" />
+      <div className="absolute inset-0 bg-white/40 dark:bg-black/40 backdrop-blur-sm z-0" />
     </section>
   );
 }

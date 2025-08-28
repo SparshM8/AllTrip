@@ -61,6 +61,10 @@ export default function ItinerariesSection() {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [likedTrips, setLikedTrips] = useState<Set<number>>(new Set());
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const toggleLike = (idx: number) => {
     setLikedTrips(prev => {
@@ -74,12 +78,74 @@ export default function ItinerariesSection() {
     });
   };
 
+  const checkScrollButtons = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      setCanScrollLeft(scrollLeft > 10); // Small threshold to account for floating point precision
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  const scrollLeft = () => {
+    if (carouselRef.current) {
+      const cardWidth = carouselRef.current.children[0]?.clientWidth || 320;
+      carouselRef.current.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+      // Check buttons after a short delay to ensure scroll has completed
+      setTimeout(checkScrollButtons, 300);
+    }
+  };
+
+  const scrollRight = () => {
+    if (carouselRef.current) {
+      const cardWidth = carouselRef.current.children[0]?.clientWidth || 320;
+      carouselRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      // Check buttons after a short delay to ensure scroll has completed
+      setTimeout(checkScrollButtons, 300);
+    }
+  };
+
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe && canScrollRight) {
+      scrollRight();
+    }
+    if (isRightSwipe && canScrollLeft) {
+      scrollLeft();
+    }
+  };
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (carousel) {
+      // Initial check
+      checkScrollButtons();
+      // Add scroll event listener
+      carousel.addEventListener('scroll', checkScrollButtons);
+      return () => carousel.removeEventListener('scroll', checkScrollButtons);
+    }
+  }, []);
+
 
   return (
-    <section 
-      id="itineraries" 
-      ref={ref} 
-      className="py-20"
+    <section
+      id="itineraries"
+      ref={ref}
+      className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300"
     >
       <div className="container mx-auto px-6 md:px-16 lg:px-20">
         {/* Section Header */}
@@ -89,16 +155,43 @@ export default function ItinerariesSection() {
               transition={{ duration: 0.6 }}
               className="text-left mb-10"
             >
-              <h2 className="text-5xl md:text-5xl font-extrabold text-black tracking-tighter uppercase">
-                ITINERARIES
-              </h2>
-              <p className="text-lg md:text-xl text-black mt-4">
-                That Beckon Every Traveller
-              </p>
+              <div className="flex flex-col space-y-4">
+                <h2 className="text-5xl md:text-5xl font-extrabold text-black dark:text-white tracking-tighter uppercase">
+                  ITINERARIES
+                </h2>
+
+                {/* Subtitle and Navigation Buttons - Same Line */}
+                <div className="flex items-center justify-between">
+                  <p className="text-lg md:text-xl text-black dark:text-gray-300">
+                    That Beckon Every Traveller
+                  </p>
+
+                  {/* Navigation Buttons - Parallel to Subtitle */}
+                  <div className="flex items-center space-x-3 ml-6">
+                    <Button
+                      onClick={scrollLeft}
+                      disabled={!canScrollLeft}
+                      className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 border border-gray-200 dark:border-gray-600"
+                      variant="outline"
+                    >
+                      <ChevronLeft className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                    </Button>
+                    <Button
+                      onClick={scrollRight}
+                      disabled={!canScrollRight}
+                      className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 border border-gray-200 dark:border-gray-600"
+                      variant="outline"
+                    >
+                      <ChevronRight className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </motion.div>
-            <div className="flex items-center">
+            <div className="relative">
+              {/* Cards Container */}
               <motion.div
-                className="overflow-hidden flex-1"
+                className="overflow-hidden"
                 initial={{ opacity: 0 }}
                 animate={
                   isInView
@@ -108,12 +201,15 @@ export default function ItinerariesSection() {
               >
                 <div
                   ref={carouselRef}
-                  className="flex space-x-4 overflow-x-hidden snap-x snap-mandatory py-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                  className="flex space-x-4 overflow-x-auto snap-x snap-mandatory py-4 px-4 md:px-24 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
                 >
                   {itineraries.map((itinerary, idx) => (
                     <motion.div
                       key={idx}
-                      className="snap-start flex-shrink-0 w-full sm:w-[300px] lg:w-[320px]"
+                      className="snap-start flex-shrink-0 w-full md:w-[300px] lg:w-[320px]"
                       initial={{ y: 50, opacity: 0 }}
                       animate={
                         isInView
@@ -132,7 +228,7 @@ export default function ItinerariesSection() {
                       onMouseLeave={() => setHoveredCard(null)}
                     >
                       {/* Clean Compact Card Design */}
-                      <div className="group bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                      <div className="group bg-white dark:bg-slate-800 rounded-xl shadow-md dark:shadow-slate-700 hover:shadow-lg dark:hover:shadow-slate-600 transition-all duration-300 overflow-hidden border border-gray-100 dark:border-slate-700">
                         {/* Image Section with Carousel Dots and Heart */}
                         <div className="relative h-56 w-full overflow-hidden">
                           <Image
@@ -142,15 +238,15 @@ export default function ItinerariesSection() {
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
                           />
-                          
+
                           {/* Heart/Like Icon - Top Right */}
                           <button
                             onClick={() => toggleLike(idx)}
-                            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm hover:bg-white transition-all duration-300 flex items-center justify-center shadow-sm"
+                            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 dark:bg-slate-700/90 backdrop-blur-sm hover:bg-white dark:hover:bg-slate-600 transition-all duration-300 flex items-center justify-center shadow-sm dark:shadow-slate-900"
                           >
-                            <Heart 
-                              size={16} 
-                              className={`${likedTrips.has(idx) ? 'fill-red-500 text-red-500' : 'text-gray-600'} transition-colors duration-300`}
+                            <Heart
+                              size={16}
+                              className={`${likedTrips.has(idx) ? 'fill-red-500 text-red-500' : 'text-gray-600 dark:text-gray-400'} transition-colors duration-300`}
                             />
                           </button>
 
@@ -159,7 +255,7 @@ export default function ItinerariesSection() {
                             {[...Array(3)].map((_, dotIdx) => (
                               <div
                                 key={dotIdx}
-                                className={`w-1.5 h-1.5 rounded-full ${dotIdx === 0 ? 'bg-white' : 'bg-white/60'}`}
+                                className={`w-1.5 h-1.5 rounded-full ${dotIdx === 0 ? 'bg-white dark:bg-gray-300' : 'bg-white/60 dark:bg-gray-400/60'}`}
                               />
                             ))}
                           </div>
@@ -187,7 +283,7 @@ export default function ItinerariesSection() {
                             </div>
                             <Button
                               asChild
-                              className="bg-[#FDBE00] text-black hover:bg-[#FDBE00]/90 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
+                              className="bg-[#FDBE00] dark:bg-[#FDBE00] text-black dark:text-black hover:bg-[#FDBE00]/90 dark:hover:bg-[#FDBE00]/90 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm dark:shadow-slate-900"
                             >
                               <a href={`/itineraries/${getItinerarySlug(itinerary.title)}`}>
                                 View Details

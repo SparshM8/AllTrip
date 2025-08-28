@@ -124,7 +124,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-<body className={`${inter.variable} ${pacifico.variable} ${montserrat.variable} ${roboto.variable} font-sans m-0 p-0`} style={{ backgroundColor: "#fff" }}>
+<body className={`${inter.variable} ${pacifico.variable} ${montserrat.variable} ${roboto.variable} font-sans m-0 p-0 bg-white dark:bg-gray-900`}>
         <SpeedInsights />
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <LenisProvider>

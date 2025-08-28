@@ -17,13 +17,12 @@ export const metadata: Metadata = generateMetadata({
     "travel guides India",
     "cultural tours blog"
   ],
-  url: "https://alltripp.com/blog",
-  image: "/himalayas.jpg",
+  ogImage: "/himalayas.jpg",
 });
 
 export default function BlogPage() {
   return (
-    <main>
+    <main className="bg-gray-50 dark:bg-gray-900 min-h-screen">
       <BlogSection />
     </main>
   );

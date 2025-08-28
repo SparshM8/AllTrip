@@ -42,10 +42,10 @@ export default function CampusAmbassadorSection() {
   };
 
   return (
-    <section 
-      id="campus" 
-      ref={ref} 
-      className="relative py-12 sm:py-16 md:py-20 lg:py-32"
+    <section
+      id="campus"
+      ref={ref}
+      className="relative py-12 sm:py-16 md:py-20 lg:py-32 bg-white dark:bg-gray-900"
     >
       <motion.div 
         variants={containerVariants}
@@ -55,8 +55,8 @@ export default function CampusAmbassadorSection() {
       >
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-12 gap-8 lg:gap-0">
           <motion.div variants={itemVariants}>
-            <p className="text-lg text-gray-500 font-semibold">CAMPUS AMBASSADOR</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mt-4">
+            <p className="text-lg text-gray-600 dark:text-gray-300 font-semibold">CAMPUS AMBASSADOR</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mt-4">
               Join the tribe,
               <br />
               lead the journey
@@ -64,26 +64,25 @@ export default function CampusAmbassadorSection() {
           </motion.div>
         </div>
 
-        <motion.div 
+        <motion.div
           variants={itemVariants}
-          className="bg-gradient-to-br from-yellow-400/10 to-yellow-500/10 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-white/20 shadow-lg"
+          className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-white/50 dark:border-gray-700/50 shadow-lg"
         >
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 mb-12">
             {benefits.map((benefit, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 whileHover={{ scale: 1.05, y: -5 }}
                 transition={{ duration: 0.3 }}
-                style={{ backgroundColor: '#FDBE00' }}
-                className="rounded-xl p-6 shadow-lg text-center text-black"
+                className="bg-yellow-400 dark:bg-yellow-500 rounded-xl p-6 shadow-lg text-center text-black dark:text-black"
               >
                 <div className="flex justify-center mb-4">
-                  <div className="w-16 h-16 rounded-full bg-white/30 flex items-center justify-center border border-white/40">
-                    <benefit.icon className="w-8 h-8 text-black" strokeWidth={1.5} />
+                  <div className="w-16 h-16 rounded-full bg-white/30 dark:bg-black/20 flex items-center justify-center border border-white/40 dark:border-black/30">
+                    <benefit.icon className="w-8 h-8 text-black dark:text-black" strokeWidth={1.5} />
                   </div>
                 </div>
                 <h3 className="text-lg font-semibold mb-1">{benefit.title}</h3>
-                <p className="text-black/70 text-sm">{benefit.description}</p>
+                <p className="text-black/70 dark:text-black/80 text-sm">{benefit.description}</p>
               </motion.div>
             ))}
           </div>
@@ -105,7 +104,7 @@ export default function CampusAmbassadorSection() {
               asChild
               size="lg"
               variant="outline"
-              className="bg-transparent border-black/50 text-black hover:bg-black/10 hover:text-black transition-all duration-300 w-full sm:w-auto"
+              className="bg-transparent border-gray-900/50 dark:border-gray-100/50 text-gray-900 dark:text-gray-100 hover:bg-gray-900/10 dark:hover:bg-gray-100/10 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-300 w-full sm:w-auto"
             >
               <Link href="https://www.instagram.com/alltripp_/" target="_blank">
                 Follow on Instagram

@@ -187,51 +187,13 @@ const Navbar: React.FC = () => {
                 </div>
               </>
             ) : (
-              // Mobile Navigation - Right side
+              // Mobile Navigation - Right side (Reordered: Hamburger, Book, Toggle)
               <div className="flex items-center gap-3">
-                {/* Mobile Theme Toggle */}
-                <button
-                  onClick={toggleTheme}
-                  aria-label="Toggle Dark Mode"
-                  className="relative inline-flex items-center w-10 h-5 rounded-full transition-all duration-300 focus:outline-none hover:scale-105"
-                  style={{
-                    backgroundColor: theme === "light" ? "#FF8C00" : "#1e40af"
-                  }}
-                >
-                  <div className="absolute inset-0 flex items-center justify-between px-1">
-                    <Sun className={`w-2.5 h-2.5 transition-opacity duration-300 ${theme === "light" ? "opacity-100 text-yellow-100" : "opacity-50 text-yellow-400"}`} />
-                    <Moon className={`w-2.5 h-2.5 transition-opacity duration-300 ${theme === "dark" ? "opacity-100 text-blue-100" : "opacity-50 text-blue-600"}`} />
-                  </div>
-                  
-                  <div
-                    className={`absolute w-3 h-3 bg-white rounded-full shadow-lg transform transition-transform duration-300 ${
-                      theme === "light" ? "translate-x-1" : "translate-x-6"
-                    }`}
-                  />
-                </button>
-
-                {/* Mobile Book Now Button */}
-                <Button
-                  asChild
-                  size="sm"
-                  className="bg-green-600 text-white hover:bg-green-700 font-medium px-3 py-1.5 rounded-lg shadow-md text-sm"
-                >
-                  <a 
-                    href="https://api.whatsapp.com/send/?phone=919266602470&text=Hi+AllTipp%2C+I+am+interested+in+planning+a+trip.+Can+you+help+me+with+the+details%3F&type=phone_number&app_absent=0" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="flex items-center gap-1"
-                  >
-                    <MessageCircle className="w-3 h-3" />
-                    Book
-                  </a>
-                </Button>
-                
-                {/* Mobile Menu Drawer */}
+                {/* Mobile Menu Drawer - First */}
                 <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
                   <DrawerTrigger asChild>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       size="icon"
                       className="bg-white hover:bg-gray-50 border-gray-200 rounded-lg shadow-md"
                       aria-label="Toggle menu"
@@ -240,9 +202,9 @@ const Navbar: React.FC = () => {
                       <span className="sr-only">Toggle menu</span>
                     </Button>
                   </DrawerTrigger>
-                  <DrawerContent 
+                  <DrawerContent
                     className="rounded-t-2xl border-t border-gray-200/20"
-                    style={{ 
+                    style={{
                       backgroundColor: '#FDBE00',
                       boxShadow: '0 -8px 32px rgba(0, 0, 0, 0.08)'
                     }}
@@ -264,17 +226,17 @@ const Navbar: React.FC = () => {
                           {link.name}
                         </Link>
                       ))}
-                      
+
                       {/* Mobile Full Book Now Button */}
                       <div className="mt-4 pt-4 border-t border-gray-200/30">
                         <Button
                           asChild
                           className="w-full bg-green-600 text-white hover:bg-green-700 font-semibold py-3 rounded-xl shadow-md"
                         >
-                          <a 
-                            href="https://api.whatsapp.com/send/?phone=919266602470&text=Hi+AllTipp%2C+I+am+interested+in+planning+a+trip.+Can+you+help+me+with+the+details%3F&type=phone_number&app_absent=0" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
+                          <a
+                            href="https://api.whatsapp.com/send/?phone=919266602470&text=Hi+AllTipp%2C+I+am+interested+in+planning+a+trip.+Can+you+help+me+with+the+details%3F&type=phone_number&app_absent=0"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             onClick={() => setIsDrawerOpen(false)}
                             className="flex items-center justify-center gap-2"
                           >
@@ -293,6 +255,44 @@ const Navbar: React.FC = () => {
                     </DrawerFooter>
                   </DrawerContent>
                 </Drawer>
+
+                {/* Mobile Book Now Button - Second */}
+                <Button
+                  asChild
+                  size="sm"
+                  className="bg-green-600 text-white hover:bg-green-700 font-medium px-3 py-1.5 rounded-lg shadow-md text-sm"
+                >
+                  <a
+                    href="https://api.whatsapp.com/send/?phone=919266602470&text=Hi+AllTipp%2C+I+am+interested+in+planning+a+trip.+Can+you+help+me+with+the+details%3F&type=phone_number&app_absent=0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1"
+                  >
+                    <MessageCircle className="w-3 h-3" />
+                    Book
+                  </a>
+                </Button>
+
+                {/* Mobile Theme Toggle - Third */}
+                <button
+                  onClick={toggleTheme}
+                  aria-label="Toggle Dark Mode"
+                  className="relative inline-flex items-center w-10 h-5 rounded-full transition-all duration-300 focus:outline-none hover:scale-105"
+                  style={{
+                    backgroundColor: theme === "light" ? "#FF8C00" : "#1e40af"
+                  }}
+                >
+                  <div className="absolute inset-0 flex items-center justify-between px-1">
+                    <Sun className={`w-2.5 h-2.5 transition-opacity duration-300 ${theme === "light" ? "opacity-100 text-yellow-100" : "opacity-50 text-yellow-400"}`} />
+                    <Moon className={`w-2.5 h-2.5 transition-opacity duration-300 ${theme === "dark" ? "opacity-100 text-blue-100" : "opacity-50 text-blue-600"}`} />
+                  </div>
+
+                  <div
+                    className={`absolute w-3 h-3 bg-white rounded-full shadow-lg transform transition-transform duration-300 ${
+                      theme === "light" ? "translate-x-1" : "translate-x-6"
+                    }`}
+                  />
+                </button>
               </div>
             )}
           </div>

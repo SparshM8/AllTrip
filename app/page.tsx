@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import HeroSection from "@/components/hero-section";
+import HeroSectionResponsive from "@/components/hero-section-responsive";
 import FeaturesSection from "@/components/features-section";
 import DestinationsSection from "@/components/destinations-section";
 import ItinerariesSection from "@/components/trips-section";
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <HeroSection />
+      <HeroSectionResponsive />
       <FeaturesSection />
       <DestinationsSection />
       <DiscountPage />
