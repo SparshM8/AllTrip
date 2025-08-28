@@ -595,9 +595,9 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
             <p className="font-semibold text-gray-900 dark:text-gray-100 transition-all duration-300">{trips[currentIndex].title}</p>
             <p className="text-sm text-gray-500 dark:text-gray-400 transition-all duration-300">
               {rateLimitActive ? (
-                <>⏰ Wait {timeUntilNextClick}s | Global Best: {globalHighestProgress}%</>
+                <>⏰ Wait {timeUntilNextClick}s | Progress: {globalHighestProgress}%</>
               ) : (
-                <>Global Best: {globalHighestProgress}%</>
+                <> Progress : {globalHighestProgress}%</>
               )}
             </p>
             <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-1.5 mt-1 overflow-hidden progress-bar-container">
