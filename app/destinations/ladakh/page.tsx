@@ -8,7 +8,7 @@ export const metadata = generateDestinationMetadata(
 
 export default function LadakhPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -29,29 +29,29 @@ export default function LadakhPage() {
         }}
       />
       
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Ladakh - Land of High Passes
           </h1>
             <div className="mb-8">
-            <img 
-              src="/destinations/Ladakh.jpg" 
-              alt="Ladakh - Stunning mountain landscapes and monasteries" 
+            <img
+              src="/destinations/Ladakh.jpg"
+              alt="Ladakh - Stunning mountain landscapes and monasteries"
               className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
               loading="eager"
             />
           </div>
-          
+
           <div className="prose prose-lg max-w-none">
-            <p className="text-xl text-gray-700 mb-6">
-              Experience the raw beauty of Ladakh with AllTripp's adventure expeditions. 
-              Known as the Land of High Passes, Ladakh offers breathtaking landscapes, 
+            <p className="text-xl text-gray-700 dark:text-gray-300 mb-6">
+              Experience the raw beauty of Ladakh with AllTripp's adventure expeditions.
+              Known as the Land of High Passes, Ladakh offers breathtaking landscapes,
               ancient Buddhist culture, and some of the world's most challenging yet rewarding adventures.
             </p>
-            
-            <h2 className="text-3xl font-semibold text-gray-900 mb-4">Why Choose Ladakh?</h2>
-            <ul className="list-disc pl-6 mb-6 text-gray-700">
+
+            <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-4">Why Choose Ladakh?</h2>
+            <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
               <li>Spectacular high-altitude landscapes and mountain passes</li>
               <li>Ancient Buddhist monasteries and spiritual heritage</li>
               <li>Pristine lakes like Pangong Tso and Tso Moriri</li>
@@ -60,23 +60,23 @@ export default function LadakhPage() {
               <li>Stargazing opportunities in clear mountain skies</li>
             </ul>
             
-            <h2 className="text-3xl font-semibold text-gray-900 mb-4">Popular Attractions</h2>
+            <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-4">Popular Attractions</h2>
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div>
-                <h3 className="text-xl font-semibold mb-2">Pangong Lake</h3>
-                <p>Stunning high-altitude lake stretching across India and China with changing blue hues.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Pangong Lake</h3>
+                <p className="text-gray-700 dark:text-gray-300">Stunning high-altitude lake stretching across India and China with changing blue hues.</p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Leh Palace</h3>
-                <p>Historic royal palace offering panoramic views of Leh town and surrounding mountains.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Leh Palace</h3>
+                <p className="text-gray-700 dark:text-gray-300">Historic royal palace offering panoramic views of Leh town and surrounding mountains.</p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Nubra Valley</h3>
-                <p>Desert valley accessible via Khardung La pass, featuring sand dunes and double-humped camels.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Nubra Valley</h3>
+                <p className="text-gray-700 dark:text-gray-300">Desert valley accessible via Khardung La pass, featuring sand dunes and double-humped camels.</p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Hemis Monastery</h3>
-                <p>Largest monastery in Ladakh famous for its annual festival and ancient Buddhist artifacts.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Hemis Monastery</h3>
+                <p className="text-gray-700 dark:text-gray-300">Largest monastery in Ladakh famous for its annual festival and ancient Buddhist artifacts.</p>
               </div>
             </div>
           </div>

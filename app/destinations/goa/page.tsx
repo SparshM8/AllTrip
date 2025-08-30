@@ -8,7 +8,7 @@ export const metadata = generateDestinationMetadata(
 
 export default function GoaPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -29,9 +29,9 @@ export default function GoaPage() {
         }}
       />
       
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Goa - Beach Paradise of India
           </h1>
           
@@ -45,14 +45,14 @@ export default function GoaPage() {
           </div>
           
           <div className="prose prose-lg max-w-none">
-            <p className="text-xl text-gray-700 mb-6">
-              Experience the magic of Goa with AllTripp's curated beach experiences. 
-              From the bustling beaches of North Goa to the serene shores of South Goa, 
+            <p className="text-xl text-gray-700 dark:text-gray-300 mb-6">
+              Experience the magic of Goa with AllTripp's curated beach experiences.
+              From the bustling beaches of North Goa to the serene shores of South Goa,
               discover a perfect blend of relaxation, adventure, and cultural heritage.
             </p>
             
-            <h2 className="text-3xl font-semibold text-gray-900 mb-4">Why Choose Goa?</h2>
-            <ul className="list-disc pl-6 mb-6 text-gray-700">
+            <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-4">Why Choose Goa?</h2>
+            <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
               <li>Pristine beaches with golden sand and clear waters</li>
               <li>Vibrant nightlife and beach parties</li>
               <li>Rich Portuguese colonial heritage and architecture</li>
@@ -61,23 +61,23 @@ export default function GoaPage() {
               <li>Peaceful beach resorts and luxury accommodations</li>
             </ul>
             
-            <h2 className="text-3xl font-semibold text-gray-900 mb-4">Popular Attractions</h2>
+            <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-4">Popular Attractions</h2>
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div>
-                <h3 className="text-xl font-semibold mb-2">North Goa</h3>
-                <p>Famous for Baga, Calangute, and Anjuna beaches with vibrant nightlife and water sports.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">North Goa</h3>
+                <p className="text-gray-700 dark:text-gray-300">Famous for Baga, Calangute, and Anjuna beaches with vibrant nightlife and water sports.</p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">South Goa</h3>
-                <p>Peaceful beaches like Palolem and Agonda, perfect for relaxation and luxury resorts.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">South Goa</h3>
+                <p className="text-gray-700 dark:text-gray-300">Peaceful beaches like Palolem and Agonda, perfect for relaxation and luxury resorts.</p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Old Goa</h3>
-                <p>UNESCO World Heritage site with beautiful churches and Portuguese architecture.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Old Goa</h3>
+                <p className="text-gray-700 dark:text-gray-300">UNESCO World Heritage site with beautiful churches and Portuguese architecture.</p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Panaji</h3>
-                <p>Capital city featuring colorful houses, local markets, and the famous Mandovi River.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Panaji</h3>
+                <p className="text-gray-700 dark:text-gray-300">Capital city featuring colorful houses, local markets, and the famous Mandovi River.</p>
               </div>
             </div>
           </div>

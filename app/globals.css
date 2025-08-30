@@ -253,3 +253,246 @@ html.lenis {
   border-left-color: hsl(var(--border));
   color: hsl(var(--muted-foreground));
 }
+
+/* React Multi Date Picker Styles */
+.rmdp-wrapper {
+  font-family: inherit;
+}
+
+.rmdp-calendar {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.rmdp-header {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.rmdp-header-values {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rmdp-arrow-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rmdp-arrow {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.rmdp-arrow:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.rmdp-arrow-container.disabled .rmdp-arrow {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rmdp-week-day {
+  color: #6b7280;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 0;
+  text-align: center;
+}
+
+.rmdp-day {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0.125rem;
+}
+
+.rmdp-day:hover {
+  background: #f3f4f6;
+}
+
+.rmdp-day.rmdp-today {
+  color: #FDBE00;
+  font-weight: 700;
+  position: relative;
+}
+
+.rmdp-day.rmdp-today::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: #FDBE00;
+  border-radius: 50%;
+}
+
+.rmdp-day.rmdp-selected {
+  background: #FDBE00;
+  color: black;
+  font-weight: 600;
+}
+
+.rmdp-day.rmdp-disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.rmdp-day.rmdp-disabled:hover {
+  background: transparent;
+}
+
+.rmdp-range {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.rmdp-range.rmdp-start,
+.rmdp-range.rmdp-end {
+  background: #FDBE00;
+  color: black;
+}
+
+.rmdp-months {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.rmdp-month {
+  min-width: 240px;
+}
+
+.rmdp-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.rmdp-day-picker {
+  padding: 0;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .rmdp-months {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .rmdp-month {
+    min-width: 280px;
+  }
+
+  .rmdp-calendar {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+/* Dark mode support */
+.dark .rmdp-calendar {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark .rmdp-header {
+  background: #111827;
+  border-color: #374151;
+}
+
+.dark .rmdp-week-day {
+  color: #9ca3af;
+}
+
+.dark .rmdp-day {
+  color: #f9fafb;
+}
+
+.dark .rmdp-day:hover {
+  background: #374151;
+}
+
+.dark .rmdp-day.rmdp-selected {
+  background: #FDBE00;
+  color: black;
+}
+
+.dark .rmdp-range {
+  background: #451a03;
+  color: #fbbf24;
+}
+
+.dark .rmdp-day.rmdp-disabled {
+  color: #6b7280;
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f7fafc;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f7fafc;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+.dark .custom-scrollbar {
+  scrollbar-color: #4a5568 #2d3748;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-track {
+  background: #2d3748;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #4a5568;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #718096;
+}

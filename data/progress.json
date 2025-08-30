@@ -1,0 +1,19 @@
+{
+  "trips": [
+    {
+      "image": "/ongoing/trip-to-goa.png",
+      "title": "Trip to Goa",
+      "status": "27% completed",
+      "percentage": 27
+    },
+    {
+      "image": "/ongoing/trip-to-himachal.png",
+      "title": "Trip to Himachal",
+      "status": "20% completed",
+      "percentage": 20
+    }
+  ],
+  "clickCount": 2,
+  "globalHighestProgress": 27,
+  "lastClickTime": 1756575683662
+}

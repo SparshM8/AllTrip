@@ -57,7 +57,7 @@ export default function EventSection() {
   return (
     <section
       id="events"
-      className="py-24 bg-gradient-to-b from-transparent to-slate-50/30"
+      className="py-20 bg-gradient-to-b from-transparent to-slate-50/30"
     >
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Header */}

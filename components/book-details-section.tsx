@@ -81,7 +81,7 @@ const BookDetailsSection = () => {
   };
 
   return (
-    <section className="py-12 relative bg-gray-50 dark:bg-gray-900">
+    <section className="py-20 relative bg-gray-50 dark:bg-gray-900">
       <ConfettiCanvas trigger={showConfetti} origins={confettiOrigins} />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 ml-4 sm:ml-6 md:ml-16 lg:ml-20">
         <div className="flex flex-col lg:flex-row items-center justify-between">
@@ -200,60 +200,88 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
     }
   ]);
 
-  // Load data from localStorage on component mount
+  // Load data from API on component mount
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // Load trips data
-      const savedTrips = localStorage.getItem('bookDetailsTrips');
-      if (savedTrips) {
-        setTrips(JSON.parse(savedTrips));
-      }
+    const loadProgressData = async () => {
+      try {
+        const response = await fetch('/api/progress');
+        if (response.ok) {
+          const data = await response.json();
+          setTrips(data.trips || trips);
+          setClickCount(data.clickCount || 0);
+          setGlobalHighestProgress(data.globalHighestProgress || 25);
+          setLastClickTime(data.lastClickTime || 0);
 
-      // Load click count
-      const savedClickCount = localStorage.getItem('bookDetailsClickCount');
-      if (savedClickCount) {
-        setClickCount(parseInt(savedClickCount, 10));
+          // Analytics logging
+          console.log('🚀 Book Details Section loaded!');
+          console.log(`📊 Current stats: ${data.clickCount || 0} total clicks, ${data.globalHighestProgress || 25}% highest progress`);
+          console.log(`🎯 Trips data:`, data.trips || trips);
+        }
+      } catch (error) {
+        console.error('Error loading progress data:', error);
+        // Fallback to localStorage if API fails
+        if (typeof window !== 'undefined') {
+          const savedTrips = localStorage.getItem('bookDetailsTrips');
+          if (savedTrips) {
+            setTrips(JSON.parse(savedTrips));
+          }
+          const savedClickCount = localStorage.getItem('bookDetailsClickCount');
+          if (savedClickCount) {
+            setClickCount(parseInt(savedClickCount, 10));
+          }
+          const savedHighestProgress = localStorage.getItem('globalHighestProgress');
+          if (savedHighestProgress) {
+            setGlobalHighestProgress(parseInt(savedHighestProgress, 10));
+          }
+          const savedLastClickTime = localStorage.getItem('lastClickTime');
+          if (savedLastClickTime) {
+            setLastClickTime(parseInt(savedLastClickTime, 10));
+          }
+        }
       }
+    };
 
-      // Load global highest progress
-      const savedHighestProgress = localStorage.getItem('globalHighestProgress');
-      if (savedHighestProgress) {
-        setGlobalHighestProgress(parseInt(savedHighestProgress, 10));
-      }
-
-      // Load last click time
-      const savedLastClickTime = localStorage.getItem('lastClickTime');
-      if (savedLastClickTime) {
-        setLastClickTime(parseInt(savedLastClickTime, 10));
-      }
-
-      // Analytics logging
-      console.log('🚀 Book Details Section loaded!');
-      console.log(`📊 Current stats: ${clickCount} total clicks, ${globalHighestProgress}% highest progress`);
-      console.log(`🎯 Trips data:`, trips);
-    }
+    loadProgressData();
   }, []);
 
-  // Save trips data to localStorage whenever it changes
+  // Save data to API whenever it changes
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('bookDetailsTrips', JSON.stringify(trips));
-    }
-  }, [trips]);
+    const saveProgressData = async () => {
+      try {
+        const dataToSave = {
+          trips,
+          clickCount,
+          globalHighestProgress,
+          lastClickTime
+        };
 
-  // Save click count to localStorage whenever it changes
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('bookDetailsClickCount', clickCount.toString());
-    }
-  }, [clickCount]);
+        const response = await fetch('/api/progress', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(dataToSave),
+        });
 
-  // Save global highest progress to localStorage whenever it changes
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('globalHighestProgress', globalHighestProgress.toString());
-    }
-  }, [globalHighestProgress]);
+        if (!response.ok) {
+          throw new Error('Failed to save progress');
+        }
+      } catch (error) {
+        console.error('Error saving progress data:', error);
+        // Fallback to localStorage if API fails
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('bookDetailsTrips', JSON.stringify(trips));
+          localStorage.setItem('bookDetailsClickCount', clickCount.toString());
+          localStorage.setItem('globalHighestProgress', globalHighestProgress.toString());
+          localStorage.setItem('lastClickTime', lastClickTime.toString());
+        }
+      }
+    };
+
+    // Debounce saves to avoid too many API calls
+    const timeoutId = setTimeout(saveProgressData, 500);
+    return () => clearTimeout(timeoutId);
+  }, [trips, clickCount, globalHighestProgress, lastClickTime]);
 
   // Countdown timer for rate limit
   useEffect(() => {
@@ -500,9 +528,6 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
 
     // Update last click time
     setLastClickTime(now);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('lastClickTime', now.toString());
-    }
 
     // Trigger confetti
     onProgressClick(e);

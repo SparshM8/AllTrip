@@ -20,7 +20,7 @@ export default function FeaturesSection() {
   return (
     <section
       id="features"
-      className="relative py-20 md:py-28 overflow-hidden bg-white dark:bg-gray-900"
+      className="relative py-20 overflow-hidden bg-white dark:bg-gray-900"
       style={{
         backgroundImage: 'url(/why-choose-bg.png)',
         backgroundSize: 'cover',

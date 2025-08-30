@@ -104,7 +104,7 @@ const BlogSection: React.FC = () => {
   }, [blogs, liked, handleLike]);
 
   return (
-    <section className="px-6 pt-20 pb-16 max-w-7xl mx-auto bg-gray-50 dark:bg-gray-900">
+    <section className="px-6 py-20 max-w-7xl mx-auto bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-4">
         <div>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground dark:text-[#f8f9fa]">Tips & Article</h2>

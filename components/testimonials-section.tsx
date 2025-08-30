@@ -93,7 +93,7 @@ export default function TestimonialsSection() {
     <section
       id="testimonials"
       ref={ref}
-      className="py-12 bg-white dark:bg-gray-900"
+      className="py-20 bg-white dark:bg-gray-900"
     >
       <motion.div
         variants={containerVariants}
