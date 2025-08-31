@@ -204,9 +204,14 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
   useEffect(() => {
     const loadProgressData = async () => {
       try {
+        console.log('🌐 Client: Fetching progress data from API...');
         const response = await fetch('/api/progress');
+        console.log('🌐 Client: API response status:', response.status);
+
         if (response.ok) {
           const data = await response.json();
+          console.log('🌐 Client: Received data from API:', data);
+
           setTrips(data.trips || trips);
           setClickCount(data.clickCount || 0);
           setGlobalHighestProgress(data.globalHighestProgress || 25);
@@ -216,9 +221,12 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
           console.log('🚀 Book Details Section loaded!');
           console.log(`📊 Current stats: ${data.clickCount || 0} total clicks, ${data.globalHighestProgress || 25}% highest progress`);
           console.log(`🎯 Trips data:`, data.trips || trips);
+        } else {
+          console.log('🌐 Client: API response not OK, status:', response.status);
         }
       } catch (error) {
-        console.error('Error loading progress data:', error);
+        console.error('❌ Client: Error loading progress data:', error);
+        console.log('🔄 Client: Falling back to localStorage...');
         // Fallback to localStorage if API fails
         if (typeof window !== 'undefined') {
           const savedTrips = localStorage.getItem('bookDetailsTrips');
@@ -248,12 +256,14 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
   useEffect(() => {
     const saveProgressData = async () => {
       try {
+        console.log('💾 Client: Saving progress data to API...');
         const dataToSave = {
           trips,
           clickCount,
           globalHighestProgress,
           lastClickTime
         };
+        console.log('📤 Client: Data to save:', dataToSave);
 
         const response = await fetch('/api/progress', {
           method: 'POST',
@@ -263,11 +273,18 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
           body: JSON.stringify(dataToSave),
         });
 
+        console.log('📥 Client: Save API response status:', response.status);
+
         if (!response.ok) {
+          console.log('❌ Client: Save API response not OK');
           throw new Error('Failed to save progress');
         }
+
+        const responseData = await response.json();
+        console.log('✅ Client: Save successful, response:', responseData);
       } catch (error) {
-        console.error('Error saving progress data:', error);
+        console.error('❌ Client: Error saving progress data:', error);
+        console.log('🔄 Client: Falling back to localStorage...');
         // Fallback to localStorage if API fails
         if (typeof window !== 'undefined') {
           localStorage.setItem('bookDetailsTrips', JSON.stringify(trips));
@@ -485,10 +502,12 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
   };
 
   const handleProgressClick = (e: React.MouseEvent) => {
+    console.log('🖱️ Click handler triggered!');
     e.stopPropagation(); // Prevent event bubbling
 
     const now = Date.now();
     const timeSinceLastClick = now - lastClickTime;
+    console.log(`⏱️ Time since last click: ${timeSinceLastClick}ms`);
 
     // Rate limiting: Only allow one click per 40 seconds
     if (timeSinceLastClick < 40000) {
@@ -499,6 +518,8 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
       return;
     }
 
+    console.log('✅ Click allowed, processing...');
+
     // Update click count and log
     const newClickCount = clickCount + 1;
     setClickCount(newClickCount);
@@ -508,6 +529,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
     setTrips(prevTrips => {
       const newTrips = [...prevTrips];
       const currentTrip = newTrips[currentIndex];
+      console.log(`📈 Current trip before update:`, currentTrip);
 
       // Increase percentage by 1% (max 100%)
       const newPercentage = Math.min(currentTrip.percentage + 1, 100);
@@ -516,6 +538,8 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
         percentage: newPercentage,
         status: `${newPercentage}% completed`
       };
+
+      console.log(`📈 Updated trip:`, newTrips[currentIndex]);
 
       // Update global highest progress if this is higher
       if (newPercentage > globalHighestProgress) {
@@ -528,6 +552,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
 
     // Update last click time
     setLastClickTime(now);
+    console.log(`🕒 Updated last click time to: ${now}`);
 
     // Trigger confetti
     onProgressClick(e);

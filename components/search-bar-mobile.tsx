@@ -7,10 +7,7 @@ import { useTheme } from "next-themes";
 import { Calendar as CalendarIcon, Search, User, MapPin, ChevronDown } from "lucide-react";
 import destinationsDataRaw from "@/data/destinations.json";
 import itinerariesDataRaw from "@/data/itineraries.json";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
+import { DatePickerModal } from "@/components/ui/date-picker-modal";
 
 // Debounce function
 function debounce<F extends (...args: any[]) => any>(func: F, waitFor: number) {
@@ -26,7 +23,8 @@ export default function SearchBarMobile() {
   const [activeField, setActiveField] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selection, setSelection] = useState<{ type: 'dest' | 'itin'; value: string } | null>(null);
-  const [date, setDate] = useState<{ from: Date | undefined; to: Date | undefined }>({ from: undefined, to: undefined });
+  const [dateRange, setDateRange] = useState<any[]>([]);
+  const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const [guests, setGuests] = useState(1);
   const [isOverlayActive, setIsOverlayActive] = useState(false);
   const searchBarRef = useRef<HTMLDivElement>(null);
@@ -115,79 +113,66 @@ export default function SearchBarMobile() {
           <div className="p-4 space-y-4">
             {/* Destination/Itinerary Search */}
             <div className="group" onClick={() => handleFieldActivation('location')}>
-              <div className="flex items-center cursor-pointer p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                <MapPin className="h-5 w-5 text-[#FDBE00] mr-3 flex-shrink-0" />
+              <div className="flex items-center cursor-pointer p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors min-h-[60px] active:bg-gray-100 dark:active:bg-gray-600">
+                <MapPin className="h-6 w-6 text-[#FDBE00] mr-4 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 block">Location</label>
-                  <div className="text-base text-gray-600 dark:text-gray-400 truncate">
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 block mb-1">Location</label>
+                  <div className="text-base text-gray-600 dark:text-gray-400 truncate font-medium">
                     {selection ? selection.value : "Where are you going?"}
                   </div>
                 </div>
-                <ChevronDown className="h-4 w-4 text-gray-400 ml-2 flex-shrink-0" />
+                <ChevronDown className="h-5 w-5 text-gray-400 ml-3 flex-shrink-0" />
               </div>
             </div>
 
             {/* Date Picker */}
-            <Popover onOpenChange={(open) => handleFieldActivation(open ? 'dates' : null)}>
-              <PopoverTrigger asChild>
-                <div className="group">
-                  <div className="flex items-center cursor-pointer p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                    <CalendarIcon className="h-5 w-5 text-[#FDBE00] mr-3 flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 block">Dates</label>
-                      <div className="text-base text-gray-600 dark:text-gray-400">
-                        {date.from && date.to ? `${format(date.from, "LLL dd")} - ${format(date.to, "LLL dd")}` : "Add dates"}
-                      </div>
-                    </div>
-                    <ChevronDown className="h-4 w-4 text-gray-400 ml-2 flex-shrink-0" />
+            <div className="group">
+              <div
+                className="flex items-center cursor-pointer p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors min-h-[60px] active:bg-gray-100 dark:active:bg-gray-600"
+                onClick={() => setIsDateModalOpen(true)}
+              >
+                <CalendarIcon className="h-6 w-6 text-[#FDBE00] mr-4 flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 block mb-1">Dates</label>
+                  <div className="text-base text-gray-600 dark:text-gray-400 font-medium">
+                    {dateRange.length === 2 && dateRange[0] && dateRange[1]
+                      ? `${dateRange[0].format("MMM dd")} - ${dateRange[1].format("MMM dd")}`
+                      : "Add dates"
+                    }
                   </div>
                 </div>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 mx-4" align="center">
-                <Calendar
-                  initialFocus
-                  mode="range"
-                  defaultMonth={date.from}
-                  selected={date}
-                  onSelect={(range) => setDate({ from: range?.from, to: range?.to })}
-                  numberOfMonths={1}
-                />
-              </PopoverContent>
-            </Popover>
+                <ChevronDown className="h-5 w-5 text-gray-400 ml-3 flex-shrink-0" />
+              </div>
+            </div>
 
             {/* Guests */}
-            <Popover onOpenChange={(open) => handleFieldActivation(open ? 'guests' : null)}>
-              <PopoverTrigger asChild>
-                <div className="group">
-                  <div className="flex items-center cursor-pointer p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                    <User className="h-5 w-5 text-[#FDBE00] mr-3 flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 block">Guests</label>
-                      <div className="text-base text-gray-600 dark:text-gray-400">{guests} guest{guests > 1 ? 's' : ''}</div>
-                    </div>
-                    <ChevronDown className="h-4 w-4 text-gray-400 ml-2 flex-shrink-0" />
-                  </div>
+            <div className="group">
+              <div className="flex items-center p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors min-h-[60px] active:bg-gray-100 dark:active:bg-gray-600">
+                <User className="h-6 w-6 text-[#FDBE00] mr-4 flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 block mb-1">Guests</label>
+                  <select
+                    value={guests}
+                    onChange={(e) => setGuests(Number(e.target.value))}
+                    className="w-full text-base text-gray-600 dark:text-gray-400 bg-transparent border-none outline-none cursor-pointer font-medium"
+                  >
+                    {[1,2,3,4,5,6,7,8].map(num => (
+                      <option key={num} value={num}>{num} guest{num > 1 ? 's' : ''}</option>
+                    ))}
+                  </select>
                 </div>
-              </PopoverTrigger>
-              <PopoverContent className="w-48 p-4 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 mx-4" align="center">
-                <div className="flex items-center justify-between text-black dark:text-white">
-                  <span className="font-semibold">Guests</span>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setGuests(Math.max(1, guests - 1))}>-</Button>
-                    <span>{guests}</span>
-                    <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setGuests(guests + 1)}>+</Button>
-                  </div>
-                </div>
-              </PopoverContent>
-            </Popover>
+                <ChevronDown className="h-5 w-5 text-gray-400 ml-3 flex-shrink-0" />
+              </div>
+            </div>
 
             {/* Search Button */}
             <motion.button
               layout
               onClick={handleSearch}
-              className="w-full bg-[#FDBE00] text-black rounded-lg py-3 hover:bg-yellow-500 transition-colors duration-200 flex items-center justify-center font-semibold"
+              disabled={!selection}
+              className="w-full bg-[#FDBE00] text-black rounded-lg py-4 hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center font-semibold text-lg min-h-[56px] active:bg-yellow-600"
             >
-              <Search className="h-5 w-5 mr-2" />
+              <Search className="h-6 w-6 mr-3" />
               Search
             </motion.button>
           </div>
@@ -197,11 +182,11 @@ export default function SearchBarMobile() {
         <AnimatePresence>
           {activeField === 'location' && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 10 }}
-              exit={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: -10 }}
+              exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-2xl border dark:border-gray-600 p-4 mx-4"
+              className="absolute bottom-full left-0 right-0 mb-2 bg-white dark:bg-gray-800 rounded-lg shadow-2xl border dark:border-gray-600 p-4 mx-4 z-50"
             >
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -262,6 +247,14 @@ export default function SearchBarMobile() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* Date Picker Modal */}
+      <DatePickerModal
+        isOpen={isDateModalOpen}
+        onClose={() => setIsDateModalOpen(false)}
+        dateRange={dateRange}
+        onDateChange={setDateRange}
+      />
     </>
   );
 }
