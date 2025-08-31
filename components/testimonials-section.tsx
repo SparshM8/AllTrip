@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import testimonialsData from "@/data/testimonials.json";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const testimonials = testimonialsData;
 
@@ -22,6 +23,7 @@ export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [direction, setDirection] = useState(0);
+  const isMobile = useIsMobile();
 
   // Auto-scroll functionality with pause on hover
   useEffect(() => {
@@ -171,43 +173,85 @@ export default function TestimonialsSection() {
                 }}
                 className="relative"
               >
-                {/* Profile Image for Left Card */}
-                {testimonials[currentIndex] && (
+                {isMobile ? (
                   <motion.div
-                    className="absolute -left-3 md:-left-6 lg:-left-9 top-0 z-10"
-                    whileHover={{ scale: 1.1 }}
+                    className="bg-white dark:bg-gray-800 rounded-t-3xl rounded-b-xl p-4 md:p-6 lg:p-8 border border-[#F7F7F7] dark:border-gray-700 shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0),0px_8.15px_6.52px_0px_rgba(0,0,0,0.01),0px_20px_13px_0px_rgba(0,0,0,0.01),0px_38.52px_25.48px_0px_rgba(0,0,0,0.01),0px_64.81px_46.85px_0px_rgba(0,0,0,0.02),0px_100px_80px_0px_rgba(0,0,0,0.02)] dark:shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0.3),0px_8.15px_6.52px_0px_rgba(0,0,0,0.2),0px_20px_13px_0px_rgba(0,0,0,0.2),0px_38.52px_25.48px_0px_rgba(0,0,0,0.2),0px_64.81px_46.85px_0px_rgba(0,0,0,0.3),0px_100px_80px_0px_rgba(0,0,0,0.3)] transition-all duration-300 hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.1)] dark:hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.3)] hover:-translate-y-2"
+                    whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] lg:w-[68px] lg:h-[68px] rounded-full overflow-hidden border-2 border-white dark:border-gray-700 shadow-lg">
-                      <Image
-                        src={testimonialImages[testimonials[currentIndex]?.name] || "/placeholder.svg"}
-                        alt={testimonials[currentIndex]?.name || "User"}
-                        width={68}
-                        height={68}
-                        className="object-cover w-full h-full transition-transform duration-300 hover:scale-110"
-                      />
+                    <div className="flex flex-col items-center">
+                      {testimonials[currentIndex] && (
+                        <motion.div
+                          className="mb-4"
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-2 border-white dark:border-gray-700 shadow-lg">
+                            <Image
+                              src={testimonialImages[testimonials[currentIndex]?.name] || "/placeholder.svg"}
+                              alt={testimonials[currentIndex]?.name || "User"}
+                              width={80}
+                              height={80}
+                              className="object-cover w-full h-full transition-transform duration-300 hover:scale-110"
+                            />
+                          </div>
+                        </motion.div>
+                      )}
+                      <blockquote className="text-[#4E4E73] dark:text-gray-300 text-sm leading-6 md:leading-7 lg:leading-8 mb-8 md:mb-12 lg:mb-16 text-center" style={{ fontFamily: 'Open Sans, sans-serif' }}>
+                        "{testimonials[currentIndex]?.testimonial}"
+                      </blockquote>
+
+                      <div className="text-center">
+                        <cite className="font-semibold text-sm md:text-base lg:text-lg text-[#5E6282] dark:text-gray-200 not-italic block" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                          {testimonials[currentIndex]?.name}
+                        </cite>
+                        <p className="text-[#5E6282] dark:text-gray-400 text-xs mt-1" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                          From {testimonials[currentIndex]?.location}
+                        </p>
+                      </div>
                     </div>
                   </motion.div>
+                ) : (
+                  <>
+                    {/* Profile Image for Left Card */}
+                    {testimonials[currentIndex] && (
+                      <motion.div
+                        className="absolute -left-3 md:-left-6 lg:-left-9 top-0 z-10"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] lg:w-[68px] lg:h-[68px] rounded-full overflow-hidden border-2 border-white dark:border-gray-700 shadow-lg">
+                          <Image
+                            src={testimonialImages[testimonials[currentIndex]?.name] || "/placeholder.svg"}
+                            alt={testimonials[currentIndex]?.name || "User"}
+                            width={68}
+                            height={68}
+                            className="object-cover w-full h-full transition-transform duration-300 hover:scale-110"
+                          />
+                        </div>
+                      </motion.div>
+                    )}
+
+                    <motion.div
+                      className="bg-white dark:bg-gray-800 rounded-lg p-4 md:p-6 lg:p-8 ml-4 md:ml-6 lg:ml-9 border border-[#F7F7F7] dark:border-gray-700 shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0),0px_8.15px_6.52px_0px_rgba(0,0,0,0.01),0px_20px_13px_0px_rgba(0,0,0,0.01),0px_38.52px_25.48px_0px_rgba(0,0,0,0.01),0px_64.81px_46.85px_0px_rgba(0,0,0,0.02),0px_100px_80px_0px_rgba(0,0,0,0.02)] dark:shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0.3),0px_8.15px_6.52px_0px_rgba(0,0,0,0.2),0px_20px_13px_0px_rgba(0,0,0,0.2),0px_38.52px_25.48px_0px_rgba(0,0,0,0.2),0px_64.81px_46.85px_0px_rgba(0,0,0,0.3),0px_100px_80px_0px_rgba(0,0,0,0.3)] transition-all duration-300 hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.1)] dark:hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.3)] hover:-translate-y-2"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <blockquote className="text-[#4E4E73] dark:text-gray-300 text-sm leading-6 md:leading-7 lg:leading-8 mb-8 md:mb-12 lg:mb-16" style={{ fontFamily: 'Open Sans, sans-serif' }}>
+                        "{testimonials[currentIndex]?.testimonial}"
+                      </blockquote>
+
+                      <div>
+                        <cite className="font-semibold text-sm md:text-base lg:text-lg text-[#5E6282] dark:text-gray-200 not-italic block" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                          {testimonials[currentIndex]?.name}
+                        </cite>
+                        <p className="text-[#5E6282] dark:text-gray-400 text-xs mt-1" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                          From {testimonials[currentIndex]?.location}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </>
                 )}
-
-                <motion.div
-                  className="bg-white dark:bg-gray-800 rounded-lg p-4 md:p-6 lg:p-8 ml-4 md:ml-6 lg:ml-9 border border-[#F7F7F7] dark:border-gray-700 shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0),0px_8.15px_6.52px_0px_rgba(0,0,0,0.01),0px_20px_13px_0px_rgba(0,0,0,0.01),0px_38.52px_25.48px_0px_rgba(0,0,0,0.01),0px_64.81px_46.85px_0px_rgba(0,0,0,0.02),0px_100px_80px_0px_rgba(0,0,0,0.02)] dark:shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0.3),0px_8.15px_6.52px_0px_rgba(0,0,0,0.2),0px_20px_13px_0px_rgba(0,0,0,0.2),0px_38.52px_25.48px_0px_rgba(0,0,0,0.2),0px_64.81px_46.85px_0px_rgba(0,0,0,0.3),0px_100px_80px_0px_rgba(0,0,0,0.3)] transition-all duration-300 hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.1)] dark:hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.3)] hover:-translate-y-2"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <blockquote className="text-[#4E4E73] dark:text-gray-300 text-sm leading-6 md:leading-7 lg:leading-8 mb-8 md:mb-12 lg:mb-16" style={{ fontFamily: 'Open Sans, sans-serif' }}>
-                    "{testimonials[currentIndex]?.testimonial}"
-                  </blockquote>
-
-                  <div>
-                    <cite className="font-semibold text-sm md:text-base lg:text-lg text-[#5E6282] dark:text-gray-200 not-italic block" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                      {testimonials[currentIndex]?.name}
-                    </cite>
-                    <p className="text-[#5E6282] dark:text-gray-400 text-xs mt-1" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                      From {testimonials[currentIndex]?.location}
-                    </p>
-                  </div>
-                </motion.div>
               </motion.div>
             </AnimatePresence>
           </motion.div>
@@ -232,43 +276,85 @@ export default function TestimonialsSection() {
                 }}
                 className="relative"
               >
-                {/* Profile Image */}
-                {testimonials[currentIndex + 1] && (
+                {isMobile ? (
                   <motion.div
-                    className="absolute -left-3 md:-left-6 lg:-left-9 top-0 z-10"
-                    whileHover={{ scale: 1.1 }}
+                    className="bg-white dark:bg-gray-800 rounded-t-3xl rounded-b-xl p-4 md:p-6 lg:p-8 border border-[#F7F7F7] dark:border-gray-700 shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0),0px_8.15px_6.52px_0px_rgba(0,0,0,0.01),0px_20px_13px_0px_rgba(0,0,0,0.01),0px_38.52px_25.48px_0px_rgba(0,0,0,0.01),0px_64.81px_46.85px_0px_rgba(0,0,0,0.02),0px_100px_80px_0px_rgba(0,0,0,0.02)] dark:shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0.3),0px_8.15px_6.52px_0px_rgba(0,0,0,0.2),0px_20px_13px_0px_rgba(0,0,0,0.2),0px_38.52px_25.48px_0px_rgba(0,0,0,0.2),0px_64.81px_46.85px_0px_rgba(0,0,0,0.3),0px_100px_80px_0px_rgba(0,0,0,0.3)] transition-all duration-300 hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.1)] dark:hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.3)] hover:-translate-y-2"
+                    whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] lg:w-[68px] lg:h-[68px] rounded-full overflow-hidden border-2 border-white dark:border-gray-700 shadow-lg">
-                      <Image
-                        src={testimonialImages[testimonials[currentIndex + 1]?.name] || "/placeholder.svg"}
-                        alt={testimonials[currentIndex + 1]?.name || "User"}
-                        width={68}
-                        height={68}
-                        className="object-cover w-full h-full transition-transform duration-300 hover:scale-110"
-                      />
+                    <div className="flex flex-col items-center">
+                      {testimonials[currentIndex + 1] && (
+                        <motion.div
+                          className="mb-4"
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-2 border-white dark:border-gray-700 shadow-lg">
+                            <Image
+                              src={testimonialImages[testimonials[currentIndex + 1]?.name] || "/placeholder.svg"}
+                              alt={testimonials[currentIndex + 1]?.name || "User"}
+                              width={80}
+                              height={80}
+                              className="object-cover w-full h-full transition-transform duration-300 hover:scale-110"
+                            />
+                          </div>
+                        </motion.div>
+                      )}
+                      <blockquote className="text-[#5E6282] dark:text-gray-300 text-sm leading-6 md:leading-7 lg:leading-8 mb-8 md:mb-12 lg:mb-16 text-center" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                        "{testimonials[currentIndex + 1]?.testimonial}"
+                      </blockquote>
+
+                      <div className="text-center">
+                        <cite className="font-semibold text-sm md:text-base lg:text-lg text-[#5E6282] dark:text-gray-200 not-italic block" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                          {testimonials[currentIndex + 1]?.name}
+                        </cite>
+                        <p className="text-[#5E6282] dark:text-gray-400 text-xs mt-1" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                          From {testimonials[currentIndex + 1]?.location}
+                        </p>
+                      </div>
                     </div>
                   </motion.div>
+                ) : (
+                  <>
+                    {/* Profile Image */}
+                    {testimonials[currentIndex + 1] && (
+                      <motion.div
+                        className="absolute -left-3 md:-left-6 lg:-left-9 top-0 z-10"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] lg:w-[68px] lg:h-[68px] rounded-full overflow-hidden border-2 border-white dark:border-gray-700 shadow-lg">
+                          <Image
+                            src={testimonialImages[testimonials[currentIndex + 1]?.name] || "/placeholder.svg"}
+                            alt={testimonials[currentIndex + 1]?.name || "User"}
+                            width={68}
+                            height={68}
+                            className="object-cover w-full h-full transition-transform duration-300 hover:scale-110"
+                          />
+                        </div>
+                      </motion.div>
+                    )}
+
+                    <motion.div
+                      className="bg-white dark:bg-gray-800 rounded-lg p-4 md:p-6 lg:p-8 ml-4 md:ml-6 lg:ml-9 border border-[#F7F7F7] dark:border-gray-700 shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0),0px_8.15px_6.52px_0px_rgba(0,0,0,0.01),0px_20px_13px_0px_rgba(0,0,0,0.01),0px_38.52px_25.48px_0px_rgba(0,0,0,0.01),0px_64.81px_46.85px_0px_rgba(0,0,0,0.02),0px_100px_80px_0px_rgba(0,0,0,0.02)] dark:shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0.3),0px_8.15px_6.52px_0px_rgba(0,0,0,0.2),0px_20px_13px_0px_rgba(0,0,0,0.2),0px_38.52px_25.48px_0px_rgba(0,0,0,0.2),0px_64.81px_46.85px_0px_rgba(0,0,0,0.3),0px_100px_80px_0px_rgba(0,0,0,0.3)] transition-all duration-300 hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.1)] dark:hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.3)] hover:-translate-y-2"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <blockquote className="text-[#5E6282] dark:text-gray-300 text-sm leading-6 md:leading-7 lg:leading-8 mb-8 md:mb-12 lg:mb-16" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                        "{testimonials[currentIndex + 1]?.testimonial}"
+                      </blockquote>
+
+                      <div>
+                        <cite className="font-semibold text-sm md:text-base lg:text-lg text-[#5E6282] dark:text-gray-200 not-italic block" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                          {testimonials[currentIndex + 1]?.name}
+                        </cite>
+                        <p className="text-[#5E6282] dark:text-gray-400 text-xs mt-1" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                          From {testimonials[currentIndex + 1]?.location}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </>
                 )}
-
-                <motion.div
-                  className="bg-white dark:bg-gray-800 rounded-lg p-4 md:p-6 lg:p-8 ml-4 md:ml-6 lg:ml-9 border border-[#F7F7F7] dark:border-gray-700 shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0),0px_8.15px_6.52px_0px_rgba(0,0,0,0.01),0px_20px_13px_0px_rgba(0,0,0,0.01),0px_38.52px_25.48px_0px_rgba(0,0,0,0.01),0px_64.81px_46.85px_0px_rgba(0,0,0,0.02),0px_100px_80px_0px_rgba(0,0,0,0.02)] dark:shadow-[0px_1.85px_3.15px_0px_rgba(0,0,0,0.3),0px_8.15px_6.52px_0px_rgba(0,0,0,0.2),0px_20px_13px_0px_rgba(0,0,0,0.2),0px_38.52px_25.48px_0px_rgba(0,0,0,0.2),0px_64.81px_46.85px_0px_rgba(0,0,0,0.3),0px_100px_80px_0px_rgba(0,0,0,0.3)] transition-all duration-300 hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.1)] dark:hover:shadow-[0px_10px_40px_0px_rgba(0,0,0,0.3)] hover:-translate-y-2"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <blockquote className="text-[#5E6282] dark:text-gray-300 text-sm leading-6 md:leading-7 lg:leading-8 mb-8 md:mb-12 lg:mb-16" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    "{testimonials[currentIndex + 1]?.testimonial}"
-                  </blockquote>
-
-                  <div>
-                    <cite className="font-semibold text-sm md:text-base lg:text-lg text-[#5E6282] dark:text-gray-200 not-italic block" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                      {testimonials[currentIndex + 1]?.name}
-                    </cite>
-                    <p className="text-[#5E6282] dark:text-gray-400 text-xs mt-1" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                      From {testimonials[currentIndex + 1]?.location}
-                    </p>
-                  </div>
-                </motion.div>
               </motion.div>
             </AnimatePresence>
           </motion.div>
