@@ -95,7 +95,7 @@ export default function HeroSectionMobile() {
                 className="text-sm sm:text-base text-gray-100 dark:text-gray-200 leading-relaxed mb-6 max-w-md mx-auto"
                 variants={itemVariants}
               >
-                Experience the magic of India with AllTripp. From mountain escapes to coastal retreats, we bring you curated journeys that celebrate culture, connection, and unforgettable moments.
+                Experience the magic of India with AllTripp. From mountain escapes to coastal retreats, we bring you curated journeys with unforgettable moments.
               </motion.p>
 
               {/* Optimized Testimonials for Mobile */}
