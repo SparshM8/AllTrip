@@ -1,24 +1,18 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
-import { Calendar as CalendarIcon, Search, User, MapPin, ChevronDown } from "lucide-react";
+import { Calendar as CalendarIcon, Search, User, MapPin } from "lucide-react";
 import destinationsDataRaw from "@/data/destinations.json";
 import itinerariesDataRaw from "@/data/itineraries.json";
 import { Button } from "@/components/ui/button";
 import { DatePickerModal } from "@/components/ui/date-picker-modal";
 import { format } from "date-fns";
 
-// Debounce function
-function debounce<F extends (...args: any[]) => any>(func: F, waitFor: number) {
-  let timeout: NodeJS.Timeout;
-  return (...args: Parameters<F>): void => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), waitFor);
-  };
-}
+// We'll import the new reusable hook instead of defining a function here
+import { useDebounce } from "@/hooks/use-debounce";
 
 export default function SearchBar() {
   const router = useRouter();
@@ -33,33 +27,31 @@ export default function SearchBar() {
   const scrollableRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
+  // New: Use the custom hook to get the debounced value.
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+
   const destinationsData = Array.from(new Map(destinationsDataRaw.map((d) => [d.name, d])).values());
   const itinerariesData = Array.from(new Map(itinerariesDataRaw.map((i) => [i.title, i])).values());
 
-  const filteredDestinations = searchTerm
-    ? destinationsData.filter((d) => d.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  // Use the debounced value for filtering
+  const filteredDestinations = debouncedSearchTerm
+    ? destinationsData.filter((d) => d.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()))
     : destinationsData;
 
-  const filteredItineraries = searchTerm
-    ? itinerariesData.filter((i) => i.title.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredItineraries = debouncedSearchTerm
+    ? itinerariesData.filter((i) => i.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()))
     : itinerariesData;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selection) return;
 
-    let slug;
+    // A single, reusable slug generation logic for both destinations and itineraries
+    const slug = encodeURIComponent(selection.value.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9\-]/g, ""));
+
     if (selection.type === 'itin') {
-      const itinerarySlugMap: { [key: string]: string } = {
-        "Jibhi & Shoja Offbeat": "jibhi---shoja-offbeat",
-        "Offbeat Meghalaya - Kongthong": "offbeat-meghalaya---kongthong",
-        "Offbeat Meghalaya - Mawlyngbna": "offbeat-meghalaya---mawlyngbna",
-        "Himachal Cultural Trail": "himachal-cultural-trail"
-      };
-      slug = itinerarySlugMap[selection.value] || encodeURIComponent(selection.value.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9\-]/g, ""));
       router.push(`/itineraries/${slug}`);
     } else {
-      slug = encodeURIComponent(selection.value.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9\-]/g, ""));
       router.push(`/destinations/${slug}`);
     }
   };
@@ -112,8 +104,6 @@ export default function SearchBar() {
       document.body.style.overflow = 'auto'; // Cleanup
     };
   }, []);
-
-  const debouncedSetSearchTerm = useCallback(debounce(setSearchTerm, 300), []);
 
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -229,8 +219,10 @@ export default function SearchBar() {
                 <input
                   type="text"
                   placeholder="Search destinations or itineraries"
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#FDBE00] outline-none bg-white dark:bg-gray-700 text-black dark:border-gray-600 transition-colors duration-200"
-                  onChange={(e) => debouncedSetSearchTerm(e.target.value)}
+                  value={searchTerm}
+                  style={{ color: theme === 'dark' ? 'white' : 'black' }} 
+                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#FDBE00] outline-none bg-white dark:bg-gray-700 dark:border-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   autoFocus
                 />
               </div>
