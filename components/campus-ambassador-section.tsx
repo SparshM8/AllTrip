@@ -45,7 +45,7 @@ export default function CampusAmbassadorSection() {
     <section
       id="campus"
       ref={ref}
-      className="relative py-12 sm:py-16 md:py-20 lg:py-32 bg-white dark:bg-gray-900"
+      className="relative py-20 bg-white dark:bg-gray-900"
     >
       <motion.div 
         variants={containerVariants}

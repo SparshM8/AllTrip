@@ -81,7 +81,7 @@ const BookDetailsSection = () => {
   };
 
   return (
-    <section className="py-12 relative bg-gray-50 dark:bg-gray-900">
+    <section className="py-20 relative bg-gray-50 dark:bg-gray-900">
       <ConfettiCanvas trigger={showConfetti} origins={confettiOrigins} />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 ml-4 sm:ml-6 md:ml-16 lg:ml-20">
         <div className="flex flex-col lg:flex-row items-center justify-between">
@@ -200,60 +200,105 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
     }
   ]);
 
-  // Load data from localStorage on component mount
+  // Load data from API on component mount
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // Load trips data
-      const savedTrips = localStorage.getItem('bookDetailsTrips');
-      if (savedTrips) {
-        setTrips(JSON.parse(savedTrips));
-      }
+    const loadProgressData = async () => {
+      try {
+        console.log('🌐 Client: Fetching progress data from API...');
+        const response = await fetch('/api/progress');
+        console.log('🌐 Client: API response status:', response.status);
 
-      // Load click count
-      const savedClickCount = localStorage.getItem('bookDetailsClickCount');
-      if (savedClickCount) {
-        setClickCount(parseInt(savedClickCount, 10));
-      }
+        if (response.ok) {
+          const data = await response.json();
+          console.log('🌐 Client: Received data from API:', data);
 
-      // Load global highest progress
-      const savedHighestProgress = localStorage.getItem('globalHighestProgress');
-      if (savedHighestProgress) {
-        setGlobalHighestProgress(parseInt(savedHighestProgress, 10));
-      }
+          setTrips(data.trips || trips);
+          setClickCount(data.clickCount || 0);
+          setGlobalHighestProgress(data.globalHighestProgress || 25);
+          setLastClickTime(data.lastClickTime || 0);
 
-      // Load last click time
-      const savedLastClickTime = localStorage.getItem('lastClickTime');
-      if (savedLastClickTime) {
-        setLastClickTime(parseInt(savedLastClickTime, 10));
+          // Analytics logging
+          console.log('🚀 Book Details Section loaded!');
+          console.log(`📊 Current stats: ${data.clickCount || 0} total clicks, ${data.globalHighestProgress || 25}% highest progress`);
+          console.log(`🎯 Trips data:`, data.trips || trips);
+        } else {
+          console.log('🌐 Client: API response not OK, status:', response.status);
+        }
+      } catch (error) {
+        console.error('❌ Client: Error loading progress data:', error);
+        console.log('🔄 Client: Falling back to localStorage...');
+        // Fallback to localStorage if API fails
+        if (typeof window !== 'undefined') {
+          const savedTrips = localStorage.getItem('bookDetailsTrips');
+          if (savedTrips) {
+            setTrips(JSON.parse(savedTrips));
+          }
+          const savedClickCount = localStorage.getItem('bookDetailsClickCount');
+          if (savedClickCount) {
+            setClickCount(parseInt(savedClickCount, 10));
+          }
+          const savedHighestProgress = localStorage.getItem('globalHighestProgress');
+          if (savedHighestProgress) {
+            setGlobalHighestProgress(parseInt(savedHighestProgress, 10));
+          }
+          const savedLastClickTime = localStorage.getItem('lastClickTime');
+          if (savedLastClickTime) {
+            setLastClickTime(parseInt(savedLastClickTime, 10));
+          }
+        }
       }
+    };
 
-      // Analytics logging
-      console.log('🚀 Book Details Section loaded!');
-      console.log(`📊 Current stats: ${clickCount} total clicks, ${globalHighestProgress}% highest progress`);
-      console.log(`🎯 Trips data:`, trips);
-    }
+    loadProgressData();
   }, []);
 
-  // Save trips data to localStorage whenever it changes
+  // Save data to API whenever it changes
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('bookDetailsTrips', JSON.stringify(trips));
-    }
-  }, [trips]);
+    const saveProgressData = async () => {
+      try {
+        console.log('💾 Client: Saving progress data to API...');
+        const dataToSave = {
+          trips,
+          clickCount,
+          globalHighestProgress,
+          lastClickTime
+        };
+        console.log('📤 Client: Data to save:', dataToSave);
 
-  // Save click count to localStorage whenever it changes
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('bookDetailsClickCount', clickCount.toString());
-    }
-  }, [clickCount]);
+        const response = await fetch('/api/progress', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(dataToSave),
+        });
 
-  // Save global highest progress to localStorage whenever it changes
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('globalHighestProgress', globalHighestProgress.toString());
-    }
-  }, [globalHighestProgress]);
+        console.log('📥 Client: Save API response status:', response.status);
+
+        if (!response.ok) {
+          console.log('❌ Client: Save API response not OK');
+          throw new Error('Failed to save progress');
+        }
+
+        const responseData = await response.json();
+        console.log('✅ Client: Save successful, response:', responseData);
+      } catch (error) {
+        console.error('❌ Client: Error saving progress data:', error);
+        console.log('🔄 Client: Falling back to localStorage...');
+        // Fallback to localStorage if API fails
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('bookDetailsTrips', JSON.stringify(trips));
+          localStorage.setItem('bookDetailsClickCount', clickCount.toString());
+          localStorage.setItem('globalHighestProgress', globalHighestProgress.toString());
+          localStorage.setItem('lastClickTime', lastClickTime.toString());
+        }
+      }
+    };
+
+    // Debounce saves to avoid too many API calls
+    const timeoutId = setTimeout(saveProgressData, 500);
+    return () => clearTimeout(timeoutId);
+  }, [trips, clickCount, globalHighestProgress, lastClickTime]);
 
   // Countdown timer for rate limit
   useEffect(() => {
@@ -457,10 +502,12 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
   };
 
   const handleProgressClick = (e: React.MouseEvent) => {
+    console.log('🖱️ Click handler triggered!');
     e.stopPropagation(); // Prevent event bubbling
 
     const now = Date.now();
     const timeSinceLastClick = now - lastClickTime;
+    console.log(`⏱️ Time since last click: ${timeSinceLastClick}ms`);
 
     // Rate limiting: Only allow one click per 40 seconds
     if (timeSinceLastClick < 40000) {
@@ -471,6 +518,8 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
       return;
     }
 
+    console.log('✅ Click allowed, processing...');
+
     // Update click count and log
     const newClickCount = clickCount + 1;
     setClickCount(newClickCount);
@@ -480,6 +529,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
     setTrips(prevTrips => {
       const newTrips = [...prevTrips];
       const currentTrip = newTrips[currentIndex];
+      console.log(`📈 Current trip before update:`, currentTrip);
 
       // Increase percentage by 1% (max 100%)
       const newPercentage = Math.min(currentTrip.percentage + 1, 100);
@@ -488,6 +538,8 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
         percentage: newPercentage,
         status: `${newPercentage}% completed`
       };
+
+      console.log(`📈 Updated trip:`, newTrips[currentIndex]);
 
       // Update global highest progress if this is higher
       if (newPercentage > globalHighestProgress) {
@@ -500,9 +552,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
 
     // Update last click time
     setLastClickTime(now);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('lastClickTime', now.toString());
-    }
+    console.log(`🕒 Updated last click time to: ${now}`);
 
     // Trigger confetti
     onProgressClick(e);

@@ -75,7 +75,7 @@ export default function HeroSectionMobile() {
         <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-black/30' : 'bg-black/20'} z-0`} />
 
         {/* Content Container - Center Aligned for Mobile */}
-        <div className="content relative z-10 flex flex-col items-center justify-center text-center text-white px-4 sm:px-6">
+        <div className="content relative z-10 flex flex-col items-center justify-center text-center text-white px-4 sm:px-6 pt-24 pb-8">
           <div className="bg-black/0 backdrop-blur-sm p-4 sm:p-6 rounded-lg w-full max-w-lg">
             <motion.div
               className="inline-block"
@@ -95,7 +95,7 @@ export default function HeroSectionMobile() {
                 className="text-sm sm:text-base text-gray-100 dark:text-gray-200 leading-relaxed mb-6 max-w-md mx-auto"
                 variants={itemVariants}
               >
-                Experience the magic of India with AllTripp. From mountain escapes to coastal retreats, we bring you curated journeys that celebrate culture, connection, and unforgettable moments.
+                Experience the magic of India with AllTripp. From mountain escapes to coastal retreats, we bring you curated journeys with unforgettable moments.
               </motion.p>
 
               {/* Optimized Testimonials for Mobile */}

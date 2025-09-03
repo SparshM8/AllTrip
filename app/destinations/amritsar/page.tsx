@@ -8,7 +8,7 @@ export const metadata = generateDestinationMetadata(
 
 export default function AmritsarPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -29,9 +29,9 @@ export default function AmritsarPage() {
         }}
       />
       
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Amritsar - Golden City of Punjab
           </h1>
             <div className="mb-8">
@@ -44,14 +44,14 @@ export default function AmritsarPage() {
           </div>
           
           <div className="prose prose-lg max-w-none">
-            <p className="text-xl text-gray-700 mb-6">
-              Experience the spiritual magnificence of Amritsar with AllTripp's cultural journeys. 
-              Home to the Golden Temple, this sacred city offers profound spiritual experiences, 
+            <p className="text-xl text-gray-700 dark:text-gray-300 mb-6">
+              Experience the spiritual magnificence of Amritsar with AllTripp's cultural journeys.
+              Home to the Golden Temple, this sacred city offers profound spiritual experiences,
               rich Sikh heritage, and the warmth of Punjabi hospitality.
             </p>
-            
-            <h2 className="text-3xl font-semibold text-gray-900 mb-4">Why Choose Amritsar?</h2>
-            <ul className="list-disc pl-6 mb-6 text-gray-700">
+
+            <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-4">Why Choose Amritsar?</h2>
+            <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
               <li>Sacred Golden Temple - holiest shrine of Sikhism</li>
               <li>Rich Sikh history and cultural heritage</li>
               <li>Famous Wagah Border ceremony with Pakistan</li>
@@ -60,23 +60,23 @@ export default function AmritsarPage() {
               <li>Warm Punjabi hospitality and vibrant culture</li>
             </ul>
             
-            <h2 className="text-3xl font-semibold text-gray-900 mb-4">Must-Visit Attractions</h2>
+            <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-4">Must-Visit Attractions</h2>
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div>
-                <h3 className="text-xl font-semibold mb-2">Golden Temple</h3>
-                <p>Stunning golden shrine surrounded by sacred pool, offering spiritual peace and community kitchen.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Golden Temple</h3>
+                <p className="text-gray-700 dark:text-gray-300">Stunning golden shrine surrounded by sacred pool, offering spiritual peace and community kitchen.</p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Wagah Border</h3>
-                <p>Famous border ceremony between India and Pakistan with patriotic fervor and military parade.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Wagah Border</h3>
+                <p className="text-gray-700 dark:text-gray-300">Famous border ceremony between India and Pakistan with patriotic fervor and military parade.</p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Jallianwala Bagh</h3>
-                <p>Historic memorial commemorating the tragic 1919 massacre during British colonial rule.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Jallianwala Bagh</h3>
+                <p className="text-gray-700 dark:text-gray-300">Historic memorial commemorating the tragic 1919 massacre during British colonial rule.</p>
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2">Akal Takht</h3>
-                <p>Highest temporal seat of Sikh authority facing the Golden Temple with religious significance.</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Akal Takht</h3>
+                <p className="text-gray-700 dark:text-gray-300">Highest temporal seat of Sikh authority facing the Golden Temple with religious significance.</p>
               </div>
             </div>
           </div>

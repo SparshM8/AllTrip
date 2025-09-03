@@ -2,7 +2,7 @@ import React from 'react';
 
 const StayRedirect = () => {
   return (
-    <section className="bg-background dark:bg-gray-900 py-16">
+    <section className="bg-background dark:bg-gray-900 py-20">
       <div className="container mx-auto px-7">
         <div
           className="relative bg-cover bg-center rounded-lg overflow-hidden"
