@@ -4,9 +4,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { fadeInUp } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
-import { Menu, Sun, Moon, MapPin, MessageCircle } from "lucide-react";
+import { Menu, Sun, Moon, MessageCircle } from "lucide-react";
 import {
   Drawer,
   DrawerTrigger,
@@ -17,13 +18,13 @@ import {
   DrawerFooter,
   DrawerClose,
 } from "@/components/ui/drawer";
-import { useMediaQuery } from "@/hooks/use-media-query";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
 import navLinksData from "@/data/nav-links.json";
 
-const navLinks = navLinksData;
+const navLinks = navLinksData as { name: string; href: string }[];
 
-const iconMap: { [key: string]: string } = {
+const iconMap: Record<string, string> = {
   Home: "mdi:home",
   "About Us": "mdi:information",
   Destinations: "mdi:map-marker",
@@ -32,38 +33,32 @@ const iconMap: { [key: string]: string } = {
 };
 
 const Navbar: React.FC = () => {
-  // State for drawer (mobile menu) and scroll-based show/hide logic
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
-  const [mounted, setMounted] = useState(false);
   const lastScrollY = useRef(0);
-  const isDesktop = useMediaQuery("(min-width: 768px)");
-
-  // Dark mode theme hook from next-themes
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
 
-  // Scroll handler: show navbar on upward scroll, hide on downward scroll after a threshold
   useEffect(() => {
     setMounted(true);
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+  }, []);
 
-      if (currentScrollY < lastScrollY.current) {
+  useEffect(() => {
+    const handleScroll = () => {
+      const current = window.scrollY;
+      if (current < lastScrollY.current) {
         setShowNavbar(true);
-      } else if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+      } else if (current > lastScrollY.current && current > 50) {
         setShowNavbar(false);
       }
-      lastScrollY.current = currentScrollY;
+      lastScrollY.current = current;
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Toggle function for theme switching
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
+  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
   return (
     <header
@@ -71,232 +66,204 @@ const Navbar: React.FC = () => {
         showNavbar ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      {/* Main Navbar Container with modern design */}
-      <nav 
-        className="shadow-lg border-b border-gray-200"
-        style={{ 
-          backgroundColor: '#FDBE00',
-          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-        }}
-      >
+      <nav className="backdrop-blur-md bg-black/55 dark:bg-black/55 border-b border-white/10 shadow-[0_2px_6px_rgba(0,0,0,0.4)] transition-colors">
         <div className="container mx-auto max-w-7xl flex items-center justify-between px-2 sm:px-4 py-2">
-            {/* Logo Section - Left */}
-            <div className="flex items-center gap-1 sm:gap-2">
-              <Link
-                href="/"
-                aria-label="AllTripp Home"
-                className="font-bold text-lg sm:text-xl font-sans"
-              >
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="w-32 h-12 relative flex items-center justify-center">
-                    <Image
-                      src="/logo.png"
-                      alt="AllTripp Logo"
-                      width={128}
-                      height={48}
-                      className="object-contain"
-                      priority
-                    />
-                  </div>
-                </motion.div>
-              </Link>
-            </div>
+          {/* Logo */}
+          <Link
+            href="/"
+            aria-label="AllTripp Home"
+            className="font-bold text-lg sm:text-xl font-sans"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="w-32 h-12 relative flex items-center justify-center">
+                <Image
+                  src="/logo.png"
+                  alt="AllTripp Logo"
+                  width={128}
+                  height={48}
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </motion.div>
+          </Link>
 
-            {/* Desktop Navigation - Center */}
-            {isDesktop ? (
-              <>
-                <div className="flex items-center justify-center flex-1">
-                  <nav className="flex items-center gap-8">
-                    {navLinks.map((link, index) => (
-                      <motion.div
-                        key={link.name}
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                      >
-                        <Link
-                          href={link.href}
-                          className="relative text-lg text-black transition-all duration-300 group py-1 px-1 font-sans flex items-center gap-2"
-                        >
-                          <Icon icon={iconMap[link.name]} className="w-5 h-5" />
-                          {link.name}
-                          {/* Hover underline effect */}
-                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full rounded-full"></span>
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </nav>
-                </div>
-                
-                {/* Right Section - Theme Toggle & CTA */}
-                <div className="flex items-center gap-6">
-                  {/* Theme Toggle */}
-                  <motion.button
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: 0.4 }}
-                    onClick={toggleTheme}
-                    aria-label="Toggle Dark Mode"
-                    className="relative inline-flex items-center w-12 h-6 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 hover:scale-105"
-                    style={{
-                      backgroundColor: theme === "light" ? "#FF8C00" : "#1e40af"
-                    }}
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center justify-center flex-1">
+            <nav className="flex items-center gap-8">
+              {navLinks.map((link, i) => (
+                <motion.div
+                  key={link.name}
+                  variants={fadeInUp}
+                  initial="initial"
+                  animate="animate"
+                  transition={{ delay: 0.05 * i }}
+                >
+                  <Link
+                    href={link.href}
+                    aria-current={pathname === link.href ? "page" : undefined}
+                    className={`relative focusable text-sm tracking-wide uppercase text-white/70 transition-colors duration-300 group py-2 px-3 font-sans flex items-center gap-2 rounded-md ${
+                      pathname === link.href ? "text-white" : "hover:text-white"
+                    }`}
                   >
-                    {/* Background Icons */}
-                    <div className="absolute inset-0 flex items-center justify-between px-1">
-                      <Sun className={`w-3 h-3 transition-opacity duration-300 ${theme === "light" ? "opacity-100 text-yellow-100" : "opacity-50 text-yellow-400"}`} />
-                      <Moon className={`w-3 h-3 transition-opacity duration-300 ${theme === "dark" ? "opacity-100 text-blue-100" : "opacity-50 text-blue-600"}`} />
-                    </div>
-                    
-                    {/* Toggle Circle */}
-                    <div
-                      className={`absolute w-4 h-4 bg-white rounded-full shadow-lg transform transition-transform duration-300 ${
-                        theme === "light" ? "translate-x-1" : "translate-x-7"
+                    <Icon icon={iconMap[link.name]} className="w-5 h-5" />
+                    {link.name}
+                    <span
+                      className={`absolute bottom-0 left-0 h-0.5 bg-[hsl(var(--brand-accent))] transition-all duration-300 rounded-full ${
+                        pathname === link.href ? "w-full" : "w-0 group-hover:w-full"
                       }`}
                     />
-                  </motion.button>
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
+          </div>
 
-                  {/* Book Now CTA Button */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: 0.5 }}
-                  >
-                    <Button
-                      asChild
-                      className="bg-green-600 text-white hover:bg-green-700 font-semibold px-4 py-1.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-0 hover:scale-105 font-sans"
-                      style={{
-                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
-                      }}
-                    >
-                      <a 
-                        href="https://api.whatsapp.com/send/?phone=919266602470&text=Hi+AllTipp%2C+I+am+interested+in+planning+a+trip.+Can+you+help+me+with+the+details%3F&type=phone_number&app_absent=0" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="font-sans flex items-center gap-2"
-                      >
-                        <MessageCircle className="w-4 h-4" />
-                        Book Now
-                      </a>
-                    </Button>
-                  </motion.div>
+          {/* Right side (desktop) */}
+          <div className="hidden md:flex items-center gap-6">
+            {mounted && (
+              <motion.button
+                variants={fadeInUp}
+                initial="initial"
+                animate="animate"
+                transition={{ delay: 0.35 }}
+                onClick={toggleTheme}
+                aria-label="Toggle Dark Mode"
+                className={`relative focusable inline-flex items-center w-12 h-6 rounded-full transition-all duration-300 hover:scale-105 ${theme === "light" ? "bg-[#FF8C00]" : "bg-[#1e40af]"}`}
+              >
+                <div className="absolute inset-0 flex items-center justify-between px-1">
+                  <Sun className={`w-3 h-3 transition-opacity duration-300 ${theme === "light" ? "opacity-100 text-yellow-100" : "opacity-50 text-yellow-400"}`} />
+                  <Moon className={`w-3 h-3 transition-opacity duration-300 ${theme === "dark" ? "opacity-100 text-blue-100" : "opacity-50 text-blue-600"}`} />
                 </div>
-              </>
-            ) : (
-              // Mobile Navigation - Right side (Reordered: Hamburger, Book, Toggle)
-              <div className="flex items-center gap-3">
-                {/* Mobile Menu Drawer - First */}
-                <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-                  <DrawerTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="bg-white hover:bg-gray-50 border-gray-200 rounded-lg shadow-md"
-                      aria-label="Toggle menu"
-                    >
-                      <Menu className="h-5 w-5 text-gray-700" />
-                      <span className="sr-only">Toggle menu</span>
-                    </Button>
-                  </DrawerTrigger>
-                  <DrawerContent
-                    className="rounded-t-2xl border-t border-gray-200/20"
-                    style={{
-                      backgroundColor: '#FDBE00',
-                      boxShadow: '0 -8px 32px rgba(0, 0, 0, 0.08)'
-                    }}
+                <div
+                  className={`absolute w-4 h-4 bg-white rounded-full shadow-lg transform transition-transform duration-300 ${
+                    theme === "light" ? "translate-x-1" : "translate-x-7"
+                  }`}
+                />
+              </motion.button>
+            )}
+            <motion.div
+              variants={fadeInUp}
+              initial="initial"
+              animate="animate"
+              transition={{ delay: 0.45 }}
+            >
+              <Button
+                asChild
+                className="btn-gradient focusable text-white font-semibold px-4 py-1.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-0 hover:scale-105 font-sans"
+              >
+                <a
+                  href="https://api.whatsapp.com/send/?phone=919266602470&text=Hi+AllTripp%2C+I+am+interested+in+planning+a+trip.+Can+you+help+me+with+the+details%3F&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-sans flex items-center gap-2"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Book Now
+                </a>
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Mobile Controls */}
+          <div className="flex md:hidden items-center gap-3">
+              {/* Drawer Trigger */}
+              <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+                <DrawerTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="focusable bg-white hover:bg-gray-50 border-gray-200 rounded-lg shadow-md"
+                    aria-label="Toggle menu"
                   >
-                    <DrawerHeader className="text-center">
-                      <DrawerTitle className="text-gray-800 text-xl font-bold">AllTripp</DrawerTitle>
-                      <DrawerDescription className="text-gray-700">
-                        Your Gateway to Amazing Adventures
-                      </DrawerDescription>
-                    </DrawerHeader>
-                    <div className="flex flex-col gap-2 p-6">
-                      {navLinks.map((link) => (
-                        <Link
-                          key={link.name}
-                          href={link.href}
+                    <Menu className="h-5 w-5 text-gray-700" />
+                  </Button>
+                </DrawerTrigger>
+                <DrawerContent className="rounded-t-2xl border-t border-gray-200/20 bg-[#FDBE00] shadow-2xl">
+                  <DrawerHeader className="text-center">
+                    <DrawerTitle className="text-gray-800 text-xl font-bold">AllTripp</DrawerTitle>
+                    <DrawerDescription className="text-gray-700">
+                      Your Gateway to Amazing Adventures
+                    </DrawerDescription>
+                  </DrawerHeader>
+                  <div className="flex flex-col gap-2 p-6">
+                    {navLinks.map(link => (
+                      <Link
+                        key={link.name}
+                        href={link.href}
+                        aria-current={pathname === link.href ? "page" : undefined}
+                        onClick={() => setIsDrawerOpen(false)}
+                        className={`focusable text-lg font-medium text-gray-800 transition-all duration-300 hover:text-gray-600 text-center py-3 px-4 rounded-lg hover:bg-white/20 ${pathname === link.href ? 'bg-white/20' : ''}`}
+                      >
+                        {link.name}
+                      </Link>
+                    ))}
+                    <div className="mt-4 pt-4 border-t border-gray-200/30">
+                      <Button
+                        asChild
+                        className="w-full btn-gradient focusable text-white font-semibold py-3 rounded-xl shadow-md"
+                      >
+                        <a
+                          href="https://api.whatsapp.com/send/?phone=919266602470&text=Hi+AllTripp%2C+I+am+interested+in+planning+a+trip.+Can+you+help+me+with+the+details%3F&type=phone_number&app_absent=0"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           onClick={() => setIsDrawerOpen(false)}
-                          className="text-lg font-medium text-gray-800 transition-all duration-300 hover:text-gray-600 text-center py-3 px-4 rounded-lg hover:bg-white/20"
+                          className="flex items-center justify-center gap-2"
                         >
-                          {link.name}
-                        </Link>
-                      ))}
-
-                      {/* Mobile Full Book Now Button */}
-                      <div className="mt-4 pt-4 border-t border-gray-200/30">
-                        <Button
-                          asChild
-                          className="w-full bg-green-600 text-white hover:bg-green-700 font-semibold py-3 rounded-xl shadow-md"
-                        >
-                          <a
-                            href="https://api.whatsapp.com/send/?phone=919266602470&text=Hi+AllTipp%2C+I+am+interested+in+planning+a+trip.+Can+you+help+me+with+the+details%3F&type=phone_number&app_absent=0"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() => setIsDrawerOpen(false)}
-                            className="flex items-center justify-center gap-2"
-                          >
-                            <MessageCircle className="w-4 h-4" />
-                            Book Your Adventure Now
-                          </a>
-                        </Button>
-                      </div>
+                          <MessageCircle className="w-4 h-4" />
+                          Book Your Adventure Now
+                        </a>
+                      </Button>
                     </div>
-                    <DrawerFooter>
-                      <DrawerClose asChild>
-                        <Button variant="outline" className="bg-white/20 border-gray-200/30">
-                          Close
-                        </Button>
-                      </DrawerClose>
-                    </DrawerFooter>
-                  </DrawerContent>
-                </Drawer>
-
-                {/* Mobile Book Now Button - Second */}
-                <Button
-                  asChild
-                  size="sm"
-                  className="bg-green-600 text-white hover:bg-green-700 font-medium px-3 py-1.5 rounded-lg shadow-md text-sm"
-                >
-                  <a
-                    href="https://api.whatsapp.com/send/?phone=919266602470&text=Hi+AllTipp%2C+I+am+interested+in+planning+a+trip.+Can+you+help+me+with+the+details%3F&type=phone_number&app_absent=0"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1"
-                  >
-                    <MessageCircle className="w-3 h-3" />
-                    Book
-                  </a>
-                </Button>
-
-                {/* Mobile Theme Toggle - Third */}
-                <button
-                  onClick={toggleTheme}
-                  aria-label="Toggle Dark Mode"
-                  className="relative inline-flex items-center w-10 h-5 rounded-full transition-all duration-300 focus:outline-none hover:scale-105"
-                  style={{
-                    backgroundColor: theme === "light" ? "#FF8C00" : "#1e40af"
-                  }}
-                >
-                  <div className="absolute inset-0 flex items-center justify-between px-1">
-                    <Sun className={`w-2.5 h-2.5 transition-opacity duration-300 ${theme === "light" ? "opacity-100 text-yellow-100" : "opacity-50 text-yellow-400"}`} />
-                    <Moon className={`w-2.5 h-2.5 transition-opacity duration-300 ${theme === "dark" ? "opacity-100 text-blue-100" : "opacity-50 text-blue-600"}`} />
                   </div>
-
-                  <div
-                    className={`absolute w-3 h-3 bg-white rounded-full shadow-lg transform transition-transform duration-300 ${
-                      theme === "light" ? "translate-x-1" : "translate-x-6"
-                    }`}
-                  />
-                </button>
-              </div>
+                  <DrawerFooter>
+                    <DrawerClose asChild>
+                      <Button variant="outline" className="focusable bg-white/20 border-gray-200/30">
+                        Close
+                      </Button>
+                    </DrawerClose>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
+              <Button
+                asChild
+                size="sm"
+                className="btn-gradient focusable text-white hover:opacity-95 font-medium px-3 py-1.5 rounded-lg shadow-md text-sm"
+              >
+                <a
+                  href="https://api.whatsapp.com/send/?phone=919266602470&text=Hi+AllTripp%2C+I+am+interested+in+planning+a+trip.+Can+you+help+me+with+the+details%3F&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1"
+                >
+                  <MessageCircle className="w-3 h-3" />
+                  Book
+                </a>
+              </Button>
+            {mounted && (
+              <button
+                onClick={toggleTheme}
+                aria-label="Toggle Dark Mode"
+                className={`relative focusable inline-flex items-center w-10 h-5 rounded-full transition-all duration-300 hover:scale-105 ${theme === "light" ? 'bg-[#FF8C00]' : 'bg-[#1e40af]'}`}
+              >
+                <div className="absolute inset-0 flex items-center justify-between px-1">
+                  <Sun className={`w-2.5 h-2.5 transition-opacity duration-300 ${theme === "light" ? "opacity-100 text-yellow-100" : "opacity-50 text-yellow-400"}`} />
+                  <Moon className={`w-2.5 h-2.5 transition-opacity duration-300 ${theme === "dark" ? "opacity-100 text-blue-100" : "opacity-50 text-blue-600"}`} />
+                </div>
+                <div
+                  className={`absolute w-3 h-3 bg-white rounded-full shadow-lg transform transition-transform duration-300 ${
+                    theme === "light" ? "translate-x-1" : "translate-x-6"
+                  }`}
+                />
+              </button>
             )}
           </div>
-        </nav>
+        </div>
+      </nav>
     </header>
   );
 };

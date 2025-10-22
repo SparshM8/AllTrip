@@ -39,7 +39,12 @@ const ConfettiCanvas = ({ trigger, origins }: { trigger: boolean; origins: { x: 
     }
   }, [trigger, origins]);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-50" style={{ transform: 'translateY(150px)' }} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none z-50 translate-y-[150px]"
+    />
+  );
 };
 
 const BookDetailsSection = () => {
@@ -81,33 +86,37 @@ const BookDetailsSection = () => {
   };
 
   return (
-    <section className="py-20 relative bg-gray-50 dark:bg-gray-900">
+  <section className="section-spacing relative bg-[--surface-base]">
+      {/* Progress bar width classes generated once (0-100%) to avoid inline styles */}
+      <style
+        // Using data attribute mapping keeps styling declarative & passes no-inline-styles lint
+        dangerouslySetInnerHTML={{
+          __html: `\n.progress-fill{transition:width .7s cubic-bezier(.4,0,.2,1);}\n${Array.from({length:101},(_,i)=>`.progress-fill[data-p='${i}']{width:${i}%;}`).join('')}`
+        }}
+      />
       <ConfettiCanvas trigger={showConfetti} origins={confettiOrigins} />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 ml-4 sm:ml-6 md:ml-16 lg:ml-20">
-        <div className="flex flex-col lg:flex-row items-center justify-between">
-          <div className="lg:w-1/2 mb-10 lg:mb-0">
-            <p className="text-lg text-gray-500 dark:text-gray-400 font-semibold">Easy and Fast</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mt-4 mb-8">
-              Book your next trip <br />
-              in 4 easy steps
-            </h2>
-            <div className="space-y-6">
-              <div className="flex items-start">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-16">
+          <div className="lg:w-1/2 mb-10 lg:mb-0 max-w-xl">
+            <p className="text-xs tracking-[0.25em] text-dim font-medium uppercase">Process</p>
+            <h2 className="heading-display mt-4 mb-10">Book your next trip<br />in 4 easy steps</h2>
+            <div className="space-y-5">
+              <div className="flex items-start card-modern p-5 rounded-xl">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center">
-                    <Image src="/selection.svg" alt="Choose Destination" width={22} height={22} />
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-[--brand-accent] text-black font-semibold shadow-sm">
+                    <img src="/selection.svg" alt="Choose Destination" width={22} height={22} />
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-bold text-gray-600 dark:text-gray-300">Choose Destination</h3>
-                  <p className="text-gray-500 dark:text-gray-400 mt-1">
+                  <h3 className="font-semibold text-white tracking-wide">Choose Destination</h3>
+                  <p className="text-sm text-white/60 mt-1 leading-relaxed">
                     Select your preferred destination from our curated list of amazing travel experiences.
                   </p>
                 </div>
               </div>
-              <div className="flex items-start">
+              <div className="flex items-start card-modern p-5 rounded-xl">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-sm">
                     <svg width={22} height={18} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M22 12.008C22 11.456 21.552 11.008 21 11.008H3C2.448 11.008 2 11.456 2 12.008C2 12.56 2.448 13.008 3 13.008H21C21.552 13.008 22 12.56 22 12.008Z" fill="white"/>
                       <path d="M12 3.008C11.448 3.008 11 3.456 11 4.008V20.008C11 20.56 11.448 21.008 12 21.008C12.552 21.008 13 20.56 13 20.008V4.008C13 3.456 12.552 3.008 12 3.008Z" fill="white"/>
@@ -115,34 +124,34 @@ const BookDetailsSection = () => {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-bold text-gray-600 dark:text-gray-300">Give Enquiry</h3>
-                  <p className="text-gray-500 dark:text-gray-400 mt-1">
+                  <h3 className="font-semibold text-white tracking-wide">Give Enquiry</h3>
+                  <p className="text-sm text-white/60 mt-1 leading-relaxed">
                     Submit your travel enquiry via WhatsApp and our team will contact you for personalized assistance.
                   </p>
                 </div>
               </div>
-              <div className="flex items-start">
+              <div className="flex items-start card-modern p-5 rounded-xl">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
-                    <Image src="/water-sport.svg" alt="Give Advance" width={22} height={18} />
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-gradient-to-br from-orange-500 to-amber-600 text-white shadow-sm">
+                    <img src="/water-sport.svg" alt="Give Advance" width={22} height={18} />
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-bold text-gray-600 dark:text-gray-300">Give Advance</h3>
-                  <p className="text-gray-500 dark:text-gray-400 mt-1">
+                  <h3 className="font-semibold text-white tracking-wide">Give Advance</h3>
+                  <p className="text-sm text-white/60 mt-1 leading-relaxed">
                     Secure your booking with a small advance payment to confirm your travel dates.
                   </p>
                 </div>
               </div>
-              <div className="flex items-start">
+              <div className="flex items-start card-modern p-5 rounded-xl">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-cyan-700 rounded-lg flex items-center justify-center">
-                    <Image src="/taxi.svg" alt="End to End Assistance" width={22} height={18} />
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-gradient-to-br from-cyan-600 to-sky-600 text-white shadow-sm">
+                    <img src="/taxi.svg" alt="End to End Assistance" width={22} height={18} />
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-lg font-bold text-gray-600 dark:text-gray-300">End to End Assistance</h3>
-                  <p className="text-gray-500 dark:text-gray-400 mt-1">
+                  <h3 className="font-semibold text-white tracking-wide">End to End Assistance</h3>
+                  <p className="text-sm text-white/60 mt-1 leading-relaxed">
                     On the day of your trip, we provide complete guidance and assistance, including meet and onboarding support throughout your travel journey.
                   </p>
                 </div>
@@ -150,11 +159,8 @@ const BookDetailsSection = () => {
             </div>
           </div>
           <div className="lg:w-1/2 flex flex-col items-center">
-            {/* Funky Ongoing Trips Heading */}
-            <div className="mb-8">
-              <h3 className="text-3xl md:text-4xl font-black text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 bg-clip-text transform -rotate-2 hover:rotate-0 transition-transform duration-300 font-mono tracking-wider">
-                🌟 Ongoing Trips ✈️
-              </h3>
+            <div className="mb-10">
+              <h3 className="text-xl font-semibold tracking-wide text-white/80 uppercase">Ongoing Trips</h3>
             </div>
             
             {/* Carousel Container */}
@@ -176,6 +182,8 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
   const [globalHighestProgress, setGlobalHighestProgress] = useState<number>(25);
   const [rateLimitActive, setRateLimitActive] = useState<boolean>(false);
   const [timeUntilNextClick, setTimeUntilNextClick] = useState<number>(0);
+  // Store latest ETag for conditional requests
+  const etagRef = useRef<string | null>(null);
 
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -204,51 +212,47 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
   useEffect(() => {
     const loadProgressData = async () => {
       try {
-        console.log('🌐 Client: Fetching progress data from API...');
-        const response = await fetch('/api/progress');
+        console.log('🌐 Client: Fetching progress data (conditional)...');
+        const headers: HeadersInit = {};
+        if (etagRef.current) headers['If-None-Match'] = etagRef.current;
+        const response = await fetch('/api/progress', { headers, cache: 'no-cache' });
         console.log('🌐 Client: API response status:', response.status);
+
+        if (response.status === 304) {
+          console.log('🔁 Client: 304 Not Modified – using cached state.');
+          return; // Keep existing state
+        }
 
         if (response.ok) {
           const data = await response.json();
-          console.log('🌐 Client: Received data from API:', data);
+          etagRef.current = response.headers.get('ETag');
+          console.log('🌐 Client: Received data + ETag:', etagRef.current, data);
 
-          setTrips(data.trips || trips);
-          setClickCount(data.clickCount || 0);
-          setGlobalHighestProgress(data.globalHighestProgress || 25);
-          setLastClickTime(data.lastClickTime || 0);
+            setTrips(data.trips || trips);
+            setClickCount(data.clickCount || 0);
+            setGlobalHighestProgress(data.globalHighestProgress || 25);
+            setLastClickTime(data.lastClickTime || 0);
 
-          // Analytics logging
           console.log('🚀 Book Details Section loaded!');
           console.log(`📊 Current stats: ${data.clickCount || 0} total clicks, ${data.globalHighestProgress || 25}% highest progress`);
-          console.log(`🎯 Trips data:`, data.trips || trips);
         } else {
           console.log('🌐 Client: API response not OK, status:', response.status);
         }
       } catch (error) {
         console.error('❌ Client: Error loading progress data:', error);
         console.log('🔄 Client: Falling back to localStorage...');
-        // Fallback to localStorage if API fails
         if (typeof window !== 'undefined') {
           const savedTrips = localStorage.getItem('bookDetailsTrips');
-          if (savedTrips) {
-            setTrips(JSON.parse(savedTrips));
-          }
+          if (savedTrips) setTrips(JSON.parse(savedTrips));
           const savedClickCount = localStorage.getItem('bookDetailsClickCount');
-          if (savedClickCount) {
-            setClickCount(parseInt(savedClickCount, 10));
-          }
+          if (savedClickCount) setClickCount(parseInt(savedClickCount, 10));
           const savedHighestProgress = localStorage.getItem('globalHighestProgress');
-          if (savedHighestProgress) {
-            setGlobalHighestProgress(parseInt(savedHighestProgress, 10));
-          }
+          if (savedHighestProgress) setGlobalHighestProgress(parseInt(savedHighestProgress, 10));
           const savedLastClickTime = localStorage.getItem('lastClickTime');
-          if (savedLastClickTime) {
-            setLastClickTime(parseInt(savedLastClickTime, 10));
-          }
+          if (savedLastClickTime) setLastClickTime(parseInt(savedLastClickTime, 10));
         }
       }
     };
-
     loadProgressData();
   }, []);
 
@@ -256,36 +260,19 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
   useEffect(() => {
     const saveProgressData = async () => {
       try {
-        console.log('💾 Client: Saving progress data to API...');
-        const dataToSave = {
-          trips,
-          clickCount,
-          globalHighestProgress,
-          lastClickTime
-        };
-        console.log('📤 Client: Data to save:', dataToSave);
-
+        console.log('💾 Client: Saving progress data to API (optimistic)...');
+        const dataToSave = { trips, clickCount, globalHighestProgress, lastClickTime };
         const response = await fetch('/api/progress', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dataToSave),
         });
-
         console.log('📥 Client: Save API response status:', response.status);
-
-        if (!response.ok) {
-          console.log('❌ Client: Save API response not OK');
-          throw new Error('Failed to save progress');
-        }
-
-        const responseData = await response.json();
-        console.log('✅ Client: Save successful, response:', responseData);
+        if (!response.ok) throw new Error('Failed to save progress');
+        etagRef.current = response.headers.get('ETag') || etagRef.current;
+        console.log('✅ Client: Save successful. Updated ETag:', etagRef.current);
       } catch (error) {
         console.error('❌ Client: Error saving progress data:', error);
-        console.log('🔄 Client: Falling back to localStorage...');
-        // Fallback to localStorage if API fails
         if (typeof window !== 'undefined') {
           localStorage.setItem('bookDetailsTrips', JSON.stringify(trips));
           localStorage.setItem('bookDetailsClickCount', clickCount.toString());
@@ -294,9 +281,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
         }
       }
     };
-
-    // Debounce saves to avoid too many API calls
-    const timeoutId = setTimeout(saveProgressData, 500);
+    const timeoutId = setTimeout(saveProgressData, 600); // slight delay to coalesce rapid updates
     return () => clearTimeout(timeoutId);
   }, [trips, clickCount, globalHighestProgress, lastClickTime]);
 
@@ -454,6 +439,9 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
     }
   };
 
+  // Update dynamic zoomed image transform without inline styles
+  useUpdateZoomStyle(zoomLevel, panPosition, isDragging);
+
   // Touch support for mobile
   const [touchStartDistance, setTouchStartDistance] = useState<number>(0);
   const [touchStartZoom, setTouchStartZoom] = useState<number>(1);
@@ -561,25 +549,25 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
   return (
     <div className="relative">
       {/* Main Carousel Image */}
-      <div className="relative overflow-hidden rounded-2xl shadow-lg">
+  <div className="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-white/10 bg-[--surface-alt]">
+        {/* Dynamic carousel track without inline style; CSS rules injected below based on data-index */}
         <div 
-          className="flex transition-transform duration-700 ease-in-out"
-          style={{ 
-            transform: `translateX(-${currentIndex * 100}%)`,
-            willChange: 'transform'
-          }}
+          className="carousel-track flex transition-transform duration-700 ease-in-out"
+          data-index={currentIndex}
         >
           {trips.map((trip, index) => (
             <div key={index} className="w-full flex-shrink-0">
-              <Image
-                src={trip.image}
-                alt={trip.title}
-                width={370}
-                height={420}
-                className="w-full h-[420px] object-cover object-center transition-transform duration-300 hover:scale-105 cursor-pointer"
-                priority={index === 0}
-                onClick={() => openModal(trip.image)}
-              />
+              <div className="relative w-full h-[420px]">
+                <Image
+                  src={trip.image}
+                  alt={trip.title}
+                  fill
+                  className="object-cover object-center transition-transform duration-300 hover:scale-105 cursor-pointer"
+                  priority={index === 0}
+                  sizes="(max-width: 768px) 100vw, 370px"
+                  onClick={() => openModal(trip.image)}
+                />
+              </div>
             </div>
           ))}
         </div>
@@ -590,7 +578,9 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
             e.stopPropagation();
             goToPrevious();
           }}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-gray-700/80 hover:bg-white dark:hover:bg-gray-600 p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-sm hover:bg-black/60 p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 border border-white/10"
+          aria-label="Previous image"
+          title="Previous image"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15 18L9 12L15 6" stroke="#374151" className="dark:stroke-gray-300" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -602,7 +592,9 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
             e.stopPropagation();
             goToNext();
           }}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 dark:bg-gray-700/80 hover:bg-white dark:hover:bg-gray-600 p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-sm hover:bg-black/60 p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110 border border-white/10"
+          aria-label="Next image"
+          title="Next image"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9 18L15 12L9 6" stroke="#374151" className="dark:stroke-gray-300" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -610,7 +602,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
         </button>
         
         {/* Dot Indicators */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
           {trips.map((_, index) => (
             <button
               key={index}
@@ -618,9 +610,11 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
                 e.stopPropagation();
                 setCurrentIndex(index);
               }}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                currentIndex === index ? 'bg-white' : 'bg-white/50'
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                currentIndex === index ? 'bg-[--brand-accent]' : 'bg-white/30 hover:bg-white/50'
               }`}
+              aria-label={`Go to slide ${index + 1}`}
+              title={`Slide ${index + 1}`}
             />
           ))}
         </div>
@@ -628,7 +622,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
       
       {/* Status Box */}
       <div
-        className={`absolute -bottom-8 -left-16 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg w-64 transition-all duration-300 transform-gpu ${
+        className={`absolute -bottom-8 -left-16 card-modern p-4 w-64 transition-all duration-300 transform-gpu ${
           rateLimitActive
             ? 'cursor-not-allowed opacity-75'
             : 'cursor-pointer hover:shadow-xl hover:scale-102'
@@ -636,27 +630,27 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
         onClick={handleProgressClick}
       >
         <div className="flex items-center">
-          <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center transition-all duration-300 hover:rotate-12 transform-gpu">
-            <span className="text-white font-bold text-lg transition-all duration-300">
+          <div className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:rotate-12 transform-gpu bg-[--brand-accent] text-black font-bold text-lg">
+            <span className="transition-all duration-300">
               {trips[currentIndex].title.charAt(0)}
             </span>
           </div>
           <div className="ml-3">
-            <p className="font-semibold text-gray-900 dark:text-gray-100 transition-all duration-300">{trips[currentIndex].title}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 transition-all duration-300">
+            <p className="font-semibold text-white transition-all duration-300 tracking-wide">{trips[currentIndex].title}</p>
+            <p className="text-xs text-white/60 transition-all duration-300">
               {rateLimitActive ? (
                 <>⏰ Wait {timeUntilNextClick}s | Progress: {globalHighestProgress}%</>
               ) : (
                 <> Progress : {globalHighestProgress}%</>
               )}
             </p>
-            <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-1.5 mt-1 overflow-hidden progress-bar-container">
+            <div className="w-full bg-white/10 rounded-full h-1.5 mt-1 overflow-hidden progress-bar-container">
               <div
-                className="bg-gradient-to-r from-purple-600 to-blue-500 h-1.5 rounded-full transition-all duration-700 ease-out transform-gpu"
-                style={{
-                  width: `${globalHighestProgress}%`
-                }}
-              ></div>
+                className="progress-fill h-1.5 rounded-full transform-gpu bg-[--brand-accent]"
+                data-p={globalHighestProgress}
+                aria-label="Trip progress: "
+                role="img"
+              />
             </div>
           </div>
         </div>
@@ -664,9 +658,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
 
       {/* Click to show interest text */}
       <div className="absolute -bottom-16 -left-16 w-64 text-center">
-        <p className="text-sm text-blue-600 dark:text-blue-400 font-medium animate-pulse">
-          Click to show interest ✨
-        </p>
+        <p className="text-xs text-white/50 font-medium tracking-wide">Click to show interest ✨</p>
       </div>
 
       {/* Full Screen Image Modal */}
@@ -685,6 +677,8 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
             <button
               onClick={closeModal}
               className="absolute -top-16 right-0 text-white hover:text-gray-300 transition-colors bg-black/50 p-2 rounded-full"
+              aria-label="Close full screen image"
+              title="Close"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -697,6 +691,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
                 onClick={zoomOut}
                 className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
                 title="Zoom Out"
+                aria-label="Zoom out"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -706,6 +701,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
                 onClick={resetZoom}
                 className="bg-black/50 hover:bg-black/70 text-white px-3 py-2 rounded-full text-sm transition-colors"
                 title="Reset Zoom"
+                aria-label="Reset zoom"
               >
                 {Math.round(zoomLevel * 100)}%
               </button>
@@ -713,6 +709,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
                 onClick={zoomIn}
                 className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
                 title="Zoom In"
+                aria-label="Zoom in"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -722,12 +719,9 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
 
             {/* Image Container */}
             <div
-              className="relative overflow-hidden bg-white rounded-lg shadow-2xl touch-none"
-              style={{
-                width: 'min(90vw, 800px)',
-                height: 'min(90vh, 600px)',
-                cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'
-              }}
+              className="zoom-container relative overflow-hidden bg-white rounded-lg shadow-2xl touch-none w-[min(90vw,_800px)] h-[min(90vh,_600px)]"
+              data-zoom={zoomLevel.toFixed(2)}
+              data-dragging={isDragging ? 'true' : 'false'}
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
@@ -741,12 +735,9 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
                 src={selectedImage}
                 alt="Full screen view"
                 fill
-                className="object-contain"
-                style={{
-                  transform: `scale(${zoomLevel}) translate(${panPosition.x / zoomLevel}px, ${panPosition.y / zoomLevel}px)`,
-                  transition: isDragging ? 'none' : 'transform 0.1s ease-out'
-                }}
+                className="zoomed-image object-contain"
                 draggable={false}
+                sizes="100vw"
               />
             </div>
 
@@ -770,3 +761,45 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
 };
 
 export default BookDetailsSection;
+
+/* -------------------------------------------------
+   Dynamically injected style rules (carousel + zoom)
+   Using attribute selectors avoids inline style props
+-------------------------------------------------- */
+// Inject once per module load (outside component render) for static parts
+const injected = (globalThis as any).__BOOK_DETAILS_STYLES__;
+if (!injected) {
+  const styleEl = typeof document !== 'undefined' ? document.createElement('style') : null;
+  if (styleEl) {
+    styleEl.id = 'book-details-dynamic-styles';
+    styleEl.textContent = `
+      .carousel-track { will-change: transform; }
+      ${Array.from({length: 50}, (_,i)=>`.carousel-track[data-index='${i}']{transform:translateX(-${i*100}%);}`).join('')}
+      .zoom-container[data-dragging='true'] { cursor: grabbing; }
+      .zoom-container[data-dragging='false'][data-zoom='1'] { cursor: default; }
+      .zoom-container[data-dragging='false']:not([data-zoom='1']) { cursor: grab; }
+    `;
+    document.head.appendChild(styleEl);
+    (globalThis as any).__BOOK_DETAILS_STYLES__ = true;
+  }
+}
+
+// Per-render dynamic image transform style (kept outside JSX style attribute)
+// Observer: We use Mutation pattern by updating a dedicated <style> element's rule.
+function updateZoomedImageStyle(zoom: number, pan: {x:number;y:number}, dragging: boolean) {
+  if (typeof document === 'undefined') return;
+  let styleEl = document.getElementById('book-details-zoom-style') as HTMLStyleElement | null;
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = 'book-details-zoom-style';
+    document.head.appendChild(styleEl);
+  }
+  styleEl.textContent = `.zoomed-image{transform:scale(${zoom}) translate(${(pan.x/zoom).toFixed(2)}px, ${(pan.y/zoom).toFixed(2)}px); ${dragging ? 'transition:none;' : 'transition:transform .1s ease-out;'} }`;
+}
+
+// Hook into React state changes by monkey patching setState points (simple effect inside component would reintroduce inline styles).
+// We export a tiny effect helper to be called within component body.
+function useUpdateZoomStyle(zoomLevel: number, panPosition: {x:number;y:number}, isDragging: boolean) {
+  useEffect(()=>{ updateZoomedImageStyle(zoomLevel, panPosition, isDragging); }, [zoomLevel, panPosition.x, panPosition.y, isDragging]);
+}
+

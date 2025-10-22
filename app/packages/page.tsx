@@ -1,6 +1,8 @@
-import { generateMetadata } from '@/lib/seo';
+import { generateMetadata, generateItemListStructuredData } from '@/lib/seo';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import packagesData from '@/data/packages.json';
+import StructuredData from '@/components/structured-data';
 
 // Hardcoded image mapping for packages
 const packageImages: { [key: string]: string } = {
@@ -26,41 +28,30 @@ export const metadata: Metadata = generateMetadata({
     "family holiday packages",
     "honeymoon packages India"
   ],
-  canonical: "https://alltripp.com/packages",
-  ogImage: "/featured/himachal-pradesh.jpg",
+  canonical: "https://alltripp.com/packages"
+  // ogImage intentionally omitted to use dynamic /api/og generation
 });
 
 export default function PackagesPage() {
   const packages = packagesData;
 
+  const itemList = generateItemListStructuredData(
+    'AllTripp Tour Packages',
+    'Curated travel packages for authentic India experiences',
+    '/packages',
+    packages.map((pkg: any) => ({
+      name: pkg.name,
+      description: `${pkg.duration} package to ${pkg.destination}`,
+      url: `/packages/${pkg.name.toLowerCase().replace(/\s+/g, '-')}`,
+      image: packageImages[pkg.name] || '/featured/default.jpg',
+      price: pkg.price.replace('₹',''),
+      priceCurrency: 'INR',
+      type: 'TouristTrip'
+    }))
+  );
   return (
     <div className="min-h-screen bg-gray-50">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            "name": "AllTripp Tour Packages",
-            "description": "Curated travel packages for authentic India experiences",
-            "url": "https://alltripp.com/packages",
-            "numberOfItems": packages.length,
-            "itemListElement": packages.map((pkg, index) => ({
-              "@type": "TouristTrip",
-              "position": index + 1,
-              "name": pkg.name,
-              "description": `${pkg.duration} package to ${pkg.destination}`,
-              "url": `https://alltripp.com/packages/${pkg.name.toLowerCase().replace(/\s+/g, '-')}`,
-              "image": `https://alltripp.com${packageImages[pkg.name] || "/featured/default.jpg"}`,
-              "offers": {
-                "@type": "Offer",
-                "price": pkg.price.replace('₹', ''),
-                "priceCurrency": "INR"
-              }
-            }))
-          })
-        }}
-      />
+      <StructuredData data={itemList} />
       
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
@@ -78,11 +69,13 @@ export default function PackagesPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 mb-12">
             {packages.map((pkg, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div className="relative h-64">                  <img 
-                    src={packageImages[pkg.name] || "/featured/default.jpg"} 
+                <div className="relative h-64">                  <Image
+                    src={packageImages[pkg.name] || "/featured/default.jpg"}
                     alt={`${pkg.name} - ${pkg.destination} tour package`}
-                    className="w-full h-full object-cover"
-                    loading={index < 2 ? "eager" : "lazy"}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                    priority={index < 2}
+                    className="object-cover"
                   />
                   <div className="absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
                     {pkg.price}

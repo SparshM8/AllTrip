@@ -1,4 +1,5 @@
-import { generateDestinationMetadata } from '@/lib/seo';
+import { generateDestinationMetadata, generateDestinationStructuredData } from '@/lib/seo';
+import StructuredData from '@/components/structured-data';
 
 export const metadata = generateDestinationMetadata(
   'Ladakh',
@@ -9,25 +10,7 @@ export const metadata = generateDestinationMetadata(
 export default function LadakhPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "TouristDestination",
-            "name": "Ladakh",
-            "description": "Land of high passes with stunning landscapes, Buddhist monasteries, and pristine lakes",
-            "url": "https://alltripp.com/destinations/ladakh",
-            "image": "https://alltripp.com/destinations/ladakh.jpg",
-            "containedInPlace": {
-              "@type": "Country",
-              "name": "India"
-            },
-            "touristType": ["Adventure", "Cultural", "Nature", "Spiritual"],
-            "hasMap": "https://maps.google.com/?q=Ladakh,India"
-          })
-        }}
-      />
+      <StructuredData data={generateDestinationStructuredData('Ladakh', 'Land of high passes with stunning landscapes, Buddhist monasteries, and pristine lakes')} />
       
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto">
@@ -36,7 +19,7 @@ export default function LadakhPage() {
           </h1>
             <div className="mb-8">
             <img
-              src="/destinations/Ladakh.jpg"
+              src="/destinations/ladakh.jpg"
               alt="Ladakh - Stunning mountain landscapes and monasteries"
               className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
               loading="eager"

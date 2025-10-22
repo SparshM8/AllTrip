@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { getBlurData } from "@/lib/blur-data";
 import {
   Carousel,
   CarouselContent,
@@ -12,6 +13,8 @@ import {
 import { Button } from "@/components/ui/button";
 import destinationsData from "@/data/destinations.json";
 import { Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/lib/motion";
 
 // Create a unique list of all destinations by name
 const allUniqueDestinations = Array.from(
@@ -45,32 +48,38 @@ const DestinationCard = ({ destination }: { destination: any }) => {
   }
 
   return (
-    <div className="destination-card">
-      <Image
-        src={destinationImages[destination.name] || "/placeholder.jpg"}
-        alt={destination.name}
-        width={140}
-        height={140}
-        className="object-cover rounded-lg shadow-lg"
-      />
-      <div className="destination-info mt-2">
-        <h3 className="destination-name text-lg font-semibold text-black dark:text-white">{destination.name}</h3>
-        <div className="flex items-center justify-between mt-1 h-12">
-          <p className="destination-location text-sm text-gray-500 dark:text-gray-300">{destination.location}</p>
-          <Button asChild className="bg-black dark:bg-white text-white dark:text-black rounded-full hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors duration-300 text-xs py-1 px-3 h-auto">
-            <a href={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-')}`}>
-              View Details
-            </a>
-          </Button>
+  <motion.div className="group relative card-modern rounded-xl overflow-hidden focusable" variants={fadeInUp}>
+      <div className="relative h-44 md:h-48 lg:h-52 w-full">
+        <Image
+          src={destinationImages[destination.name] || "/placeholder.jpg"}
+          alt={destination.name}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
+          placeholder="blur"
+          blurDataURL={getBlurData(destinationImages[destination.name] || 'dest')}
+        />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+        <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+          <div>
+            <h3 className="text-white font-semibold text-base md:text-lg leading-tight drop-shadow">{destination.name}</h3>
+            <p className="text-white/80 text-xs md:text-sm">{destination.location}</p>
+          </div>
+          <a
+            href={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-')}`}
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-medium hover:bg-white/15 transition"
+          >
+            Explore →
+          </a>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 export default function DestinationsSection() {
    return (
-     <section id="destinations" className="py-20 bg-gray-50 dark:bg-gray-900">
+  <section id="destinations" className="py-20 bg-white dark:bg-[hsl(var(--surface-base))]">
        <div className="container mx-auto px-6 md:px-16 lg:px-20">
          <Carousel
            opts={{
@@ -81,11 +90,11 @@ export default function DestinationsSection() {
          >
            <div className="mb-12 md:mb-20">
              <div className="text-left">
-               <h2 className="text-3xl md:text-5xl font-extrabold text-black dark:text-white tracking-tighter uppercase">
-                 Popular Destination
-               </h2>
+               <motion.h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tighter uppercase" variants={fadeInUp} initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }}>
+                 Popular Destinations
+               </motion.h2>
                <div className="flex justify-between items-center mt-2 md:mt-4">
-                 <p className="text-base md:text-lg md:text-xl text-black dark:text-white flex-1">
+                 <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 flex-1">
                    Explore our top-rated destinations
                  </p>
                  <div className="flex items-center space-x-2 sm:hidden ml-4">
@@ -99,15 +108,25 @@ export default function DestinationsSection() {
                <CarouselNext />
              </div>
            </div>
-           <CarouselContent className="-ml-2 md:-ml-4">
-             {allUniqueDestinations.map((destination) => (
-               <CarouselItem key={destination.name} className="basis-1/2 pl-2 md:pl-4 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6">
-                 <div className="p-1">
-                   <DestinationCard destination={destination} />
-                 </div>
-               </CarouselItem>
-             ))}
-           </CarouselContent>
+          <CarouselContent className="-ml-2 md:-ml-4">
+            {allUniqueDestinations.map((destination) => (
+              <CarouselItem
+                key={destination.name}
+                className="basis-1/2 pl-2 md:pl-4 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+              >
+                <motion.div
+                  variants={fadeInUp}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true, amount: 0.15 }}
+                >
+                  <div className="p-1">
+                    <DestinationCard destination={destination} />
+                  </div>
+                </motion.div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
          </Carousel>
        </div>
      </section>

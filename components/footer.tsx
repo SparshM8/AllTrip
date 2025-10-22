@@ -3,6 +3,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { trackCta, trackEvent } from "@/lib/analytics";
 import { SiInstagram, SiFacebook, SiLinkedin } from "react-icons/si";
 import { IconBrandWhatsapp } from "@tabler/icons-react";
 import { motion } from "framer-motion";
@@ -59,9 +60,10 @@ export default function Footer() {
             </div>
             <div className="flex justify-start">
               <a
-                href="https://wa.me/919266602470?text=Hi%20AllTipp%2C%20I%20am%20interested%20in%20planning%20a%20trip.%20Can%20you%20help%20me%20with%20the%20details%3F"
+                href="https://wa.me/919266602470?text=Hi%20AllTripp%2C%20I%20am%20interested%20in%20planning%20a%20trip.%20Can%20you%20help%20me%20with%20the%20details%3F"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackCta('whatsapp_book_trip', 'footer')}
                 className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 text-base"
               >
                 <IconBrandWhatsapp className="h-6 w-6" />
@@ -117,7 +119,16 @@ export default function Footer() {
             <p className="text-gray-400 text-sm mb-2">
               Get the latest travel updates, offers, and inspiration delivered to your inbox.
             </p>
-            <form className="flex flex-col sm:flex-row gap-3">
+            <form
+              className="flex flex-col sm:flex-row gap-3"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const form = e.currentTarget;
+                const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement | null;
+                trackEvent('newsletter_subscribe_attempt', { emailPresent: !!emailInput?.value });
+                // In a future enhancement you'd call an API here then track success/failure
+              }}
+            >
               <input
                 type="email"
                 required

@@ -1,4 +1,5 @@
-import { generateDestinationMetadata } from '@/lib/seo';
+import { generateDestinationMetadata, generateDestinationStructuredData } from '@/lib/seo';
+import StructuredData from '@/components/structured-data';
 
 export const metadata = generateDestinationMetadata(
   'Himachal Pradesh',
@@ -9,25 +10,7 @@ export const metadata = generateDestinationMetadata(
 export default function HimachalPradeshPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "TouristDestination",
-            "name": "Himachal Pradesh",
-            "description": "Beautiful hill state with snow-capped mountains, serene valleys, and adventure sports",
-            "url": "https://alltripp.com/destinations/himachal-pradesh",
-            "image": "https://alltripp.com/destinations/himachal-pradesh.jpg",
-            "containedInPlace": {
-              "@type": "Country",
-              "name": "India"
-            },
-            "touristType": ["Adventure", "Nature", "Hill Station", "Leisure"],
-            "hasMap": "https://maps.google.com/?q=Himachal+Pradesh,India"
-          })
-        }}
-      />
+      <StructuredData data={generateDestinationStructuredData('Himachal Pradesh', 'Beautiful hill state with snow-capped mountains, serene valleys, and adventure sports')} />
       
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto">

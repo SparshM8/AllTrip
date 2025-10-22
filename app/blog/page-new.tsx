@@ -17,8 +17,7 @@ export const metadata: Metadata = generateMetadata({
     "travel guides India",
     "cultural tours blog"
   ],
-  url: "https://alltripp.com/blog",
-  image: "/himalayas.jpg",
+  ogImage: "/himalayas.jpg",
 });
 
 export default function BlogPage() {
