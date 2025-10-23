@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import policies from "@/data/policies.json";
 import { generateMetadata } from '@/lib/seo';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import StructuredData from "@/components/structured-data";
 
 export const metadata = generateMetadata({
   title: 'Privacy Policy',
@@ -39,11 +41,33 @@ export default function PrivacyPage() {
 
   return (
     <main className="container mx-auto py-12 px-4">
+      {/* Breadcrumb */}
+      <div className="mb-6">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/policies">Policies</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Privacy Policy</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+
+      {/* Page heading */}
       <div className="text-center mb-10">
         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
           Privacy Policy
         </h1>
       </div>
+
+      {/* Two-column layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* TOC */}
         <aside className="lg:col-span-3">
@@ -62,7 +86,7 @@ export default function PrivacyPage() {
         {/* Content */}
         <div className="lg:col-span-9 space-y-8">
           {sections.map((section, idx) => {
-            const id = slugify(section.title)
+            const id = slugify(section.title);
             return (
               <Card key={idx} className="overflow-hidden">
                 <CardHeader>
@@ -77,7 +101,7 @@ export default function PrivacyPage() {
                           <ul key={pIdx} className="list-disc ml-6">
                             {para
                               .split("\n")
-                              .filter(line => line.trim().startsWith("- "))
+                              .filter((line) => line.trim().startsWith("- "))
                               .map((line, liIdx) => (
                                 <li key={liIdx}>{line.replace(/^- /, "")}</li>
                               ))}
@@ -89,10 +113,23 @@ export default function PrivacyPage() {
                   </div>
                 </CardContent>
               </Card>
-            )
+            );
           })}
         </div>
       </div>
+
+      {/* JSON-LD Breadcrumbs */}
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://alltripp.com" },
+            { "@type": "ListItem", position: 2, name: "Policies", item: "https://alltripp.com/policies" },
+            { "@type": "ListItem", position: 3, name: "Privacy Policy", item: "https://alltripp.com/privacy" },
+          ],
+        }}
+      />
     </main>
   );
 }

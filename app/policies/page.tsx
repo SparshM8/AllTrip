@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import policies from "@/data/policies.json";
 import { generateMetadata } from "@/lib/seo";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import StructuredData from "@/components/structured-data";
 
 export const metadata = generateMetadata({
   title: "Policies",
@@ -16,6 +18,19 @@ export default function PoliciesSummaryPage() {
 
   return (
     <main className="container mx-auto py-12 px-4 max-w-3xl">
+      <div className="mb-6">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Policies</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
       <header className="mb-8">
         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">Policies</h1>
         {summary?.lastUpdated && (
@@ -46,6 +61,16 @@ export default function PoliciesSummaryPage() {
           </div>
         </CardContent>
       </Card>
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://alltripp.com" },
+            { "@type": "ListItem", position: 2, name: "Policies", item: "https://alltripp.com/policies" }
+          ]
+        }}
+      />
     </main>
   );
 }

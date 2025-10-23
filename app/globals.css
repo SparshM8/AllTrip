@@ -51,6 +51,8 @@
     --radius-md: 0.625rem;
     --radius-lg: 1rem;
     --transition-base: 180ms cubic-bezier(.4,0,.2,1);
+  /* Fixed navbar height (used for anchor offsets) */
+  --nav-height: 5rem;
     /* Typography scale */
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
@@ -103,6 +105,9 @@
    Component / Utility Layer
 --------------------------------------- */
 @layer components {
+  /* Anchor-safe heading offsets */
+  .anchor-offset { scroll-margin-top: var(--nav-height); }
+  .prose h1, .prose h2, .prose h3, .prose h4 { scroll-margin-top: var(--nav-height); }
   /* Replaced Tailwind @apply utilities with raw CSS for editor compatibility */
   .card-modern {
     position: relative; /* relative */

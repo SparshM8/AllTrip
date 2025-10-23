@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import policies from "@/data/policies.json";
 import { generateMetadata } from '@/lib/seo';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import StructuredData from "@/components/structured-data";
 
 export const metadata = generateMetadata({
   title: 'Refund & Cancellation Policy',
@@ -25,6 +27,23 @@ export default function RefundPage() {
 
   return (
     <main className="container mx-auto py-12 px-4">
+      <div className="mb-6">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/policies">Policies</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Refund & Cancellation</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
       <div className="text-center mb-10">
         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
           {title}
@@ -81,6 +100,17 @@ export default function RefundPage() {
           })}
         </div>
       </div>
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://alltripp.com" },
+            { "@type": "ListItem", position: 2, name: "Policies", item: "https://alltripp.com/policies" },
+            { "@type": "ListItem", position: 3, name: "Refund & Cancellation", item: "https://alltripp.com/refund" },
+          ]
+        }}
+      />
     </main>
   );
 }
