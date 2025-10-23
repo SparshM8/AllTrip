@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { z } from 'zod';
+import { Redis } from '@upstash/redis';
 
-const PROGRESS_FILE = path.join(process.cwd(), 'data', 'progress.json');
+export const runtime = 'edge';
 
 // Default progress data
 const defaultProgress = {
@@ -25,67 +25,99 @@ const defaultProgress = {
   lastClickTime: 0
 };
 
-// Helper function to read progress data
-function readProgressData() {
-  try {
-    console.log('📖 Attempting to read progress file...');
-    if (fs.existsSync(PROGRESS_FILE)) {
-      console.log('✅ File exists, reading...');
-      const data = fs.readFileSync(PROGRESS_FILE, 'utf8');
-      const parsed = JSON.parse(data);
-      console.log('📋 Successfully read and parsed data');
-      return parsed;
-    } else {
-      console.log('❌ File does not exist, returning defaults');
-    }
-  } catch (error) {
-    console.error('❌ Error reading progress data:', error);
-  }
-  return defaultProgress;
+// Zod schema for POST body
+const progressSchema = z.object({
+  trips: z
+    .array(
+      z.object({
+        image: z.string(),
+        title: z.string(),
+        status: z.string(),
+        percentage: z.number().min(0).max(100),
+      })
+    )
+    .optional(),
+  clickCount: z.number().int().min(0).optional(),
+  globalHighestProgress: z.number().min(0).max(100).optional(),
+  lastClickTime: z.number().int().nonnegative().optional(),
+});
+
+// In-memory fallback (per-region ephemeral)
+const memory = (globalThis as any).__progressMemory ?? new Map<string, any>();
+(globalThis as any).__progressMemory = memory;
+
+const hasUpstash = !!process.env.UPSTASH_REDIS_REST_URL && !!process.env.UPSTASH_REDIS_REST_TOKEN;
+let redis: Redis | null = null;
+if (hasUpstash) {
+  redis = new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL!,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+  });
 }
 
-// Helper function to write progress data
-function writeProgressData(data: any) {
+const KEY = 'progress:global:v1';
+const RATELIMIT_PREFIX = 'rl:progress:'; // per ip
+const RATE_WINDOW_MS = 2000; // 1 update per 2s
+
+async function kvGet<T>(): Promise<T | null> {
+  if (!redis) {
+    return (memory.has(KEY) ? memory.get(KEY) : null) as T | null;
+  }
+  return (await redis.get<T>(KEY)) ?? null;
+}
+
+async function kvSet<T>(value: T) {
+  if (!redis) {
+    memory.set(KEY, value);
+    return;
+  }
+  await redis.set(KEY, value);
+}
+
+async function checkRateLimit(ip: string | null): Promise<{ allowed: boolean; retryAfter?: number }> {
+  if (!ip) return { allowed: true };
+  const key = `${RATELIMIT_PREFIX}${ip}`;
+  const now = Date.now();
+  if (!redis) {
+    // simple in-memory timestamp
+    const last = memory.get(key) as number | undefined;
+    if (last && now - last < RATE_WINDOW_MS) {
+      return { allowed: false, retryAfter: Math.ceil((RATE_WINDOW_MS - (now - last)) / 1000) };
+    }
+    memory.set(key, now);
+    return { allowed: true };
+  }
+  const existing = await redis.get<number>(key);
+  if (existing) {
+    return { allowed: false, retryAfter: Math.ceil((RATE_WINDOW_MS - (now - existing)) / 1000) };
+  }
+  // set with px expiry
+  await redis.set(key, now, { px: RATE_WINDOW_MS });
+  return { allowed: true };
+}
+
+function buildEtag(obj: unknown): string {
   try {
-    console.log('💾 Attempting to write progress data...');
-    // Ensure data directory exists
-    const dataDir = path.dirname(PROGRESS_FILE);
-    console.log('📁 Data directory:', dataDir);
-    if (!fs.existsSync(dataDir)) {
-      console.log('📂 Creating data directory...');
-      fs.mkdirSync(dataDir, { recursive: true });
-    }
-
-    console.log('✍️ Writing to file:', PROGRESS_FILE);
-    fs.writeFileSync(PROGRESS_FILE, JSON.stringify(data, null, 2));
-    console.log('✅ Successfully wrote data to file');
-
-    // Verify the write
-    if (fs.existsSync(PROGRESS_FILE)) {
-      const verifyData = fs.readFileSync(PROGRESS_FILE, 'utf8');
-      console.log('🔍 Verification: File exists and contains data');
-    } else {
-      console.log('⚠️ Warning: File write verification failed');
-    }
-  } catch (error) {
-    console.error('❌ Error writing progress data:', error);
+    const json = JSON.stringify(obj);
+    let hash = 0;
+    for (let i = 0; i < json.length; i++) hash = (hash * 31 + json.charCodeAt(i)) | 0;
+    return 'W/"pg-' + (hash >>> 0).toString(16) + '"';
+  } catch {
+    return 'W/"pg-0"';
   }
 }
 
 // GET /api/progress - Get current progress data
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    console.log('🔍 GET /api/progress called');
-    console.log('📁 PROGRESS_FILE path:', PROGRESS_FILE);
-    console.log('🌐 Environment:', process.env.NODE_ENV);
-    console.log('💾 File exists:', fs.existsSync(PROGRESS_FILE));
-
-    const progressData = readProgressData();
-    console.log('📊 Retrieved progress data:', progressData);
-
-    return NextResponse.json(progressData);
+    const progressData = (await kvGet<typeof defaultProgress>()) ?? defaultProgress;
+    const etag = buildEtag(progressData);
+    const ifNoneMatch = req.headers.get('if-none-match');
+    if (ifNoneMatch && ifNoneMatch === etag) {
+      return new NextResponse(null, { status: 304, headers: { ETag: etag } });
+    }
+    return NextResponse.json(progressData, { headers: { ETag: etag, 'Cache-Control': 'no-store' } });
   } catch (error) {
-    console.error('❌ Error getting progress:', error);
     return NextResponse.json({ error: 'Failed to get progress' }, { status: 500 });
   }
 }
@@ -93,31 +125,29 @@ export async function GET() {
 // POST /api/progress - Update progress data
 export async function POST(request: NextRequest) {
   try {
-    console.log('📝 POST /api/progress called');
-    const body = await request.json();
-    console.log('📨 Received body:', body);
+    // Rate limit
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || null;
+    const rl = await checkRateLimit(ip);
+    if (!rl.allowed) {
+      return NextResponse.json({ error: 'Rate limit exceeded', retryAfter: rl.retryAfter }, { status: 429 });
+    }
+    const body = await request.json().catch(() => ({}));
+    const parsed = progressSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
+    }
 
-    const currentData = readProgressData();
-    console.log('📊 Current data before update:', currentData);
-
-    // Update the data with new values
+    const current = (await kvGet<typeof defaultProgress>()) ?? defaultProgress;
     const updatedData = {
-      ...currentData,
-      ...body,
-      // Ensure trips array is properly merged
-      trips: body.trips || currentData.trips,
+      ...current,
+      ...parsed.data,
+      trips: parsed.data.trips ?? current.trips,
     };
 
-    console.log('🔄 Updated data to write:', updatedData);
-    writeProgressData(updatedData);
-
-    // Verify the write by reading back
-    const verifyData = readProgressData();
-    console.log('✅ Data after write verification:', verifyData);
-
-    return NextResponse.json({ success: true, data: updatedData });
+    await kvSet(updatedData);
+    const etag = buildEtag(updatedData);
+    return NextResponse.json({ success: true, data: updatedData }, { headers: { ETag: etag } });
   } catch (error) {
-    console.error('❌ Error updating progress:', error);
     return NextResponse.json({ error: 'Failed to update progress' }, { status: 500 });
   }
 }

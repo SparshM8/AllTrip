@@ -1,4 +1,5 @@
-import { generateDestinationMetadata } from '@/lib/seo';
+import { generateDestinationMetadata, generateDestinationStructuredData } from '@/lib/seo';
+import StructuredData from '@/components/structured-data';
 
 export const metadata = generateDestinationMetadata(
   'Rishikesh',
@@ -9,25 +10,7 @@ export const metadata = generateDestinationMetadata(
 export default function RishikeshPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "TouristDestination",
-            "name": "Rishikesh",
-            "description": "Yoga capital of the world with spiritual heritage, adventure sports, and Ganga Aarti",
-            "url": "https://alltripp.com/destinations/rishikesh",
-            "image": "https://alltripp.com/destinations/rishikesh.jpg",
-            "containedInPlace": {
-              "@type": "Country",
-              "name": "India"
-            },
-            "touristType": ["Spiritual", "Adventure", "Cultural", "Wellness"],
-            "hasMap": "https://maps.google.com/?q=Rishikesh,India"
-          })
-        }}
-      />
+      <StructuredData data={generateDestinationStructuredData('Rishikesh', 'Yoga capital of the world with spiritual heritage, adventure sports, and Ganga Aarti')} />
       
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto">
@@ -36,8 +19,8 @@ export default function RishikeshPage() {
           </h1>
             <div className="mb-8">
             <img
-              src="/destinations/Uttarakhand.jpg"
-              alt="Rishikesh - River Ganges and spiritual temples"
+              src="/destinations/rishikesh.jpg"
+              alt="Rishikesh Ganges river evening aarti spiritual ghats"
               className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
               loading="eager"
             />

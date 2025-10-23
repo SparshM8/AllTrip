@@ -1,4 +1,6 @@
-import { generateDestinationMetadata } from '@/lib/seo';
+import { generateDestinationMetadata, generateDestinationStructuredData } from '@/lib/seo';
+import Image from 'next/image';
+import StructuredData from '@/components/structured-data';
 
 export const metadata = generateDestinationMetadata(
   'Kashmir',
@@ -9,25 +11,7 @@ export const metadata = generateDestinationMetadata(
 export default function KashmirPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "TouristDestination",
-            "name": "Kashmir",
-            "description": "Paradise on earth with snow-capped mountains, pristine lakes, and rich cultural heritage",
-            "url": "https://alltripp.com/destinations/kashmir",
-            "image": "https://alltripp.com/destinations/kashmir.jpg",
-            "containedInPlace": {
-              "@type": "Country",
-              "name": "India"
-            },
-            "touristType": ["Cultural", "Adventure", "Nature", "Leisure"],
-            "hasMap": "https://maps.google.com/?q=Kashmir,India"
-          })
-        }}
-      />
+      <StructuredData data={generateDestinationStructuredData('Kashmir', 'Paradise on earth with snow-capped mountains, pristine lakes, and rich cultural heritage')} />
       
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto">
@@ -35,12 +19,14 @@ export default function KashmirPage() {
             Kashmir - Paradise on Earth
           </h1>
           
-          <div className="mb-8">
-            <img 
-              src="/destinations/kashmir.jpg" 
-              alt="Kashmir Valley - Beautiful mountains and lakes" 
-              className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
-              loading="eager"
+          <div className="mb-8 relative w-full h-64 md:h-96">
+            <Image
+              src="/destinations/kashmir.jpg"
+              alt="Kashmir Valley - Beautiful mountains and lakes"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="object-cover rounded-lg shadow-lg"
             />
           </div>
           

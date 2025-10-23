@@ -1,4 +1,6 @@
-import { generateDestinationMetadata } from '@/lib/seo';
+import { generateDestinationMetadata, generateDestinationStructuredData } from '@/lib/seo';
+import Image from 'next/image';
+import StructuredData from '@/components/structured-data';
 
 export const metadata = generateDestinationMetadata(
   'Amritsar',
@@ -9,37 +11,21 @@ export const metadata = generateDestinationMetadata(
 export default function AmritsarPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "TouristDestination",
-            "name": "Amritsar",
-            "description": "Spiritual center of Sikhism featuring Golden Temple, rich Punjab culture, and historic significance",
-            "url": "https://alltripp.com/destinations/amritsar",
-            "image": "https://alltripp.com/destinations/amritsar.jpg",
-            "containedInPlace": {
-              "@type": "Country",
-              "name": "India"
-            },
-            "touristType": ["Religious", "Cultural", "Historical", "Spiritual"],
-            "hasMap": "https://maps.google.com/?q=Amritsar,India"
-          })
-        }}
-      />
+      <StructuredData data={generateDestinationStructuredData('Amritsar', 'Spiritual center of Sikhism featuring Golden Temple, rich Punjab culture, and historic significance')} />
       
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Amritsar - Golden City of Punjab
           </h1>
-            <div className="mb-8">
-            <img 
-              src="/destinations/delhi.jpg" 
-              alt="Amritsar - Golden Temple and Sikh heritage" 
-              className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
-              loading="eager"
+            <div className="mb-8 relative w-full h-64 md:h-96">
+            <Image
+              src="/destinations/amritsar.jpg"
+              alt="Amritsar - Golden Temple illuminated at night reflecting in the sacred pool"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="object-cover rounded-lg shadow-lg"
             />
           </div>
           
@@ -59,7 +45,7 @@ export default function AmritsarPage() {
               <li>Historic Jallianwala Bagh memorial</li>
               <li>Warm Punjabi hospitality and vibrant culture</li>
             </ul>
-            
+
             <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-4">Must-Visit Attractions</h2>
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div>

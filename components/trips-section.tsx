@@ -2,7 +2,9 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import { getBlurData } from "@/lib/blur-data";
 import { motion, useInView } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/lib/motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -145,24 +147,24 @@ export default function ItinerariesSection() {
     <section
       id="itineraries"
       ref={ref}
-      className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300"
+  className="py-20 bg-white dark:bg-[hsl(var(--surface-base))] transition-colors duration-300"
     >
       <div className="container mx-auto px-6 md:px-16 lg:px-20">
         {/* Section Header */}
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
+            variants={fadeInUp}
+            initial="initial"
+            animate={isInView ? "animate" : "initial"}
               className="text-left mb-10"
             >
               <div className="flex flex-col space-y-4">
-                <h2 className="text-5xl md:text-5xl font-extrabold text-black dark:text-white tracking-tighter uppercase">
+                <h2 className="text-5xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tighter uppercase">
                   ITINERARIES
                 </h2>
 
                 {/* Subtitle and Navigation Buttons - Same Line */}
                 <div className="flex items-center justify-between">
-                  <p className="text-lg md:text-xl text-black dark:text-gray-300">
+                  <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300">
                     That Beckon Every Traveller
                   </p>
 
@@ -171,18 +173,18 @@ export default function ItinerariesSection() {
                     <Button
                       onClick={scrollLeft}
                       disabled={!canScrollLeft}
-                      className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 border border-gray-200 dark:border-gray-600"
+                      className="focusable w-12 h-12 rounded-full bg-white dark:bg-slate-800 shadow-lg hover:bg-gray-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 border border-gray-200 dark:border-slate-700"
                       variant="outline"
                     >
-                      <ChevronLeft className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                      <ChevronLeft className="w-6 h-6 text-gray-700 dark:text-gray-200" />
                     </Button>
                     <Button
                       onClick={scrollRight}
                       disabled={!canScrollRight}
-                      className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 border border-gray-200 dark:border-gray-600"
+                      className="focusable w-12 h-12 rounded-full bg-white dark:bg-slate-800 shadow-lg hover:bg-gray-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 border border-gray-200 dark:border-slate-700"
                       variant="outline"
                     >
-                      <ChevronRight className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                      <ChevronRight className="w-6 h-6 text-gray-700 dark:text-gray-200" />
                     </Button>
                   </div>
                 </div>
@@ -192,12 +194,9 @@ export default function ItinerariesSection() {
               {/* Cards Container */}
               <motion.div
                 className="overflow-hidden"
-                initial={{ opacity: 0 }}
-                animate={
-                  isInView
-                    ? { opacity: 1, transition: { duration: 0.7, ease: "easeInOut" } }
-                    : {}
-                }
+                variants={staggerContainer(0.05,0.12)}
+                initial="initial"
+                animate={isInView ? "animate" : "initial"}
               >
                 <div
                   ref={carouselRef}
@@ -210,25 +209,12 @@ export default function ItinerariesSection() {
                     <motion.div
                       key={idx}
                       className="snap-start flex-shrink-0 w-full md:w-[300px] lg:w-[320px]"
-                      initial={{ y: 50, opacity: 0 }}
-                      animate={
-                        isInView
-                          ? {
-                              y: 0,
-                              opacity: 1,
-                              transition: {
-                                delay: idx * 0.15,
-                                duration: 0.8,
-                                ease: "easeInOut",
-                              },
-                            }
-                          : {}
-                      }
+                      variants={fadeInUp}
                       onMouseEnter={() => setHoveredCard(idx)}
                       onMouseLeave={() => setHoveredCard(null)}
                     >
-                      {/* Clean Compact Card Design */}
-                      <div className="group bg-white dark:bg-slate-800 rounded-xl shadow-md dark:shadow-slate-700 hover:shadow-lg dark:hover:shadow-slate-600 transition-all duration-300 overflow-hidden border border-gray-100 dark:border-slate-700">
+                      {/* Dark modern compact card */}
+                      <div className="group card-modern rounded-xl overflow-hidden">
                         {/* Image Section with Carousel Dots and Heart */}
                         <div className="relative h-56 w-full overflow-hidden">
                           <Image
@@ -237,16 +223,22 @@ export default function ItinerariesSection() {
                             fill
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
+                            placeholder="blur"
+                            blurDataURL={getBlurData(itineraryImages[itinerary.title] || 'itinerary')}
                           />
-
+                          {/* overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/0 to-black/0" />
                           {/* Heart/Like Icon - Top Right */}
                           <button
                             onClick={() => toggleLike(idx)}
-                            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 dark:bg-slate-700/90 backdrop-blur-sm hover:bg-white dark:hover:bg-slate-600 transition-all duration-300 flex items-center justify-center shadow-sm dark:shadow-slate-900"
+                            className="focusable absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm hover:bg-white dark:hover:bg-slate-700 transition-all duration-300 flex items-center justify-center shadow-sm"
+                            aria-label={likedTrips.has(idx) ? "Remove from saved" : "Save this trip"}
+                            title={likedTrips.has(idx) ? "Remove from saved" : "Save this trip"}
+                            type="button"
                           >
                             <Heart
                               size={16}
-                              className={`${likedTrips.has(idx) ? 'fill-red-500 text-red-500' : 'text-gray-600 dark:text-gray-400'} transition-colors duration-300`}
+                              className={`${likedTrips.has(idx) ? 'fill-red-500 text-red-500' : 'text-gray-700 dark:text-gray-200'} transition-colors duration-300`}
                             />
                           </button>
 
@@ -262,33 +254,31 @@ export default function ItinerariesSection() {
                         </div>
 
                         {/* Content Section */}
-                        <div className="p-4 space-y-3">
+                          <div className="p-4 space-y-3">
                           {/* Title Row */}
                           <div className="flex items-start justify-between">
                             <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-gray-900 dark:text-white truncate text-base leading-tight">
+                              <h3 className="font-semibold text-white truncate text-base leading-tight">
                                 {itinerary.title}
                               </h3>
-                              <p className="text-sm text-gray-500 dark:text-gray-400 truncate mt-0.5">
+                              <p className="text-sm text-gray-300/80 truncate mt-0.5">
                                 {itinerary.location}
                               </p>
                             </div>
                           </div>
 
                           {/* Features Row */}
-                          <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-300 w-full">
+                          <div className="flex items-center justify-between text-xs text-gray-200 w-full">
                             <div className="flex items-center space-x-1">
-                              <Calendar size={16} className="text-black dark:text-white" />
+                              <Calendar size={16} className="text-white" />
                               <span className="font-medium">{itinerary.duration}</span>
                             </div>
-                            <Button
-                              asChild
-                              className="bg-[#FDBE00] dark:bg-[#FDBE00] text-black dark:text-black hover:bg-[#FDBE00]/90 dark:hover:bg-[#FDBE00]/90 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm dark:shadow-slate-900"
+                            <a
+                              href={`/itineraries/${getItinerarySlug(itinerary.title)}`}
+                              className="focusable inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-white font-medium hover:bg-white/15 transition text-sm"
                             >
-                              <a href={`/itineraries/${getItinerarySlug(itinerary.title)}`}>
-                                View Details
-                              </a>
-                            </Button>
+                              View Details
+                            </a>
                           </div>
                         </div>
                       </div>

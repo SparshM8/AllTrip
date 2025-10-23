@@ -1,4 +1,5 @@
-import { generateDestinationMetadata } from '@/lib/seo';
+import { generateDestinationMetadata, generateDestinationStructuredData } from '@/lib/seo';
+import StructuredData from '@/components/structured-data';
 
 export const metadata = generateDestinationMetadata(
   'Jim Corbett',
@@ -9,25 +10,7 @@ export const metadata = generateDestinationMetadata(
 export default function JimCorbettPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "TouristDestination",
-            "name": "Jim Corbett National Park",
-            "description": "India's oldest national park famous for tiger safaris, wildlife conservation, and diverse flora fauna",
-            "url": "https://alltripp.com/destinations/jim-corbett",
-            "image": "https://alltripp.com/destinations/jim-corbett.jpg",
-            "containedInPlace": {
-              "@type": "Country",
-              "name": "India"
-            },
-            "touristType": ["Wildlife", "Nature", "Adventure", "Photography"],
-            "hasMap": "https://maps.google.com/?q=Jim+Corbett+National+Park,India"
-          })
-        }}
-      />
+      <StructuredData data={generateDestinationStructuredData('Jim Corbett National Park', "India's oldest national park famous for tiger safaris, wildlife conservation, and diverse flora fauna")} />
       
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto">
@@ -36,8 +19,8 @@ export default function JimCorbettPage() {
           </h1>
             <div className="mb-8">
             <img
-              src="/destinations/Uttarakhand.jpg"
-              alt="Jim Corbett National Park - Tigers and wildlife in natural habitat"
+              src="/destinations/jim-corbett.jpg"
+              alt="Jim Corbett National Park tiger habitat lush forest landscape"
               className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
               loading="eager"
             />

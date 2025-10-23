@@ -1,0 +1,19 @@
+// Centralized lightweight blur placeholders for Next.js Image components
+// Using a tiny dark neutral SVG to avoid layout shift while keeping bytes minimal.
+// You can customize individual mappings later with more descriptive dominant color silhouettes.
+
+export const BLUR_DATA_DEFAULT =
+  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PHJhZGlhbEdyYWRpZW50IGlkPSJnIiBjeD0iNTAlIiBjeT0iNTAlIiByPSI1MCUiPjxzdG9wIG9mZnNldD0iMCUiIGZpbGw9IiMwMTEyMjQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIGZpbGw9IiMwYTIyMzQiLz48L3JhZGlhbEdyYWRpZW50PjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0idXJsKCNnKSIgcnk9IjQiLz48L3N2Zz4=';
+
+// Optional specific overrides (dominant color approximations) keyed by filename or path substring
+const OVERRIDES: Record<string, string> = {
+  '/4.png': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmFkaWFsR3JhZGllbnQgaWQ9ImgiIGN4PSIxNiIgY3k9IjE2IiByPSIxNiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIHN0b3AtY29sb3I9IiMyMDI1MzAiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM0NDZiNzAiLz48L3JhZGlhbEdyYWRpZW50PjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0idXJsKCNoKSIvPjwvc3ZnPg==',
+  '/discount.png': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48bGluZWFyR3JhZGllbnQgaWQ9ImQiIHgxPSIwIiB5MT0iMCIgeDI9IjMyIiB5Mj0iMzIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBzdG9wLWNvbG9yPSIjMTMxMzE1Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNDkzYjZhIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIGZpbGw9InVybCgjZCkiIHJ4PSI0Ii8+PC9zdmc+',
+};
+
+export function getBlurData(path: string): string {
+  for (const key of Object.keys(OVERRIDES)) {
+    if (path.includes(key)) return OVERRIDES[key];
+  }
+  return BLUR_DATA_DEFAULT;
+}

@@ -18,5 +18,9 @@
   {
     "name": "Checkout",
     "href": "/checkout"
+  },
+  {
+    "name": "Policies",
+    "href": "/policies"
   }
 ]

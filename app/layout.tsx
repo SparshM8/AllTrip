@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Inter, Pacifico, Montserrat, Roboto } from "next/font/google"
+import { Inter, Montserrat } from "next/font/google"
 import "./globals.css"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -10,21 +10,8 @@ import { Analytics } from "@vercel/analytics/react"
 import ClientPerformance from "@/components/client-performance"
 import LenisProvider from "@/components/lenis-provider"
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
-const pacifico = Pacifico({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-pacifico",
-})
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-})
-const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-roboto",
-})
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: 'swap' })
+const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat", weight: ["600","700"], display: 'swap' })
 
 export const metadata: Metadata = {
   title: {
@@ -124,12 +111,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-<body className={`${inter.variable} ${pacifico.variable} ${montserrat.variable} ${roboto.variable} font-sans m-0 p-0 bg-white dark:bg-gray-900`}>
+<body className={`${inter.variable} ${montserrat.variable} font-sans antialiased m-0 p-0 bg-white dark:bg-[hsl(var(--surface-base))] text-[hsl(var(--foreground))] tracking-[0.015em] selection:bg-[hsl(var(--brand-accent))]/25`}>
+        {/* Skip link for keyboard users */}
+        <a
+          href="#main-content"
+          className="skip-link fixed left-2 top-2 -translate-y-20 focus:translate-y-0 focus:outline-none bg-[hsl(var(--surface-elevated))] text-[hsl(var(--foreground))] px-4 py-2 rounded shadow transition-transform z-[9999]"
+        >
+          Skip to content
+        </a>
+        {/* Reduced motion preference detection (adds class to <body>) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('reduced-motion')}}catch(e){}`
+          }}
+        />
         <SpeedInsights />
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <LenisProvider>
             <Navbar />
-            <main className="m-0 p-0">{children}</main>
+            {/* Offset for fixed navbar to prevent heading overlap */}
+            <main id="main-content" className="m-0 p-0 pt-16 md:pt-20">{children}</main>
             <Footer />
           </LenisProvider>
         </ThemeProvider>

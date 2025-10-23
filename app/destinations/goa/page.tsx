@@ -1,4 +1,6 @@
-import { generateDestinationMetadata } from '@/lib/seo';
+import { generateDestinationMetadata, generateDestinationStructuredData } from '@/lib/seo';
+import Image from 'next/image';
+import StructuredData from '@/components/structured-data';
 
 export const metadata = generateDestinationMetadata(
   'Goa',
@@ -9,25 +11,16 @@ export const metadata = generateDestinationMetadata(
 export default function GoaPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "TouristDestination",
-            "name": "Goa",
-            "description": "Beach paradise with pristine shores, vibrant nightlife, and rich Portuguese heritage",
-            "url": "https://alltripp.com/destinations/goa",
-            "image": "https://alltripp.com/destinations/goa.jpg",
-            "containedInPlace": {
-              "@type": "Country",
-              "name": "India"
-            },
-            "touristType": ["Beach", "Cultural", "Nightlife", "Leisure"],
-            "hasMap": "https://maps.google.com/?q=Goa,India"
-          })
-        }}
-      />
+      <StructuredData data={generateDestinationStructuredData('Goa', 'Beach paradise with pristine shores, vibrant nightlife, and rich Portuguese heritage')} />
+      <StructuredData data={{
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://alltripp.com/' },
+          { '@type': 'ListItem', position: 2, name: 'Destinations', item: 'https://alltripp.com/destinations' },
+          { '@type': 'ListItem', position: 3, name: 'Goa', item: 'https://alltripp.com/destinations/goa' }
+        ]
+      }} />
       
       <div className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto">
@@ -35,12 +28,14 @@ export default function GoaPage() {
             Goa - Beach Paradise of India
           </h1>
           
-          <div className="mb-8">
-            <img 
-              src="/destinations/goa.jpg" 
-              alt="Goa beaches - Beautiful coastline and palm trees" 
-              className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
-              loading="eager"
+          <div className="mb-8 relative w-full h-64 md:h-96">
+            <Image
+              src="/destinations/goa.jpg"
+              alt="Goa beaches - Beautiful coastline and palm trees"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="object-cover rounded-lg shadow-lg"
             />
           </div>
           

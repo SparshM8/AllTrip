@@ -19,8 +19,13 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  reactStrictMode: true,
+  output: 'standalone',
   // Performance optimizations
   images: {
+    // Use Next Image features even if unoptimized; keep domains for any remote assets
+    unoptimized: true,
+    domains: ['alltripp.com'],
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
@@ -30,53 +35,16 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: true,
   experimental: {
-    optimizeCss: true,
-    optimizePackageImports: ['lucide-react', '@heroicons/react'],
-  },
-  // Webpack optimizations
-  webpack: (config, { dev, isServer }) => {
-    if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        cacheGroups: {
-          default: false,
-          vendors: false,
-          // vendor chunk
-          vendor: {
-            name: 'vendor',
-            chunks: 'all',
-            test: /node_modules/,
-            priority: 20
-          },
-          // common chunk
-          common: {
-            name: 'common',
-            minChunks: 2,
-            chunks: 'all',
-            priority: 10,
-            reuseExistingChunk: true,
-            enforce: true
-          }
-        }
-      };
-    }
-    return config;
-  },
-  images: {
-    unoptimized: true,
-    domains: ['alltripp.com'],
-    formats: ['image/webp', 'image/avif'],
-  },
-  experimental: {
+    // Disable optimizeCss to avoid optional 'critters' dependency issues
+    optimizeCss: false,
+    optimizePackageImports: ['lucide-react', '@iconify/react'],
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
-  // SEO optimizations
+  // Use Next.js default chunking; avoid custom splitChunks to prevent runtime path mismatches
+  // SEO/security optimizations
   trailingSlash: false,
-  generateEtags: true,
-  poweredByHeader: false,
-  compress: true,
   // Add security headers
   async headers() {
     return [

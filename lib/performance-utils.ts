@@ -80,12 +80,27 @@ export const registerServiceWorker = () => {
   }
 
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
-        console.log('SW registered: ', registration);
+    // Verify that sw.js is available before attempting to register
+    fetch('/sw.js', { method: 'HEAD' })
+      .then((res) => {
+        if (!res.ok) return;
+        navigator.serviceWorker
+          .register('/sw.js')
+          .then((registration) => {
+            const nodeEnv = (globalThis as any)?.process?.env?.NODE_ENV;
+            if (nodeEnv !== 'production') {
+              console.log('SW registered: ', registration.scope);
+            }
+          })
+          .catch((registrationError) => {
+            const nodeEnv = (globalThis as any)?.process?.env?.NODE_ENV;
+            if (nodeEnv !== 'production') {
+              console.warn('SW registration failed: ', registrationError);
+            }
+          });
       })
-      .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError);
+      .catch(() => {
+        // No service worker found; skip registration
       });
   });
 };

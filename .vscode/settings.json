@@ -1,1 +1,7 @@
-{}
+{
+	"css.customData": ["./.vscode/tailwind.custom-data.json"],
+	"scss.customData": ["./.vscode/tailwind.custom-data.json"],
+	"less.customData": ["./.vscode/tailwind.custom-data.json"],
+	// Fallback suppression if language server still flags Tailwind at-rules
+	"css.lint.unknownAtRules": "ignore"
+}

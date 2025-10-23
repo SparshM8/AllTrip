@@ -1,42 +1,70 @@
+"use client";
 import Image from 'next/image';
+import { getBlurData } from '@/lib/blur-data';
 import React from 'react';
 import { Button } from './ui/button';
+import { Input } from './ui/input';
 
 const DiscountPage = () => {
   return (
-<section className="relative w-full h-auto overflow-hidden container mx-auto rounded-2xl px-6 py-20">
-      <div className="absolute inset-0 p-8">
-        <div className="relative w-full h-full rounded-2xl overflow-hidden">
+    <section className="relative w-full overflow-hidden section-spacing">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/10 bg-[--surface-alt]">
+          {/* Background image */}
           <Image
             src="/discount.png"
             alt="Woman looking at hot air balloons"
             fill
-            style={{ objectFit: 'cover' }}
-            className="z-0"
+            className="object-cover opacity-70 mix-blend-luminosity"
+            priority
+            placeholder="blur"
+            blurDataURL={getBlurData('/discount.png')}
           />
-        </div>
-      </div>
-      <div className="absolute inset-0 bg-black bg-opacity-0 z-10" />
-      <div className="relative z-20 flex flex-col items-start justify-center text-black dark:text-white p-3.5 md:p-14 w-full md:w-1/2">
-        <h2 className="text-xl md:text-4xl font-bold leading-tight">
-          Grab up to <span className="text-orange-500">35% off</span>
-          <br />
-          on your favorite
-          <br />
-          Destination
-        </h2>
-        <p className="mt-3.5 text-sm md:text-base">
-          Limited time offer, don't miss the opportunity.
-        </p>
-        <div className="mt-5 md:mt-7 flex flex-col sm:flex-row items-stretch gap-2 sm:gap-0">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            className="px-3.5 py-2.5 text-sm md:px-7 md:py-3.5 md:text-base rounded-xl sm:rounded-l-xl sm:rounded-r-none flex-1"
-          />
-          <Button className="bg-orange-500 text-white hover:bg-orange-600 px-3.5 py-2.5 text-sm md:px-6 md:py-7 md:text-base rounded-xl sm:rounded-r-xl sm:rounded-l-none whitespace-nowrap">
-            Get Your Coupon
-          </Button>
+
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/20" />
+
+          {/* Content */}
+          <div className="relative z-10 p-8 sm:p-12 lg:p-16 text-white max-w-xl">
+            <h2 className="heading-display text-white/90">
+              Grab up to <span className="text-[--brand-accent]">35% off</span><br />on your favourite<br />Destination
+            </h2>
+            <p className="mt-5 text-sm sm:text-base text-white/70 max-w-prose leading-relaxed">
+              Limited time offer. Don&apos;t miss the opportunity.
+            </p>
+
+            {/* Subscribe form */}
+            <form
+              className="mt-8 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3 sm:gap-2 card-modern p-2 bg-white/5 backdrop-blur-md"
+              onSubmit={(e) => e.preventDefault()}
+              aria-label="Get discount coupon"
+            >
+              <label htmlFor="discount-email" className="sr-only">
+                Email address
+              </label>
+              <Input
+                id="discount-email"
+                type="email"
+                inputMode="email"
+                placeholder="Enter your email"
+                required
+                className="bg-white/10 text-white placeholder:text-white/40 border-0 focus-visible:ring-0 focus:outline-none"
+                aria-label="Email address"
+              />
+              <Button
+                type="submit"
+                className="focusable relative overflow-hidden rounded-lg px-6 py-2.5 font-semibold tracking-wide text-sm bg-[--brand-accent] text-black transition-all duration-300 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.15),0_4px_24px_-4px_rgba(0,0,0,0.4)] group"
+                aria-label="Get your coupon"
+                title="Get your coupon"
+              >
+                <span className="relative z-10">Get Your Coupon</span>
+                {/* Sheen */}
+                <span className="pointer-events-none absolute inset-0 before:absolute before:top-0 before:left-[-60%] before:h-full before:w-[50%] before:translate-x-0 before:rotate-12 before:bg-gradient-to-r before:from-white/0 before:via-white/50 before:to-white/0 before:opacity-0 before:transition-transform before:duration-700 before:ease-out group-hover:before:translate-x-[220%] group-hover:before:opacity-70" />
+                {/* Glow underline */}
+                <span className="pointer-events-none absolute -bottom-px left-0 w-full h-px bg-gradient-to-r from-transparent via-black/40 to-transparent" />
+              </Button>
+            </form>
+          </div>
         </div>
       </div>
     </section>

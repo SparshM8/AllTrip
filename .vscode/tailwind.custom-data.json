@@ -1,0 +1,10 @@
+{
+  "atDirectives": [
+    { "name": "@tailwind", "description": "Tailwind CSS layer injection directive" },
+    { "name": "@layer", "description": "Tailwind CSS layer creation" },
+    { "name": "@variants", "description": "Tailwind CSS variants grouping" },
+    { "name": "@apply", "description": "Tailwind CSS utility composition" },
+    { "name": "@responsive", "description": "Tailwind CSS responsive block" },
+    { "name": "@screen", "description": "Tailwind CSS screen shortcut" }
+  ]
+}

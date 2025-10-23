@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 export function PreloadResources() {
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') return;
     // Preload critical images
     const criticalImages = [
       '/destinations/kerala.jpg',
@@ -18,13 +19,14 @@ export function PreloadResources() {
       document.head.appendChild(link);
     });
 
-    // Preload critical fonts
+    // Preload critical fonts (ensure file exists in production build)
+    const fontHref = '/fonts/inter-var.woff2';
     const fontLink = document.createElement('link');
     fontLink.rel = 'preload';
     fontLink.as = 'font';
     fontLink.type = 'font/woff2';
     fontLink.crossOrigin = 'anonymous';
-    fontLink.href = '/fonts/inter-var.woff2'; // Adjust path as needed
+    fontLink.href = fontHref;
     document.head.appendChild(fontLink);
 
   }, []);

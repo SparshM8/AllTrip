@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "@/lib/motion";
 import Image from "next/image";
+import { getBlurData } from "@/lib/blur-data";
 import Link from "next/link";
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Heart } from "lucide-react";
@@ -65,10 +67,8 @@ const BlogSection: React.FC = () => {
     return blogs.slice(0, 3).map((post, index) => (
       <motion.div
         key={post.slug}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.1 }}
-        className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl dark:shadow-2xl dark:hover:shadow-3xl transition-shadow duration-300 bg-gradient-to-br from-[#fceabb] via-[#f8b500] to-[#e38e00] dark:from-[#2a1810] dark:via-[#4a2c1a] dark:to-[#6b3f2a]"
+        variants={fadeInUp}
+        className="card-modern rounded-xl overflow-hidden focusable"
       >
         <div className="relative w-full h-56">
           <Image
@@ -76,22 +76,24 @@ const BlogSection: React.FC = () => {
             alt={post.title}
             fill
             className="object-cover"
+            placeholder="blur"
+            blurDataURL={getBlurData(post.image)}
           />
         </div>
-        <div className="p-6 flex flex-col flex-grow backdrop-blur-sm bg-white/80 dark:bg-black/60">
-          <p className="text-sm text-[#7c552f] dark:text-[#d4a574]">Adventure</p>
-          <h3 className="text-xl font-semibold text-[#4d2e10] dark:text-card-foreground mt-3">
+        <div className="p-5 flex flex-col flex-grow bg-gradient-to-b from-black/30 via-black/0 to-black/60">
+          <p className="text-xs uppercase tracking-wide text-white/60">Adventure</p>
+          <h3 className="text-lg font-semibold text-white mt-3 leading-snug">
             {truncateText(post.title, 56)}
           </h3>
           <div className="flex justify-between items-center mt-4">
             <Link href={`/blog/${post.slug}`}>
-              <button className="bg-[#5a3e2b] dark:bg-[#6b4f3a] text-white px-4 py-2 rounded-full w-fit hover:scale-105 transition-all">
+              <button className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-white text-sm font-medium hover:bg-white/15 transition">
                 Read More
               </button>
             </Link>
             <button
               onClick={(e) => handleLike(e, index, post.slug)}
-              className={`flex items-center gap-1 text-sm ${liked[post.slug] ? "text-red-400" : "text-[#5a3e2b] dark:text-[#6b4f3a]"} hover:text-red-400 transition-colors`}
+              className={`flex items-center gap-1 text-sm ${liked[post.slug] ? "text-red-400" : "text-white/70"} hover:text-red-400 transition-colors`}
               aria-label={`Like ${post.title}`}
             >
               <Heart size={16} className={liked[post.slug] ? "fill-current" : ""} />
@@ -104,24 +106,32 @@ const BlogSection: React.FC = () => {
   }, [blogs, liked, handleLike]);
 
   return (
-    <section className="px-6 py-20 max-w-7xl mx-auto bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-4">
-        <div>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground dark:text-[#f8f9fa]">Tips & Article</h2>
-          <p className="text-lg text-muted-foreground mt-2 max-w-lg">
+    <section className="px-6 py-20 max-w-7xl mx-auto bg-white dark:bg-[hsl(var(--surface-base))]">
+      <motion.div
+        className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-4"
+        variants={staggerContainer(0.05,0.12)}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <motion.div variants={fadeInUp}>
+          <h2 className="heading-display text-gray-900 dark:text-white">Tips & Articles</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 mt-3 max-w-lg">
             Get inspired by stories, tips, and curated travel experiences from around the world.
           </p>
-        </div>
-        <Link href="/blog">
-          <button className="bg-[#dba43b] dark:bg-[#e6a852] text-white px-6 py-2 rounded-full font-medium hover:opacity-90 transition-all">
-            View more
-          </button>
-        </Link>
-      </div>
+        </motion.div>
+        <motion.div variants={fadeInUp}>
+          <Link href="/blog">
+            <button className="focusable inline-flex items-center px-6 py-2 rounded-md bg-white/10 border border-white/20 text-white font-medium hover:bg-white/15 transition">
+              View more
+            </button>
+          </Link>
+        </motion.div>
+      </motion.div>
 
-      <div className="grid md:grid-cols-3 gap-10">
+      <motion.div className="grid md:grid-cols-3 gap-10" variants={staggerContainer(0.1,0.15)} initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.15 }}>
         {blogCards}
-      </div>
+      </motion.div>
     </section>
   );
 };
