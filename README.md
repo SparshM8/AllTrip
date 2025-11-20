@@ -50,6 +50,24 @@ yarn dev
 Open your browser and visit http://localhost:3000 to see the application.
 ```
 
+### Quick Preview & Accessibility Checks
+
+After the dev server is running, open the site at `http://localhost:3000` and perform a quick accessibility and performance check:
+
+1. Open Chrome DevTools (F12) → Lighthouse. Run audits for Mobile and Desktop to get Performance, Accessibility, Best Practices, and SEO scores.
+2. Keyboard test: press `Tab` to navigate through interactive elements. Use the skip link (press Tab from top) to jump to main content.
+3. Reduced motion: toggle OS-level `prefers-reduced-motion` to verify Lottie and motion-reduced fallbacks are respected.
+
+Recommended commands:
+
+```powershell
+cd 'd:\New folder\AllTripp\AllTrip'
+npm install
+npm run dev
+
+# Then open http://localhost:3000 in Chrome and run Lighthouse
+```
+
 Contribution
 We welcome contributions! Feel free to open an issue or submit a pull request.
 

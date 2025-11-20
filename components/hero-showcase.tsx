@@ -119,6 +119,7 @@ export default function HeroShowcase() {
                 Explore destination
               </Link>
               <button
+                type="button"
                 onClick={prev}
                 aria-label="Previous slide"
                 className="hidden md:inline-flex w-12 h-12 rounded-full bg-white/90 hover:bg-white text-gray-800 shadow-md transition items-center justify-center"
@@ -126,6 +127,7 @@ export default function HeroShowcase() {
                 <ChevronLeft className="w-6 h-6" />
               </button>
               <button
+                type="button"
                 onClick={next}
                 aria-label="Next slide"
                 className="hidden md:inline-flex w-12 h-12 rounded-full bg-white/90 hover:bg-white text-gray-800 shadow-md transition items-center justify-center"
@@ -140,6 +142,7 @@ export default function HeroShowcase() {
             <div className="flex md:flex-col gap-5 text-white/70 pr-2">
               {slides.map((s, i) => (
                 <button
+                  type="button"
                   key={s.title}
                   onClick={() => goTo(i)}
                   className="group inline-flex items-center md:justify-end gap-3"

@@ -9,7 +9,7 @@ const DiscountPage = () => {
   return (
     <section className="relative w-full overflow-hidden section-spacing">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/10 bg-[--surface-alt]">
+        <div className="relative rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/10 bg-[hsl(var(--surface-alt))]">
           {/* Background image */}
           <Image
             src="/discount.png"
@@ -53,7 +53,7 @@ const DiscountPage = () => {
               />
               <Button
                 type="submit"
-                className="focusable relative overflow-hidden rounded-lg px-6 py-2.5 font-semibold tracking-wide text-sm bg-[--brand-accent] text-black transition-all duration-300 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.15),0_4px_24px_-4px_rgba(0,0,0,0.4)] group"
+                className="focusable relative overflow-hidden rounded-lg px-6 py-2.5 font-semibold tracking-wide text-sm bg-[hsl(var(--brand-accent))] text-black transition-all duration-300 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.15),0_4px_24px_-4px_rgba(0,0,0,0.4)] group"
                 aria-label="Get your coupon"
                 title="Get your coupon"
               >

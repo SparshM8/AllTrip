@@ -13,6 +13,7 @@ export function StarIcon({ className, width = 24, height = 24 }: StarIconProps) 
       alt="star icon"
       width={width}
       height={height}
+      loading="lazy"
       className={className}
     />
   );

@@ -67,12 +67,14 @@ export default function DestinationsIndex({ items }: { items: DestinationItem[] 
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="inline-flex items-center rounded-md border border-gray-300 dark:border-white/10 bg-white/70 dark:bg-white/5 p-1 text-xs">
             <button
+              type="button"
               onClick={() => setView("advanced")}
               className={`px-3 py-1 rounded ${view === "advanced" ? "bg-[hsl(var(--brand-accent))]/15 text-[hsl(var(--brand-accent))]" : "text-gray-600 dark:text-gray-300"}`}
             >
               Search & Filters
             </button>
             <button
+              type="button"
               onClick={() => setView("simple")}
               className={`px-3 py-1 rounded ${view === "simple" ? "bg-[hsl(var(--brand-accent))]/15 text-[hsl(var(--brand-accent))]" : "text-gray-600 dark:text-gray-300"}`}
             >
@@ -107,8 +109,9 @@ export default function DestinationsIndex({ items }: { items: DestinationItem[] 
 
         {view === "advanced" && (
           <div className="flex flex-wrap items-center gap-2">
-            {regions.map((r) => (
+              {regions.map((r) => (
               <button
+                type="button"
                 key={r}
                 onClick={() => setSelectedRegion(r)}
                 className={`px-2.5 py-1 rounded-full border text-xs transition-colors ${
@@ -125,8 +128,9 @@ export default function DestinationsIndex({ items }: { items: DestinationItem[] 
                 <span className="mx-1 text-xs text-gray-500">•</span>
                 {allTags.map((tag) => {
                   const active = selectedTags.includes(tag);
-                  return (
+                    return (
                     <button
+                      type="button"
                       key={tag}
                       onClick={() =>
                         setSelectedTags((prev) =>
@@ -166,6 +170,7 @@ export default function DestinationsIndex({ items }: { items: DestinationItem[] 
                 src={d.image}
                 alt={`${d.name} thumbnail`}
                 fill
+                loading="lazy"
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw"
                 placeholder="blur"

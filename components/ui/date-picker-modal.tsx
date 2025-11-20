@@ -20,6 +20,7 @@ export function DatePickerModal({ isOpen, onClose, dateRange, onDateChange }: Da
         <div className="p-3 border-b border-gray-200 flex items-center justify-between">
           <h3 className="text-base font-semibold text-gray-900">Select Dates</h3>
           <button
+            type="button"
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 text-lg p-1"
           >
@@ -55,12 +56,14 @@ export function DatePickerModal({ isOpen, onClose, dateRange, onDateChange }: Da
           </div>
           <div className="flex gap-2 justify-end">
             <button
+              type="button"
               onClick={() => onDateChange([])}
               className="px-3 py-2 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-md transition-colors"
             >
               Clear
             </button>
             <button
+              type="button"
               onClick={onClose}
               disabled={!dateRange || dateRange.length < 2}
               className="px-4 py-2 bg-[#FDBE00] text-black text-sm font-medium rounded-md hover:bg-[#FDBE00]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"

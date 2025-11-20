@@ -75,6 +75,7 @@ const BlogSection: React.FC = () => {
             src={post.image}
             alt={post.title}
             fill
+            loading="lazy"
             className="object-cover"
             placeholder="blur"
             blurDataURL={getBlurData(post.image)}
@@ -87,11 +88,12 @@ const BlogSection: React.FC = () => {
           </h3>
           <div className="flex justify-between items-center mt-4">
             <Link href={`/blog/${post.slug}`}>
-              <button className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-white text-sm font-medium hover:bg-white/15 transition">
-                Read More
-              </button>
-            </Link>
+                <button type="button" className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-white text-sm font-medium hover:bg-white/15 transition">
+                  Read More
+                </button>
+              </Link>
             <button
+              type="button"
               onClick={(e) => handleLike(e, index, post.slug)}
               className={`flex items-center gap-1 text-sm ${liked[post.slug] ? "text-red-400" : "text-white/70"} hover:text-red-400 transition-colors`}
               aria-label={`Like ${post.title}`}
@@ -122,7 +124,7 @@ const BlogSection: React.FC = () => {
         </motion.div>
         <motion.div variants={fadeInUp}>
           <Link href="/blog">
-            <button className="focusable inline-flex items-center px-6 py-2 rounded-md bg-white/10 border border-white/20 text-white font-medium hover:bg-white/15 transition">
+            <button type="button" className="focusable inline-flex items-center px-6 py-2 rounded-md bg-white/10 border border-white/20 text-white font-medium hover:bg-white/15 transition">
               View more
             </button>
           </Link>

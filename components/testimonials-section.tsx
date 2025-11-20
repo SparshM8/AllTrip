@@ -112,6 +112,17 @@ export default function TestimonialsSection() {
     setStartX(null);
   };
 
+// Inject small CSS for testimonial progress fill (width via data-p attribute)
+if (typeof document !== 'undefined' && !document.getElementById('testimonials-progress-styles')) {
+  const s = document.createElement('style');
+  s.id = 'testimonials-progress-styles';
+  s.textContent = `
+    .testimonials-progress{ transition: width .1s linear; background: hsl(var(--brand-accent)); height:100%; }
+    ${Array.from({length:101}, (_,i)=>`.testimonials-progress[data-p='${i}']{width:${i}%;}`).join('')}
+  `;
+  document.head.appendChild(s);
+}
+
   const avatarSrc = (name?: string) => {
     const src = name ? testimonialImages[name] : undefined;
     return src || "/testimonials/default.jpg";
@@ -132,7 +143,7 @@ export default function TestimonialsSection() {
     <section
       id="testimonials"
       ref={ref}
-      className="section-spacing bg-[--surface-base]"
+      className="section-spacing bg-[hsl(var(--surface-base))]"
       role="region"
       aria-label="Customer testimonials"
     >
@@ -168,11 +179,13 @@ export default function TestimonialsSection() {
             <div className="flex lg:flex-col gap-3 lg:ml-2">
               {Array.from({ length: totalPages }).map((_, index) => (
                 <button
+                  type="button"
                   key={index}
                   onClick={() => setCurrentIndex(index)}
                   aria-label={`Go to testimonial ${index + 1}`}
                   title={`Go to testimonial ${index + 1}`}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 hover:scale-110 ${index === currentIndex ? 'bg-[--brand-accent]' : 'bg-white/15 hover:bg-white/25'}`}
+                  aria-current={index === currentIndex ? 'true' : undefined}
+                  className={`w-3.5 h-3.5 rounded-full transition-transform duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[hsl(var(--brand-accent))] ${index === currentIndex ? 'bg-[hsl(var(--brand-accent))] scale-110' : 'bg-white/15 hover:bg-white/25'}`}
                 />
               ))}
             </div>
@@ -194,11 +207,10 @@ export default function TestimonialsSection() {
         >
           {!reduceMotion && (
             <div className="col-span-full h-0.5 bg-white/10 rounded overflow-hidden" aria-hidden="true">
-              {(() => {
-                const pct = Math.max(0, Math.min(100, Math.round(progress / 5) * 5));
-                const cls = `h-full bg-[--brand-accent] transition-all duration-100 w-[${pct}%]`;
-                return <div className={cls} />;
-              })()}
+              <div
+                className="h-full transition-all duration-100 testimonials-progress"
+                data-p={Math.max(0, Math.min(100, Math.round(progress)))}
+              />
             </div>
           )}
           {/* Left card */}
@@ -211,7 +223,7 @@ export default function TestimonialsSection() {
                       {len > 0 && testimonials[idx1] && (
                         <motion.div className="mb-4" whileHover={{ scale: 1.1 }} transition={{ duration: 0.3 }}>
                           <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-2 border-white dark:border-gray-700 shadow-lg">
-                            <Image src={avatarSrc(testimonials[idx1]?.name)} alt={testimonials[idx1]?.name || "User"} width={80} height={80} className="object-cover w-full h-full transition-transform duration-300 hover:scale-110" placeholder="empty" />
+                            <Image src={avatarSrc(testimonials[idx1]?.name)} alt={testimonials[idx1]?.name || "User"} width={80} height={80} loading="lazy" className="object-cover w-full h-full transition-transform duration-300 hover:scale-110" placeholder="empty" />
                           </div>
                         </motion.div>
                       )}
@@ -237,7 +249,7 @@ export default function TestimonialsSection() {
                     {len > 0 && testimonials[idx1] && (
                       <motion.div className="absolute -left-6 top-0 z-10" whileHover={{ scale: 1.1 }} transition={{ duration: 0.3 }}>
                         <div className="w-[60px] h-[60px] rounded-full overflow-hidden ring-2 ring-white/10">
-                          <Image src={avatarSrc(testimonials[idx1]?.name)} alt={testimonials[idx1]?.name || "User"} width={68} height={68} className="object-cover w-full h-full transition-transform duration-300 hover:scale-110" placeholder="empty" />
+                          <Image src={avatarSrc(testimonials[idx1]?.name)} alt={testimonials[idx1]?.name || "User"} width={68} height={68} loading="lazy" className="object-cover w-full h-full transition-transform duration-300 hover:scale-110" placeholder="empty" />
                         </div>
                       </motion.div>
                     )}
@@ -271,7 +283,7 @@ export default function TestimonialsSection() {
                       {len > 0 && testimonials[idx2] && (
                         <motion.div className="mb-4" whileHover={{ scale: 1.1 }} transition={{ duration: 0.3 }}>
                           <div className="w-[80px] h-[80px] rounded-full overflow-hidden border border-white/10 shadow-lg">
-                            <Image src={avatarSrc(testimonials[idx2]?.name)} alt={testimonials[idx2]?.name || "User"} width={80} height={80} className="object-cover w-full h-full transition-transform duration-300 hover:scale-110" placeholder="empty" />
+                             <Image src={avatarSrc(testimonials[idx2]?.name)} alt={testimonials[idx2]?.name || "User"} width={80} height={80} loading="lazy" className="object-cover w-full h-full transition-transform duration-300 hover:scale-110" placeholder="empty" />
                           </div>
                         </motion.div>
                       )}
@@ -294,7 +306,7 @@ export default function TestimonialsSection() {
                     {len > 0 && testimonials[idx2] && (
                       <motion.div className="absolute -left-6 top-0 z-10" whileHover={{ scale: 1.1 }} transition={{ duration: 0.3 }}>
                         <div className="w-[60px] h-[60px] rounded-full overflow-hidden ring-2 ring-white/10">
-                          <Image src={avatarSrc(testimonials[idx2]?.name)} alt={testimonials[idx2]?.name || "User"} width={68} height={68} className="object-cover w-full h-full transition-transform duration-300 hover:scale-110" placeholder="empty" />
+                            <Image src={avatarSrc(testimonials[idx2]?.name)} alt={testimonials[idx2]?.name || "User"} width={68} height={68} loading="lazy" className="object-cover w-full h-full transition-transform duration-300 hover:scale-110" placeholder="empty" />
                         </div>
                       </motion.div>
                     )}

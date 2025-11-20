@@ -18,6 +18,7 @@ export default function SearchBar() {
   const router = useRouter();
   const [activeField, setActiveField] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selection, setSelection] = useState<{ type: 'dest' | 'itin'; value: string } | null>(null);
   const [dateRange, setDateRange] = useState<any[]>([]);
   const [guests, setGuests] = useState(1);
@@ -105,9 +106,53 @@ export default function SearchBar() {
     };
   }, []);
 
+  // Ensure active suggestion is scrolled into view
+  useEffect(() => {
+    if (activeIndex == null || !scrollableRef.current) return;
+    const el = scrollableRef.current.querySelector(`#suggestion-${activeIndex}`) as HTMLElement | null;
+    if (el) {
+      el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }, [activeIndex]);
+
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
+      handleClose();
+    }
+  };
+
+  // Keyboard navigation for suggestions
+  const onInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const total = filteredItineraries.length + filteredDestinations.length;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActiveIndex((prev) => {
+        if (prev == null) return total > 0 ? 0 : null;
+        return Math.min(total - 1, prev + 1);
+      });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveIndex((prev) => {
+        if (prev == null) return total > 0 ? total - 1 : null;
+        return Math.max(0, prev - 1);
+      });
+    } else if (e.key === 'Enter') {
+      if (activeIndex != null) {
+        e.preventDefault();
+        // Determine which list the index belongs to
+        if (activeIndex < filteredItineraries.length) {
+          const item = filteredItineraries[activeIndex];
+          setSelection({ type: 'itin', value: item.title });
+        } else {
+          const idx = activeIndex - filteredItineraries.length;
+          const item = filteredDestinations[idx];
+          setSelection({ type: 'dest', value: item.name });
+        }
+        handleClose();
+      }
+    } else if (e.key === 'Tab') {
+      // let tab proceed normally but close overlay
       handleClose();
     }
   };
@@ -176,8 +221,10 @@ export default function SearchBar() {
             <div className="flex items-center px-4 py-2">
               <User className="h-6 w-6 text-[#FDBE00] mr-3 flex-shrink-0" />
               <div className="min-w-0 flex-1">
-                <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 block">Guests</label>
+                <label htmlFor="search-guests" className="text-sm font-semibold text-gray-700 dark:text-gray-300 block">Guests</label>
                 <select
+                  id="search-guests"
+                  aria-label="Number of guests"
                   value={guests}
                   onChange={(e) => setGuests(Number(e.target.value))}
                   className="w-full text-base text-gray-600 dark:text-gray-400 bg-transparent border-none outline-none cursor-pointer hover:text-gray-800 dark:hover:text-gray-200 transition-colors duration-200"
@@ -220,9 +267,9 @@ export default function SearchBar() {
                   type="text"
                   placeholder="Search destinations or itineraries"
                   value={searchTerm}
-                  style={{ color: theme === 'dark' ? 'white' : 'black' }} 
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#FDBE00] outline-none bg-white dark:bg-gray-700 dark:border-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-500"
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#FDBE00] outline-none bg-white dark:bg-gray-700 dark:border-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-500 ${theme === 'dark' ? 'text-white' : 'text-black'}`}
+                  onChange={(e) => { setSearchTerm(e.target.value); setActiveIndex(null); }}
+                  onKeyDown={onInputKeyDown}
                   autoFocus
                 />
               </div>
@@ -230,7 +277,7 @@ export default function SearchBar() {
               <div 
                 ref={scrollableRef}
                 className="max-h-60 overflow-y-auto custom-scrollbar"
-                style={{ scrollbarGutter: 'stable' }}
+                tabIndex={-1}
               >
                 {/* Itineraries Section */}
                 {filteredItineraries.length > 0 && (
@@ -238,25 +285,33 @@ export default function SearchBar() {
                     <h3 className="font-bold text-gray-800 dark:text-gray-200 px-2 pt-2 pb-1 sticky top-0 bg-white dark:bg-gray-800">
                       Itineraries
                     </h3>
-                    {filteredItineraries.map((item) => (
-                      <motion.div
-                        key={`itin-${item.title}`}
-                        className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200"
-                        onClick={() => {
-                          setSelection({ type: 'itin', value: item.title });
-                          handleClose();
-                        }}
-                        whileHover={{ x: 4 }}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <div className="bg-emerald-100 text-emerald-700 rounded-lg p-2 flex-shrink-0">
-                          <MapPin className="h-5 w-5" />
-                        </div>
-                        <span className="text-black dark:text-white font-medium">{item.title}</span>
-                      </motion.div>
-                    ))}
+                    {filteredItineraries.map((item, idx) => {
+                      const index = idx; // itineraries come first
+                      const isActive = activeIndex === index;
+                      return (
+                        <motion.div
+                          id={`suggestion-${index}`}
+                          key={`itin-${item.title}`}
+                          role="option"
+                          aria-selected={isActive}
+                          className={`flex items-center gap-4 p-3 rounded-lg cursor-pointer transition-colors duration-200 ${isActive ? 'bg-gray-100 dark:bg-gray-700' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                          onMouseEnter={() => setActiveIndex(index)}
+                          onClick={() => {
+                            setSelection({ type: 'itin', value: item.title });
+                            handleClose();
+                          }}
+                          whileHover={{ x: 4 }}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <div className="bg-emerald-100 text-emerald-700 rounded-lg p-2 flex-shrink-0">
+                            <MapPin className="h-5 w-5" />
+                          </div>
+                          <span className="text-black dark:text-white font-medium">{item.title}</span>
+                        </motion.div>
+                      );
+                    })}
                   </>
                 )}
 
@@ -266,25 +321,33 @@ export default function SearchBar() {
                     <h3 className="font-bold text-gray-800 dark:text-gray-200 px-2 pt-4 pb-1 sticky top-0 bg-white dark:bg-gray-800">
                       Destinations
                     </h3>
-                    {filteredDestinations.map((item) => (
-                      <motion.div
-                        key={`dest-${item.name}`}
-                        className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200"
-                        onClick={() => {
-                          setSelection({ type: 'dest', value: item.name });
-                          handleClose();
-                        }}
-                        whileHover={{ x: 4 }}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <div className="bg-blue-100 text-blue-700 rounded-lg p-2 flex-shrink-0">
-                          <MapPin className="h-5 w-5" />
-                        </div>
-                        <span className="text-black dark:text-white font-medium">{item.name}</span>
-                      </motion.div>
-                    ))}
+                    {filteredDestinations.map((item, idx) => {
+                      const index = filteredItineraries.length + idx; // after itineraries
+                      const isActive = activeIndex === index;
+                      return (
+                        <motion.div
+                          id={`suggestion-${index}`}
+                          key={`dest-${item.name}`}
+                          role="option"
+                          aria-selected={isActive}
+                          className={`flex items-center gap-4 p-3 rounded-lg cursor-pointer transition-colors duration-200 ${isActive ? 'bg-gray-100 dark:bg-gray-700' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                          onMouseEnter={() => setActiveIndex(index)}
+                          onClick={() => {
+                            setSelection({ type: 'dest', value: item.name });
+                            handleClose();
+                          }}
+                          whileHover={{ x: 4 }}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <div className="bg-blue-100 text-blue-700 rounded-lg p-2 flex-shrink-0">
+                            <MapPin className="h-5 w-5" />
+                          </div>
+                          <span className="text-black dark:text-white font-medium">{item.name}</span>
+                        </motion.div>
+                      );
+                    })}
                   </>
                 )}
 

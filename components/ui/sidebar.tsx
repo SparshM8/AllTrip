@@ -26,6 +26,24 @@ const SIDEBAR_WIDTH_MOBILE = "18rem"
 const SIDEBAR_WIDTH_ICON = "3rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 
+// Inject sidebar CSS variables and skeleton width rules once per module load
+if (!(globalThis as any).__SIDEBAR_STYLES__) {
+  const styleEl = typeof document !== 'undefined' ? document.createElement('style') : null
+  if (styleEl) {
+    styleEl.id = 'sidebar-dynamic-styles'
+    styleEl.textContent = `
+      .sidebar-default-vars { --sidebar-width: ${SIDEBAR_WIDTH}; --sidebar-width-icon: ${SIDEBAR_WIDTH_ICON}; }
+      [data-sidebar][data-mobile] { --sidebar-width: ${SIDEBAR_WIDTH_MOBILE}; }
+      ${Array.from({ length: 41 }, (_, i) => {
+        const v = 50 + i
+        return `.menu-skeleton-text[data-skeleton-width='${v}%']{max-width:${v}%;}`
+      }).join('\n')}
+    `
+    document.head.appendChild(styleEl)
+    ;(globalThis as any).__SIDEBAR_STYLES__ = true
+  }
+}
+
 type SidebarContext = {
   state: "expanded" | "collapsed"
   open: boolean
@@ -133,15 +151,8 @@ const SidebarProvider = React.forwardRef<
       <SidebarContext.Provider value={contextValue}>
         <TooltipProvider delayDuration={0}>
           <div
-            style={
-              {
-                "--sidebar-width": SIDEBAR_WIDTH,
-                "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
-                ...style,
-              } as React.CSSProperties
-            }
             className={cn(
-              "group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
+              "sidebar-default-vars group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
               className
             )}
             ref={ref}
@@ -199,11 +210,6 @@ const Sidebar = React.forwardRef<
             data-sidebar="sidebar"
             data-mobile="true"
             className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
-            style={
-              {
-                "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-              } as React.CSSProperties
-            }
             side={side}
           >
             <div className="flex h-full w-full flex-col">{children}</div>
@@ -293,6 +299,7 @@ const SidebarRail = React.forwardRef<
 
   return (
     <button
+      type="button"
       ref={ref}
       data-sidebar="rail"
       aria-label="Toggle Sidebar"
@@ -656,7 +663,7 @@ const SidebarMenuSkeleton = React.forwardRef<
   }, [])
 
   return (
-    <div
+      <div
       ref={ref}
       data-sidebar="menu-skeleton"
       className={cn("rounded-md h-8 flex gap-2 px-2 items-center", className)}
@@ -669,13 +676,9 @@ const SidebarMenuSkeleton = React.forwardRef<
         />
       )}
       <Skeleton
-        className="h-4 flex-1 max-w-[--skeleton-width]"
+        className="h-4 flex-1 menu-skeleton-text"
         data-sidebar="menu-skeleton-text"
-        style={
-          {
-            "--skeleton-width": width,
-          } as React.CSSProperties
-        }
+        data-skeleton-width={width}
       />
     </div>
   )

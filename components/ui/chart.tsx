@@ -118,27 +118,23 @@ const ChartTooltipContent = React.forwardRef<
       active,
       payload,
       className,
+      // other props...
       indicator = "dot",
       hideLabel = false,
       hideIndicator = false,
-      label,
-      labelFormatter,
-      labelClassName,
-      formatter,
-      color,
-      nameKey,
-      labelKey,
-    },
-    ref
-  ) => {
-    const { config } = useChart()
-
-    const tooltipLabel = React.useMemo(() => {
-      if (hideLabel || !payload?.length) {
-        return null
-      }
-
-      const [item] = payload
+                        <div
+                          className={cn(
+                            "shrink-0 rounded-[2px] border",
+                            {
+                              "h-2.5 w-2.5": indicator === "dot",
+                              "w-1": indicator === "line",
+                              "w-0 border-[1.5px] border-dashed": indicator === "dashed",
+                              "my-0.5": nestLabel && indicator === "dashed",
+                            }
+                          )}
+                          data-indicator-color={indicatorColor}
+                          data-indicator-type={indicator === "dashed" ? 'dashed' : 'solid'}
+                        />
       const key = `${labelKey || item.dataKey || item.name || "value"}`
       const itemConfig = getPayloadConfigFromPayload(config, item, key)
       const value =
@@ -208,21 +204,16 @@ const ChartTooltipContent = React.forwardRef<
                       !hideIndicator && (
                         <div
                           className={cn(
-                            "shrink-0 rounded-[2px] border-[--color-border] bg-[--color-bg]",
+                            "shrink-0 rounded-[2px] border",
                             {
                               "h-2.5 w-2.5": indicator === "dot",
                               "w-1": indicator === "line",
-                              "w-0 border-[1.5px] border-dashed bg-transparent":
-                                indicator === "dashed",
+                              "w-0 border-[1.5px] border-dashed": indicator === "dashed",
                               "my-0.5": nestLabel && indicator === "dashed",
                             }
                           )}
-                          style={
-                            {
-                              "--color-bg": indicatorColor,
-                              "--color-border": indicatorColor,
-                            } as React.CSSProperties
-                          }
+                          data-indicator-color={indicatorColor}
+                          data-indicator-type={indicator === "dashed" ? 'dashed' : 'solid'}
                         />
                       )
                     )}
@@ -267,9 +258,40 @@ const ChartLegendContent = React.forwardRef<
     }
 >(
   (
-    { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
+    ({ className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
     ref
   ) => {
+    // Set dynamic colors for tooltip indicators and legend items without using inline `style` props.
+    React.useEffect(() => {
+      if (typeof document === "undefined") return
+
+      // Apply indicator colors
+      document.querySelectorAll('[data-indicator-color]').forEach((el) => {
+        const color = el.getAttribute('data-indicator-color') || ''
+        const type = el.getAttribute('data-indicator-type')
+        try {
+          (el as HTMLElement).style.borderColor = color
+          if (type === 'dashed') {
+            (el as HTMLElement).style.backgroundColor = 'transparent'
+          } else {
+            (el as HTMLElement).style.backgroundColor = color
+          }
+        } catch (e) {
+          // ignore
+        }
+      })
+
+      // Apply legend swatch colors
+      document.querySelectorAll('[data-color]').forEach((el) => {
+        const c = el.getAttribute('data-color') || ''
+        try {
+          (el as HTMLElement).style.backgroundColor = c
+        } catch (e) {
+          // ignore
+        }
+      })
+    }, [payload])
+
     const { config } = useChart()
 
     if (!payload?.length) {
@@ -301,9 +323,7 @@ const ChartLegendContent = React.forwardRef<
               ) : (
                 <div
                   className="h-2 w-2 shrink-0 rounded-[2px]"
-                  style={{
-                    backgroundColor: item.color,
-                  }}
+                  data-color={item.color}
                 />
               )}
               {itemConfig?.label}

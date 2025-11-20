@@ -5,6 +5,18 @@ import * as ProgressPrimitive from "@radix-ui/react-progress"
 
 import { cn } from "@/lib/utils"
 
+// Inject CSS mapping for progress indicator transforms (0-100)
+if (typeof document !== 'undefined' && !(globalThis as any).__PROGRESS_INDICATOR_STYLES__) {
+  const s = document.createElement('style')
+  s.id = 'progress-indicator-styles'
+  s.textContent = `
+    .progress-indicator{transform:translateX(-100%);} 
+    ${Array.from({ length: 101 }, (_, i) => `.progress-indicator[data-value='${i}']{transform:translateX(-${100 - i}%);}`).join('\n')}
+  `
+  document.head.appendChild(s)
+  ;(globalThis as any).__PROGRESS_INDICATOR_STYLES__ = true
+}
+
 const Progress = React.forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
@@ -18,8 +30,8 @@ const Progress = React.forwardRef<
     {...props}
   >
     <ProgressPrimitive.Indicator
-      className="h-full w-full flex-1 bg-primary transition-all"
-      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+      className="h-full w-full flex-1 progress-indicator transition-all"
+      data-value={value ?? 0}
     />
   </ProgressPrimitive.Root>
 ))

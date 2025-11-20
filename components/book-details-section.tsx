@@ -86,16 +86,16 @@ const BookDetailsSection = () => {
   };
 
   return (
-  <section className="section-spacing relative bg-[--surface-base]">
+  <section className="section-spacing relative bg-[hsl(var(--surface-base))]">
       {/* Progress bar width classes generated once (0-100%) to avoid inline styles */}
       <style
         // Using data attribute mapping keeps styling declarative & passes no-inline-styles lint
         dangerouslySetInnerHTML={{
-          __html: `\n.progress-fill{transition:width .7s cubic-bezier(.4,0,.2,1);}\n${Array.from({length:101},(_,i)=>`.progress-fill[data-p='${i}']{width:${i}%;}`).join('')}`
+          __html: `\n.progress-fill{transition:width .7s cubic-bezier(.4,0,.2,1); background: hsl(var(--brand-accent));}\n${Array.from({length:101},(_,i)=>`.progress-fill[data-p='${i}']{width:${i}%;}`).join('')}`
         }}
       />
       <ConfettiCanvas trigger={showConfetti} origins={confettiOrigins} />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 ml-4 sm:ml-6 md:ml-16 lg:ml-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-start justify-between gap-16">
           <div className="lg:w-1/2 mb-10 lg:mb-0 max-w-xl">
             <p className="text-xs tracking-[0.25em] text-dim font-medium uppercase">Process</p>
@@ -103,7 +103,7 @@ const BookDetailsSection = () => {
             <div className="space-y-5">
               <div className="flex items-start card-modern p-5 rounded-xl">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-[--brand-accent] text-black font-semibold shadow-sm">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-[hsl(var(--brand-accent))] text-black font-semibold shadow-sm">
                     <img src="/selection.svg" alt="Choose Destination" width={22} height={22} />
                   </div>
                 </div>
@@ -162,9 +162,9 @@ const BookDetailsSection = () => {
             <div className="mb-10">
               <h3 className="text-xl font-semibold tracking-wide text-white/80 uppercase">Ongoing Trips</h3>
             </div>
-            
-            {/* Carousel Container */}
-            <div className="relative w-full max-w-xs">
+
+            {/* Carousel Container - responsive widths */}
+            <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-full lg:pr-28">
               <OngoingTripsCarousel onProgressClick={triggerConfetti} />
             </div>
           </div>
@@ -549,7 +549,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
   return (
     <div className="relative">
       {/* Main Carousel Image */}
-  <div className="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-white/10 bg-[--surface-alt]">
+            <div className="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-white/10 bg-[hsl(var(--surface-alt))]">
         {/* Dynamic carousel track without inline style; CSS rules injected below based on data-index */}
         <div 
           className="carousel-track flex transition-transform duration-700 ease-in-out"
@@ -557,7 +557,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
         >
           {trips.map((trip, index) => (
             <div key={index} className="w-full flex-shrink-0">
-              <div className="relative w-full h-[420px]">
+              <div className="relative w-full h-56 sm:h-72 md:h-80 lg:h-[420px]">
                 <Image
                   src={trip.image}
                   alt={trip.title}
@@ -574,6 +574,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
         
         {/* Navigation Buttons */}
         <button
+          type="button"
           onClick={(e) => {
             e.stopPropagation();
             goToPrevious();
@@ -588,6 +589,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
         </button>
         
         <button
+          type="button"
           onClick={(e) => {
             e.stopPropagation();
             goToNext();
@@ -605,13 +607,14 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
           {trips.map((_, index) => (
             <button
+              type="button"
               key={index}
               onClick={(e) => {
                 e.stopPropagation();
                 setCurrentIndex(index);
               }}
               className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                currentIndex === index ? 'bg-[--brand-accent]' : 'bg-white/30 hover:bg-white/50'
+                currentIndex === index ? 'bg-[hsl(var(--brand-accent))]' : 'bg-white/30 hover:bg-white/50'
               }`}
               aria-label={`Go to slide ${index + 1}`}
               title={`Slide ${index + 1}`}
@@ -620,17 +623,15 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
         </div>
       </div>
       
-      {/* Status Box */}
+      {/* Status Box - stacks under carousel on small screens, absolute overlay on large screens */}
       <div
-        className={`absolute -bottom-8 -left-16 card-modern p-4 w-64 transition-all duration-300 transform-gpu ${
-          rateLimitActive
-            ? 'cursor-not-allowed opacity-75'
-            : 'cursor-pointer hover:shadow-xl hover:scale-102'
-        }`}
+        className={`card-modern p-4 transition-all duration-300 transform-gpu ${
+          rateLimitActive ? 'cursor-not-allowed opacity-75' : 'cursor-pointer hover:shadow-xl hover:scale-102'
+        } w-full sm:max-w-sm lg:w-64 mt-4 lg:mt-0 lg:absolute lg:bottom-6 lg:right-6 lg:left-auto lg:translate-x-0`}
         onClick={handleProgressClick}
       >
         <div className="flex items-center">
-          <div className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:rotate-12 transform-gpu bg-[--brand-accent] text-black font-bold text-lg">
+          <div className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:rotate-12 transform-gpu bg-[hsl(var(--brand-accent))] text-black font-bold text-lg">
             <span className="transition-all duration-300">
               {trips[currentIndex].title.charAt(0)}
             </span>
@@ -646,7 +647,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
             </p>
             <div className="w-full bg-white/10 rounded-full h-1.5 mt-1 overflow-hidden progress-bar-container">
               <div
-                className="progress-fill h-1.5 rounded-full transform-gpu bg-[--brand-accent]"
+                className="progress-fill h-1.5 rounded-full transform-gpu"
                 data-p={globalHighestProgress}
                 aria-label="Trip progress: "
                 role="img"
@@ -656,8 +657,8 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
         </div>
       </div>
 
-      {/* Click to show interest text */}
-      <div className="absolute -bottom-16 -left-16 w-64 text-center">
+      {/* Click to show interest text - responsive */}
+      <div className="w-full text-center mt-2 lg:mt-0 lg:absolute lg:bottom-0 lg:right-6 lg:w-64">
         <p className="text-xs text-white/50 font-medium tracking-wide">Click to show interest ✨</p>
       </div>
 
@@ -675,6 +676,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
           >
             {/* Close Button */}
             <button
+              type="button"
               onClick={closeModal}
               className="absolute -top-16 right-0 text-white hover:text-gray-300 transition-colors bg-black/50 p-2 rounded-full"
               aria-label="Close full screen image"
@@ -688,6 +690,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
             {/* Zoom Controls */}
             <div className="absolute -top-16 left-0 flex space-x-2">
               <button
+                type="button"
                 onClick={zoomOut}
                 className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
                 title="Zoom Out"
@@ -698,6 +701,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
                 </svg>
               </button>
               <button
+                type="button"
                 onClick={resetZoom}
                 className="bg-black/50 hover:bg-black/70 text-white px-3 py-2 rounded-full text-sm transition-colors"
                 title="Reset Zoom"
@@ -706,6 +710,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
                 {Math.round(zoomLevel * 100)}%
               </button>
               <button
+                type="button"
                 onClick={zoomIn}
                 className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
                 title="Zoom In"
@@ -735,6 +740,7 @@ const OngoingTripsCarousel = ({ onProgressClick }: { onProgressClick: (e: React.
                 src={selectedImage}
                 alt="Full screen view"
                 fill
+                loading="lazy"
                 className="zoomed-image object-contain"
                 draggable={false}
                 sizes="100vw"

@@ -102,7 +102,7 @@ export default function PackagesPage() {
                       <span className="text-2xl font-bold text-blue-600">{pkg.price}</span>
                       <span className="text-gray-500 text-sm ml-1">per person</span>
                     </div>
-                    <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    <button type="button" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                       View Details
                     </button>
                   </div>
@@ -119,7 +119,7 @@ export default function PackagesPage() {
               Our travel experts can create a personalized itinerary based on your preferences, 
               budget, and travel dates. Get a custom quote today!
             </p>
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold">
+            <button type="button" className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold">
               Get Custom Quote
             </button>
           </div>
