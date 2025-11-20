@@ -2,16 +2,20 @@
 
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
+import Lottie from 'lottie-react';
+import travelAnimation from "@/animations/travel-animation.json";
 import { getBlurData } from "@/lib/blur-data";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { fadeInUp, staggerContainer } from "@/lib/motion";
 import SearchBar from "@/components/search-bar";
+import AnimatedCounters from "@/components/animated-counters";
 import { StarIcon } from "@/components/ui/star-icon";
 
 export default function HeroSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const [scrollProgress, setScrollProgress] = useState(0);
+  const reduceMotion = useReducedMotion();
 
   // Replaced local variants with centralized motion system
 
@@ -109,6 +113,7 @@ export default function HeroSection() {
                         alt="User testimonial"
                         width={56}
                         height={56}
+                        loading="lazy"
                         className="rounded-full object-cover aspect-square"
                         placeholder="blur"
                         blurDataURL={getBlurData('ananya-patel')}
@@ -118,6 +123,7 @@ export default function HeroSection() {
                         alt="User testimonial"
                         width={56}
                         height={56}
+                        loading="lazy"
                         className="rounded-full object-cover aspect-square"
                         placeholder="blur"
                         blurDataURL={getBlurData('priya-sharma')}
@@ -127,6 +133,7 @@ export default function HeroSection() {
                         alt="User testimonial"
                         width={56}
                         height={56}
+                        loading="lazy"
                         className="rounded-full object-cover aspect-square"
                         placeholder="blur"
                         blurDataURL={getBlurData('rahul-mehta')}
@@ -136,6 +143,7 @@ export default function HeroSection() {
                         alt="User testimonial"
                         width={56}
                         height={56}
+                        loading="lazy"
                         className="rounded-full object-cover aspect-square"
                         placeholder="blur"
                         blurDataURL={getBlurData('rohan-sharma')}
@@ -145,6 +153,7 @@ export default function HeroSection() {
                         alt="User testimonial"
                         width={56}
                         height={56}
+                        loading="lazy"
                         className="rounded-full object-cover aspect-square"
                         placeholder="blur"
                         blurDataURL={getBlurData('vikram-singh')}
@@ -171,8 +180,29 @@ export default function HeroSection() {
                 >
                   <SearchBar />
                 </motion.div>
+                {/* Animated counters: social proof / quick stats */}
+                <motion.div className="mt-6 w-full" variants={fadeInUp}>
+                  <AnimatedCounters
+                    items={[
+                      { id: 'trips', label: 'Trips booked', value: 1248 },
+                      { id: 'destinations', label: 'Destinations', value: 86 },
+                      { id: 'partners', label: 'Local partners', value: 42 },
+                    ]}
+                  />
+                </motion.div>
             </motion.div>
           </div>
+        </div>
+        {/* Decorative Lottie Animation - Right Side on large screens */}
+        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 pointer-events-none hidden lg:flex items-center justify-center w-1/2 pr-16">
+          <div className="w-[520px] max-w-full" aria-hidden="true">
+              {!reduceMotion ? (
+                <Lottie animationData={travelAnimation} loop={true} autoplay={true} />
+              ) : (
+                // Reduced motion: render decorative static SVG fallback (keeps visual balance)
+                <div className="w-full h-64 bg-gradient-to-tr from-yellow-200 via-amber-200 to-transparent rounded-lg" aria-hidden="true" />
+              )}
+            </div>
         </div>
       </section>
     </>

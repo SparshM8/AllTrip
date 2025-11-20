@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { fadeInUp } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
-import { Menu, Sun, Moon, MessageCircle } from "lucide-react";
+import { Menu, MessageCircle } from "lucide-react";
 import {
   Drawer,
   DrawerTrigger,
@@ -18,7 +18,7 @@ import {
   DrawerFooter,
   DrawerClose,
 } from "@/components/ui/drawer";
-import { useTheme } from "next-themes";
+import { ThemeToggle } from "@/components/theme-provider";
 import { usePathname } from "next/navigation";
 import navLinksData from "@/data/nav-links.json";
 
@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const lastScrollY = useRef(0);
-  const { theme, setTheme } = useTheme();
+  // theme toggle is handled by ThemeToggle component
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
@@ -58,7 +58,7 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
+  // keep mounted guard for client-only UI
 
   return (
     <header
@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
         showNavbar ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <nav className="backdrop-blur-md bg-black/55 dark:bg-black/55 border-b border-white/10 shadow-[0_2px_6px_rgba(0,0,0,0.4)] transition-colors">
+      <nav role="navigation" aria-label="Primary" className="backdrop-blur-md bg-black/55 dark:bg-black/55 border-b border-white/10 shadow-[0_2px_6px_rgba(0,0,0,0.4)] transition-colors">
         <div className="container mx-auto max-w-7xl flex items-center justify-between px-2 sm:px-4 py-2">
           {/* Logo */}
           <Link
@@ -126,25 +126,14 @@ const Navbar: React.FC = () => {
           {/* Right side (desktop) */}
           <div className="hidden md:flex items-center gap-6">
             {mounted && (
-              <motion.button
+              <motion.div
                 variants={fadeInUp}
                 initial="initial"
                 animate="animate"
                 transition={{ delay: 0.35 }}
-                onClick={toggleTheme}
-                aria-label="Toggle Dark Mode"
-                className={`relative focusable inline-flex items-center w-12 h-6 rounded-full transition-all duration-300 hover:scale-105 ${theme === "light" ? "bg-[#FF8C00]" : "bg-[#1e40af]"}`}
               >
-                <div className="absolute inset-0 flex items-center justify-between px-1">
-                  <Sun className={`w-3 h-3 transition-opacity duration-300 ${theme === "light" ? "opacity-100 text-yellow-100" : "opacity-50 text-yellow-400"}`} />
-                  <Moon className={`w-3 h-3 transition-opacity duration-300 ${theme === "dark" ? "opacity-100 text-blue-100" : "opacity-50 text-blue-600"}`} />
-                </div>
-                <div
-                  className={`absolute w-4 h-4 bg-white rounded-full shadow-lg transform transition-transform duration-300 ${
-                    theme === "light" ? "translate-x-1" : "translate-x-7"
-                  }`}
-                />
-              </motion.button>
+                <ThemeToggle className="relative focusable inline-flex items-center w-12 h-6 rounded-full transition-all duration-300 hover:scale-105 bg-transparent" />
+              </motion.div>
             )}
             <motion.div
               variants={fadeInUp}
@@ -245,21 +234,7 @@ const Navbar: React.FC = () => {
                 </a>
               </Button>
             {mounted && (
-              <button
-                onClick={toggleTheme}
-                aria-label="Toggle Dark Mode"
-                className={`relative focusable inline-flex items-center w-10 h-5 rounded-full transition-all duration-300 hover:scale-105 ${theme === "light" ? 'bg-[#FF8C00]' : 'bg-[#1e40af]'}`}
-              >
-                <div className="absolute inset-0 flex items-center justify-between px-1">
-                  <Sun className={`w-2.5 h-2.5 transition-opacity duration-300 ${theme === "light" ? "opacity-100 text-yellow-100" : "opacity-50 text-yellow-400"}`} />
-                  <Moon className={`w-2.5 h-2.5 transition-opacity duration-300 ${theme === "dark" ? "opacity-100 text-blue-100" : "opacity-50 text-blue-600"}`} />
-                </div>
-                <div
-                  className={`absolute w-3 h-3 bg-white rounded-full shadow-lg transform transition-transform duration-300 ${
-                    theme === "light" ? "translate-x-1" : "translate-x-6"
-                  }`}
-                />
-              </button>
+              <ThemeToggle className="relative focusable inline-flex items-center w-10 h-5 rounded-full transition-all duration-300 hover:scale-105 bg-transparent" />
             )}
           </div>
         </div>

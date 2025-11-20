@@ -54,6 +54,7 @@ const DestinationCard = ({ destination }: { destination: any }) => {
           src={destinationImages[destination.name] || "/placeholder.jpg"}
           alt={destination.name}
           fill
+          loading="lazy"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
           placeholder="blur"

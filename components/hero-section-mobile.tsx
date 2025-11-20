@@ -47,16 +47,29 @@ export default function HeroSectionMobile() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+// Inject module-level styles for the mobile scroll indicator (data-p -> height) to avoid inline styles
+const injectedHeroMobile = (globalThis as any).__HERO_MOBILE_SCROLL_STYLES__;
+if (!injectedHeroMobile && typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.id = 'hero-mobile-scroll-styles';
+  style.textContent = `
+    .hero-scroll-fill{ transition:height .3s ease-out; }
+    ${Array.from({length:101}, (_,i)=>`.hero-scroll-fill[data-p='${i}']{height:${i}%;}`).join('')}
+  `;
+  document.head.appendChild(style);
+  (globalThis as any).__HERO_MOBILE_SCROLL_STYLES__ = true;
+}
+
   return (
     <>
       {/* Custom Scroll Indicator - Hidden on mobile for cleaner look */}
       <div className="hidden md:block fixed right-4 top-1/2 transform -translate-y-1/2 z-50">
-        <div className="w-1 h-32 bg-white/20 rounded-full backdrop-blur-sm">
-          <div
-            className="w-full bg-[#FDBE00] rounded-full transition-all duration-300 ease-out"
-            style={{ height: `${scrollProgress}%` }}
-          />
-        </div>
+          <div className="w-1 h-32 bg-white/20 rounded-full backdrop-blur-sm">
+            <div
+              className="w-full bg-[#FDBE00] rounded-full hero-scroll-fill"
+              data-p={Math.max(0, Math.min(100, Math.round(scrollProgress)))}
+            />
+          </div>
       </div>
 
       <section
@@ -68,8 +81,7 @@ export default function HeroSectionMobile() {
           alt="Scenic view of Himalayas/Kashmir"
           fill
           priority
-          className="object-cover"
-          style={{ objectPosition: 'center center' }}
+          className="object-cover object-center"
         />
         {/* Optimized overlay for dark mode */}
         <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-black/30' : 'bg-black/20'} z-0`} />
@@ -120,6 +132,7 @@ export default function HeroSectionMobile() {
                       alt="User testimonial"
                       width={40}
                       height={40}
+                      loading="lazy"
                       className="rounded-full object-cover aspect-square border-2 border-white dark:border-gray-700"
                     />
                     <Image
@@ -127,6 +140,7 @@ export default function HeroSectionMobile() {
                       alt="User testimonial"
                       width={40}
                       height={40}
+                      loading="lazy"
                       className="rounded-full object-cover aspect-square border-2 border-white dark:border-gray-700"
                     />
                     <Image
@@ -134,6 +148,7 @@ export default function HeroSectionMobile() {
                       alt="User testimonial"
                       width={40}
                       height={40}
+                      loading="lazy"
                       className="rounded-full object-cover aspect-square border-2 border-white dark:border-gray-700"
                     />
                   </div>

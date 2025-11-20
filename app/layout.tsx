@@ -130,7 +130,7 @@ export default function RootLayout({
           <LenisProvider>
             <Navbar />
             {/* Offset for fixed navbar to prevent heading overlap */}
-            <main id="main-content" className="m-0 p-0 pt-16 md:pt-20">{children}</main>
+            <main id="main-content" role="main" className="m-0 p-0 pt-16 md:pt-20">{children}</main>
             <Footer />
           </LenisProvider>
         </ThemeProvider>

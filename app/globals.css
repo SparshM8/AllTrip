@@ -155,6 +155,69 @@
     outline: none;
     box-shadow: 0 0 0 2px hsl(var(--surface-alt)), 0 0 0 4px hsl(var(--brand-accent));
   }
+  /* Button primitives used across the site for consistent microinteractions */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    background-color: hsl(var(--brand-accent));
+    color: white;
+    font-weight: 600;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), filter var(--transition-base);
+    will-change: transform;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  }
+  .btn:hover {
+    transform: translateY(-3px) scale(1.01);
+    filter: brightness(1.03);
+  }
+  .btn:active {
+    transform: translateY(0) scale(0.995);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  }
+  .btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--surface-alt)), 0 0 0 6px hsl(var(--brand-accent));
+  }
+  /* Ghost / subtle button variant */
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.06);
+    color: inherit;
+    box-shadow: none;
+  }
+  .btn-ghost:hover { transform: translateY(-2px); }
+  /* Skip-link: hidden off-screen until focused */
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 0.5rem;
+    transform: translateY(-120%);
+    transition: transform 160ms ease, opacity 160ms ease;
+    opacity: 0;
+    z-index: 9999;
+    background: hsl(var(--surface-elevated));
+    color: hsl(var(--foreground));
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  }
+  .skip-link:focus,
+  .skip-link:active {
+    transform: translateY(0);
+    opacity: 1;
+    outline: none;
+  }
+  /* Helper to temporarily disable transitions during theme switch */
+  .disable-theme-transitions *,
+  .disable-theme-transitions *::before,
+  .disable-theme-transitions *::after {
+    transition: none !important;
+    animation: none !important;
+  }
   .text-dim { color: hsl(var(--text-dim)); }
   .divider-accent { background:linear-gradient(90deg,hsl(var(--brand-accent)) 0%,transparent 70%); height:1px; width:100%; opacity:.5; }
 }
