@@ -124,7 +124,13 @@ const BlogSection: React.FC = () => {
         </motion.div>
         <motion.div variants={fadeInUp}>
           <Link href="/blog">
-            <button type="button" className="focusable inline-flex items-center px-6 py-2 rounded-md bg-white/10 border border-white/20 text-white font-medium hover:bg-white/15 transition">
+            <button
+              type="button"
+              className={
+                "focusable inline-flex items-center px-6 py-2 rounded-md font-medium transition bg-yellow-400 text-gray-900 hover:bg-yellow-500 " +
+                "dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+              }
+            >
               View more
             </button>
           </Link>

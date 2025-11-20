@@ -51,7 +51,7 @@ export default function CampusAmbassadorSection() {
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="container relative z-10 px-4 sm:px-6 md:px-8 md:px-16 lg:px-20"
+        className="container relative z-10 px-4 sm:px-6 md:px-16 lg:px-20"
       >
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-12 gap-8 lg:gap-0">
           <motion.div variants={itemVariants}>

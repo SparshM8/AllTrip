@@ -11,6 +11,8 @@ import policies from "@/data/policies.json";
 // Minimal UI primitives from your existing design system (radix/shadcn based)
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 // Schema per step
 const TravelerSchema = z.object({
@@ -130,9 +132,9 @@ export default function CheckoutPageClient() {
               >
                 {i + 1}
               </span>
-              <span className="text-white/90">
+              <span className="text-gray-900 dark:text-white">
                 <span className="font-semibold">{s.title}</span>
-                <span className="ml-2 hidden sm:inline text-white/60">{s.desc}</span>
+                <span className="ml-2 hidden sm:inline text-gray-500 dark:text-gray-300">{s.desc}</span>
               </span>
               {i < steps.length - 1 && <span className="mx-2 text-white/30">→</span>}
             </li>
@@ -152,27 +154,27 @@ export default function CheckoutPageClient() {
                 <section aria-labelledby="traveler-heading" className="space-y-4">
                   <h2 id="traveler-heading" className="text-lg font-semibold">Traveler details</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm mb-1">First name</label>
-                      <input className="input-modern" {...form.register("firstName")} />
-                      <p className="text-xs text-red-400">{form.formState.errors.firstName?.message as string}</p>
+                      <div>
+                        <label className="block text-sm mb-1">First name</label>
+                        <Input {...form.register("firstName")} />
+                        <p className="text-xs text-red-400">{form.formState.errors.firstName?.message as string}</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm mb-1">Last name</label>
+                        <Input {...form.register("lastName")} />
+                        <p className="text-xs text-red-400">{form.formState.errors.lastName?.message as string}</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm mb-1">Email</label>
+                        <Input type="email" {...form.register("email")} />
+                        <p className="text-xs text-red-400">{form.formState.errors.email?.message as string}</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm mb-1">Phone</label>
+                        <Input {...form.register("phone")} />
+                        <p className="text-xs text-red-400">{form.formState.errors.phone?.message as string}</p>
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm mb-1">Last name</label>
-                      <input className="input-modern" {...form.register("lastName")} />
-                      <p className="text-xs text-red-400">{form.formState.errors.lastName?.message as string}</p>
-                    </div>
-                    <div>
-                      <label className="block text-sm mb-1">Email</label>
-                      <input className="input-modern" type="email" {...form.register("email")} />
-                      <p className="text-xs text-red-400">{form.formState.errors.email?.message as string}</p>
-                    </div>
-                    <div>
-                      <label className="block text-sm mb-1">Phone</label>
-                      <input className="input-modern" {...form.register("phone")} />
-                      <p className="text-xs text-red-400">{form.formState.errors.phone?.message as string}</p>
-                    </div>
-                  </div>
                 </section>
               )}
 
@@ -182,27 +184,27 @@ export default function CheckoutPageClient() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm mb-1">Destination</label>
-                      <input className="input-modern" placeholder="Goa, Kashmir..." {...form.register("destination")} />
+                      <Input placeholder="Goa, Kashmir..." {...form.register("destination")} />
                       <p className="text-xs text-red-400">{form.formState.errors.destination?.message as string}</p>
                     </div>
                     <div>
                       <label className="block text-sm mb-1">Start date</label>
-                      <input className="input-modern" type="date" {...form.register("startDate")} />
+                      <Input type="date" {...form.register("startDate")} />
                       <p className="text-xs text-red-400">{form.formState.errors.startDate?.message as string}</p>
                     </div>
                     <div>
                       <label className="block text-sm mb-1">Nights</label>
-                      <input className="input-modern" type="number" min={1} {...form.register("nights", { valueAsNumber: true })} />
+                      <Input type="number" min={1} {...form.register("nights", { valueAsNumber: true })} />
                       <p className="text-xs text-red-400">{form.formState.errors.nights?.message as string}</p>
                     </div>
                     <div>
                       <label className="block text-sm mb-1">Adults</label>
-                      <input className="input-modern" type="number" min={1} {...form.register("adults", { valueAsNumber: true })} />
+                      <Input type="number" min={1} {...form.register("adults", { valueAsNumber: true })} />
                       <p className="text-xs text-red-400">{form.formState.errors.adults?.message as string}</p>
                     </div>
                     <div>
                       <label className="block text-sm mb-1">Children</label>
-                      <input className="input-modern" type="number" min={0} {...form.register("children", { valueAsNumber: true })} />
+                      <Input type="number" min={0} {...form.register("children", { valueAsNumber: true })} />
                       <p className="text-xs text-red-400">{form.formState.errors.children?.message as string}</p>
                     </div>
                   </div>
@@ -222,7 +224,7 @@ export default function CheckoutPageClient() {
                   </label>
                   <div>
                     <label className="block text-sm mb-1">Special requests</label>
-                    <textarea className="input-modern" rows={3} {...form.register("specialRequests")} />
+                    <Textarea rows={3} {...form.register("specialRequests")} />
                   </div>
                 </section>
               )}
@@ -269,10 +271,10 @@ export default function CheckoutPageClient() {
             <Card className="p-6 sticky top-6">
               <h2 className="text-lg font-semibold mb-4">Summary</h2>
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between"><span>Base</span><span>${'{'}Summary.base{'}'}</span></div>
-                <div className="flex justify-between"><span>Add-ons</span><span>${'{'}Summary.addOns{'}'}</span></div>
-                <div className="border-t border-white/10 my-2" />
-                <div className="flex justify-between font-semibold"><span>Total</span><span>${'{'}Summary.total{'}'}</span></div>
+                <div className="flex justify-between"><span>Base</span><span>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Summary.base)}</span></div>
+                <div className="flex justify-between"><span>Add-ons</span><span>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Summary.addOns)}</span></div>
+                <div className="border-t border-gray-200/10 my-2" />
+                <div className="flex justify-between font-semibold"><span>Total</span><span>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Summary.total)}</span></div>
               </div>
               <Button className="w-full mt-4" onClick={() => (step < 3 ? setStep(3) : alert("Proceed to payment gateway..."))} disabled={step === 3 && !agree}>
                 {step < 3 ? "Review details" : (agree ? "Place booking" : "Accept policies to continue")}
