@@ -35,18 +35,19 @@
     --travel-sand: 40 80% 70%;
     --travel-sky: 204 94% 94%;
     /* Modern dark additions */
-    --brand-accent: 24 92% 55%;
-    --brand-accent-rgb: 255 111 40;
-    --surface-base: 222 47% 6%;
-    --surface-alt: 222 40% 10%;
-    --surface-elevated: 222 32% 14%;
-    --surface-raised: 222 28% 18%; /* added to match design system documentation */
-    --border-subtle: 220 15% 18%;
-    --text-strong: 0 0% 98%;
-    --text-dim: 210 13% 60%;
+    /* Modern Navy palette (premium, professional, trustworthy) */
+    --brand-accent: 210 90% 48%;
+    --brand-accent-rgb: 17 85 204;
+    --surface-base: 210 18% 12%;
+    --surface-alt: 216 18% 16%;
+    --surface-elevated: 218 20% 20%;
+    --surface-raised: 218 22% 24%;
+    --border-subtle: 214 14% 22%;
+    --text-strong: 210 20% 97%;
+    --text-dim: 210 10% 70%;
     --text-primary: var(--text-strong); /* alias for docs parity */
     --text-secondary: var(--text-dim); /* alias for docs parity */
-    --focus-ring: 24 92% 55%;
+    --focus-ring: 210 90% 60%;
     --radius-sm: 0.375rem;
     --radius-md: 0.625rem;
     --radius-lg: 1rem;
@@ -163,8 +164,9 @@
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 0.75rem;
-    background-color: hsl(var(--brand-accent));
-    color: white;
+    /* subtle two-stop gradient for premium depth */
+    background: linear-gradient(180deg, hsl(var(--brand-cta, var(--brand-accent))) 0%, hsl(var(--brand-accent)) 100%);
+    color: hsl(var(--primary-foreground, 0 0% 100%));
     font-weight: 600;
     transition: transform var(--transition-base), box-shadow var(--transition-base), filter var(--transition-base);
     will-change: transform;

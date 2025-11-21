@@ -3,15 +3,9 @@
 import { useEffect, useState } from "react"
 
 export function useMediaQuery(query: string): boolean {
-  // Initialize based on current window if available to minimize hydration mismatch
-  const getInitial = () => {
-    if (typeof window === "undefined" || typeof window.matchMedia === "undefined") {
-      return false
-    }
-    return window.matchMedia(query).matches
-  }
-
-  const [matches, setMatches] = useState<boolean>(getInitial)
+  // Start with a deterministic server-friendly value (false).
+  // We intentionally avoid reading `window` during render to keep SSR output stable.
+  const [matches, setMatches] = useState<boolean>(false)
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof window.matchMedia === "undefined") {
@@ -26,7 +20,7 @@ export function useMediaQuery(query: string): boolean {
     }
 
     // Set once on mount in case it changed between SSR and mount
-    onChange(media)
+    setMatches(media.matches)
 
     if (typeof media.addEventListener === "function") {
       media.addEventListener("change", onChange as (e: Event) => void)

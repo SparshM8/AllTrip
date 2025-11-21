@@ -81,18 +81,14 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
+            ([theme, prefix]) => `\n${prefix} [data-chart=${id}] {\n${colorConfig
   .map(([key, itemConfig]) => {
     const color =
       itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
       itemConfig.color
     return color ? `  --color-${key}: ${color};` : null
   })
-  .join("\n")}
-}
-`
+  .join("\n")}\n}\n`
           )
           .join("\n"),
       }}
@@ -112,24 +108,23 @@ const ChartTooltipContent = React.forwardRef<
       nameKey?: string
       labelKey?: string
     }
->((
-  {
-    active,
-    payload,
-    className,
-    indicator = "dot",
-    hideLabel = false,
-    hideIndicator = false,
-    nameKey,
-    labelKey,
-    label,
-    labelFormatter,
-    labelClassName,
-    formatter,
-    // collect other props but ignore for now
-    ...props
-  },
-  ref
+>(({
+  active,
+  payload,
+  className,
+  indicator = "dot",
+  hideLabel = false,
+  hideIndicator = false,
+  nameKey,
+  labelKey,
+  label,
+  labelFormatter,
+  labelClassName,
+  formatter,
+  // collect other props but ignore for now
+  ...props
+},
+ref
 ) => {
   const { config } = useChart()
 
@@ -139,7 +134,7 @@ const ChartTooltipContent = React.forwardRef<
       try {
         return (
           <div className={cn("font-medium", labelClassName)}>
-            {labelFormatter(label as any, payload)}
+            {labelFormatter(label as any, payload ?? [])}
           </div>
         )
       } catch (e) {
@@ -244,84 +239,79 @@ const ChartLegendContent = React.forwardRef<
       hideIcon?: boolean
       nameKey?: string
     }
->(
-  (
-    ({ className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
-    ref
-  ) => {
-    // Set dynamic colors for tooltip indicators and legend items without using inline `style` props.
-    React.useEffect(() => {
-      if (typeof document === "undefined") return
+>(({ className, hideIcon = false, payload, verticalAlign = "bottom", nameKey }, ref) => {
+  // Set dynamic colors for tooltip indicators and legend items without using inline `style` props.
+  React.useEffect(() => {
+    if (typeof document === "undefined") return
 
-      // Apply indicator colors
-      document.querySelectorAll('[data-indicator-color]').forEach((el) => {
-        const color = el.getAttribute('data-indicator-color') || ''
-        const type = el.getAttribute('data-indicator-type')
-        try {
-          (el as HTMLElement).style.borderColor = color
-          if (type === 'dashed') {
-            (el as HTMLElement).style.backgroundColor = 'transparent'
-          } else {
-            (el as HTMLElement).style.backgroundColor = color
-          }
-        } catch (e) {
-          // ignore
+    // Apply indicator colors
+    document.querySelectorAll('[data-indicator-color]').forEach((el) => {
+      const color = el.getAttribute('data-indicator-color') || ''
+      const type = el.getAttribute('data-indicator-type')
+      try {
+        (el as HTMLElement).style.borderColor = color
+        if (type === 'dashed') {
+          (el as HTMLElement).style.backgroundColor = 'transparent'
+        } else {
+          (el as HTMLElement).style.backgroundColor = color
         }
-      })
+      } catch (e) {
+        // ignore
+      }
+    })
 
-      // Apply legend swatch colors
-      document.querySelectorAll('[data-color]').forEach((el) => {
-        const c = el.getAttribute('data-color') || ''
-        try {
-          (el as HTMLElement).style.backgroundColor = c
-        } catch (e) {
-          // ignore
-        }
-      })
-    }, [payload])
+    // Apply legend swatch colors
+    document.querySelectorAll('[data-color]').forEach((el) => {
+      const c = el.getAttribute('data-color') || ''
+      try {
+        (el as HTMLElement).style.backgroundColor = c
+      } catch (e) {
+        // ignore
+      }
+    })
+  }, [payload])
 
-    const { config } = useChart()
+  const { config } = useChart()
 
-    if (!payload?.length) {
-      return null
-    }
-
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          "flex items-center justify-center gap-4",
-          verticalAlign === "top" ? "pb-3" : "pt-3",
-          className
-        )}
-      >
-        {payload.map((item) => {
-          const key = `${nameKey || item.dataKey || "value"}`
-          const itemConfig = getPayloadConfigFromPayload(config, item, key)
-
-          return (
-            <div
-              key={item.value}
-              className={cn(
-                "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
-              )}
-            >
-              {itemConfig?.icon && !hideIcon ? (
-                <itemConfig.icon />
-              ) : (
-                <div
-                  className="h-2 w-2 shrink-0 rounded-[2px]"
-                  data-color={item.color}
-                />
-              )}
-              {itemConfig?.label}
-            </div>
-          )
-        })}
-      </div>
-    )
+  if (!payload?.length) {
+    return null
   }
-)
+
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "flex items-center justify-center gap-4",
+        verticalAlign === "top" ? "pb-3" : "pt-3",
+        className
+      )}
+    >
+      {payload.map((item) => {
+        const key = `${nameKey || item.dataKey || "value"}`
+        const itemConfig = getPayloadConfigFromPayload(config, item, key)
+
+        return (
+          <div
+            key={item.value}
+            className={cn(
+              "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
+            )}
+          >
+            {itemConfig?.icon && !hideIcon ? (
+              <itemConfig.icon />
+            ) : (
+              <div
+                className="h-2 w-2 shrink-0 rounded-[2px]"
+                data-color={item.color}
+              />
+            )}
+            {itemConfig?.label}
+          </div>
+        )
+      })}
+    </div>
+  )
+})
 ChartLegendContent.displayName = "ChartLegend";
 
 // Helper to extract item config from a payload.
