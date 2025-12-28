@@ -51,7 +51,7 @@ export default function HeroSection() {
       <div className="scroll-indicator fixed right-4 top-1/2 transform -translate-y-1/2 z-50">
         <div className="w-1 h-32 bg-white/20 rounded-full backdrop-blur-sm">
           <div
-            className="w-full bg-[#FDBE00] rounded-full transition-all duration-300 ease-out"
+            className="w-full bg-accent-500 rounded-full transition-all duration-300 ease-out"
             data-p={Math.round(scrollProgress)}
           />
         </div>
@@ -83,7 +83,7 @@ export default function HeroSection() {
               animate={isInView ? "animate" : "initial"}
             >
                 <motion.h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight" variants={fadeInUp}>
-                  One Solution For All Your <span className="text-yellow-400">Travel</span> <span className="text-yellow-400">Needs</span>
+                  One Solution For All Your <span className="text-accent-500">Travel</span> <span className="text-accent-500">Needs</span>
                 </motion.h1>
 
                 <motion.p
@@ -160,15 +160,15 @@ export default function HeroSection() {
                       />
                     </div>
                     <div className="flex flex-col sm:flex-row sm:items-baseline space-y-2 sm:space-y-0 sm:space-x-4 translate-y-0 sm:translate-y-4">
-                      <p className="font-bold leading-none text-[18px] text-[#fbb03b]">4.6</p>
+                      <p className="font-bold leading-none text-[18px] text-accent-500">4.6</p>
                       <div className="flex items-baseline space-x-1">
-                        <StarIcon width={18} height={18} className="sm:w-[22px] sm:h-[22px] text-yellow-400" />
-                        <StarIcon width={18} height={18} className="sm:w-[22px] sm:h-[22px] text-yellow-400" />
-                        <StarIcon width={18} height={18} className="sm:w-[22px] sm:h-[22px] text-yellow-400" />
-                        <StarIcon width={18} height={18} className="sm:w-[22px] sm:h-[22px] text-yellow-400" />
-                        <StarIcon width={18} height={18} className="sm:w-[22px] sm:h-[22px] text-yellow-400" />
+                        <StarIcon width={18} height={18} className="sm:w-[22px] sm:h-[22px] text-accent-500" />
+                        <StarIcon width={18} height={18} className="sm:w-[22px] sm:h-[22px] text-accent-500" />
+                        <StarIcon width={18} height={18} className="sm:w-[22px] sm:h-[22px] text-accent-500" />
+                        <StarIcon width={18} height={18} className="sm:w-[22px] sm:h-[22px] text-accent-500" />
+                        <StarIcon width={18} height={18} className="sm:w-[22px] sm:h-[22px] text-accent-500" />
                       </div>
-                      <p className="font-semibold leading-none text-[18px] text-[#fbb03b]">50 reviews</p>
+                      <p className="font-semibold leading-none text-[18px] text-accent-500">50 reviews</p>
                     </div>
                   </div>
                 </motion.div>

@@ -91,7 +91,8 @@ export default function ItinerariesSection() {
   const scrollLeft = () => {
     if (carouselRef.current) {
       const cardWidth = carouselRef.current.children[0]?.clientWidth || 320;
-      carouselRef.current.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+      const gap = 16; // space-x-4 = 1rem = 16px
+      carouselRef.current.scrollBy({ left: -(cardWidth + gap), behavior: 'smooth' });
       // Check buttons after a short delay to ensure scroll has completed
       setTimeout(checkScrollButtons, 300);
     }
@@ -100,7 +101,8 @@ export default function ItinerariesSection() {
   const scrollRight = () => {
     if (carouselRef.current) {
       const cardWidth = carouselRef.current.children[0]?.clientWidth || 320;
-      carouselRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      const gap = 16; // space-x-4 = 1rem = 16px
+      carouselRef.current.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
       // Check buttons after a short delay to ensure scroll has completed
       setTimeout(checkScrollButtons, 300);
     }
@@ -200,7 +202,7 @@ export default function ItinerariesSection() {
               >
                 <div
                   ref={carouselRef}
-                  className="flex space-x-4 overflow-x-auto snap-x snap-mandatory py-4 px-4 md:px-24 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                  className="flex space-x-4 overflow-x-auto snap-x snap-mandatory py-4 px-2 md:px-8 lg:px-12 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                   onTouchStart={handleTouchStart}
                   onTouchMove={handleTouchMove}
                   onTouchEnd={handleTouchEnd}
@@ -208,7 +210,7 @@ export default function ItinerariesSection() {
                   {itineraries.map((itinerary, idx) => (
                     <motion.div
                       key={idx}
-                      className="snap-start flex-shrink-0 w-full md:w-[300px] lg:w-[320px]"
+                      className="snap-start flex-shrink-0 w-full sm:w-80 md:w-80 lg:w-80 xl:w-96"
                       variants={fadeInUp}
                       onMouseEnter={() => setHoveredCard(idx)}
                       onMouseLeave={() => setHoveredCard(null)}
