@@ -5,13 +5,16 @@ import path from 'path';
 // Cache the blogs data to avoid reading files on every request
 let cachedBlogs: any[] | null = null;
 let cacheTimestamp = 0;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 60 * 1000; // 1 minute in development, can be increased for production
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const forceRefresh = searchParams.get('refresh') === 'true';
+
   try {
     // Check if we have cached data that's still valid
     const now = Date.now();
-    if (cachedBlogs && (now - cacheTimestamp) < CACHE_DURATION) {
+    if (cachedBlogs && (now - cacheTimestamp) < CACHE_DURATION && !forceRefresh) {
       return NextResponse.json(cachedBlogs);
     }
 

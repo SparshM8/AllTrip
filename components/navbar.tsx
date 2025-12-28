@@ -113,7 +113,7 @@ const Navbar: React.FC = () => {
                     <Icon icon={iconMap[link.name]} className="w-5 h-5" />
                     {link.name}
                     <span
-                      className={`absolute bottom-0 left-0 h-0.5 bg-[hsl(var(--brand-accent))] transition-all duration-300 rounded-full ${
+                      className={`absolute bottom-0 left-0 h-0.5 bg-accent-500 transition-all duration-300 rounded-full ${
                         pathname === link.href ? "w-full" : "w-0 group-hover:w-full"
                       }`}
                     />
@@ -172,7 +172,7 @@ const Navbar: React.FC = () => {
                     <Menu className="h-5 w-5 text-gray-700" />
                   </Button>
                 </DrawerTrigger>
-                <DrawerContent className="rounded-t-2xl border-t border-gray-200/20 bg-[#FDBE00] shadow-2xl">
+                <DrawerContent className="rounded-t-2xl border-t border-gray-200/20 bg-accent-500 shadow-2xl">
                   <DrawerHeader className="text-center">
                     <DrawerTitle className="text-gray-800 text-xl font-bold">AllTripp</DrawerTitle>
                     <DrawerDescription className="text-gray-700">
