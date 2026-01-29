@@ -123,7 +123,7 @@ export default function Footer() {
               <h4 className="text-sm font-semibold text-gray-200 mb-2">Subscribe to our Newsletter</h4>
               <p className="text-gray-400 text-sm mb-4">Get travel updates, exclusive offers and inspiration.</p>
 
-              <form className="relative flex items-center gap-3" onSubmit={(e) => {
+              <form className="relative flex items-center gap-3" onSubmit={async (e) => {
                 e.preventDefault();
                 const form = e.currentTarget;
                 const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement | null;
@@ -132,20 +132,39 @@ export default function Footer() {
 
                 if (!email) { setNewsletterState("error"); return; }
                 setNewsletterState("pending");
-                setTimeout(() => {
-                  setNewsletterState("success");
-                  trackEvent('newsletter_subscribe_success', { emailPresent: !!email });
-                  if (emailInput) emailInput.value = "";
+
+                try {
+                  const response = await fetch('/api/newsletter', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                  });
+
+                  const data = await response.json();
+
+                  if (response.ok) {
+                    setNewsletterState("success");
+                    trackEvent('newsletter_subscribe_success', { emailPresent: !!email });
+                    if (emailInput) emailInput.value = "";
+                    setTimeout(() => setNewsletterState("idle"), 4000);
+                  } else {
+                    throw new Error(data.error || 'Failed to subscribe');
+                  }
+                } catch (error) {
+                  setNewsletterState("error");
+                  trackEvent('newsletter_subscribe_error', { error: error instanceof Error ? error.message : 'Unknown error' });
                   setTimeout(() => setNewsletterState("idle"), 4000);
-                }, 700);
+                }
               }}>
                 <Mail className="absolute left-3 text-gray-400 h-4 w-4" />
                 <input id="footer-email" name="email" type="email" required placeholder="Your email address" className="pl-10 pr-4 py-2 rounded-md bg-gray-900 text-gray-100 w-full" aria-required="true" aria-invalid="false" />
-                <button type="submit" className="ml-2 inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-semibold px-4 py-2 rounded-md">{newsletterState === "pending" ? "Subscribing..." : "Subscribe"}</button>
+                <button type="submit" className="ml-2 inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-semibold px-4 py-2 rounded-md" disabled={newsletterState === "pending"}>{newsletterState === "pending" ? "Subscribing..." : "Subscribe"}</button>
               </form>
               <div aria-live="polite" className="min-h-[1.25rem] mt-3">
                 {newsletterState === "success" && (<p className="text-sm text-green-400">Thanks — check your inbox.</p>)}
-                {newsletterState === "error" && (<p className="text-sm text-yellow-300">Please enter a valid email.</p>)}
+                {newsletterState === "error" && (<p className="text-sm text-yellow-300">Please enter a valid email address.</p>)}
               </div>
             </div>
           </div>
