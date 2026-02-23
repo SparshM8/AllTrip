@@ -5,7 +5,7 @@ import HeroShowcase from "@/components/hero-showcase"
 import FeaturesSection from "@/components/features-section"
 import DestinationsSection from "@/components/destinations-section"
 import ItinerariesSection from "@/components/trips-section"
-import DiscountPage from "@/components/discount-page"
+import SocialImpactSection from "@/components/social-impact-section"
 import BookDetailsSection from "@/components/book-details-section"
 import TestimonialsSection from "@/components/testimonials-section"
 import StayRedirect from "@/components/stayredirect"
@@ -17,7 +17,7 @@ export default function HomeClient() {
       <HeroShowcase />
       <FeaturesSection />
       <DestinationsSection />
-      <DiscountPage />
+      <SocialImpactSection />
       <ItinerariesSection />
       <BookDetailsSection />
       <StayRedirect />

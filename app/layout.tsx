@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Inter, Montserrat } from "next/font/google"
+import { Inter, Montserrat, Poppins } from "next/font/google"
 import "./globals.css"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -12,6 +12,7 @@ import LenisProvider from "@/components/lenis-provider"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: 'swap' })
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat", weight: ["600","700"], display: 'swap' })
+const poppins = Poppins({ subsets: ["latin"], variable: "--font-poppins", weight: ["400","500","600","700"], display: 'swap' })
 
 export const metadata: Metadata = {
   title: {
@@ -111,7 +112,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-<body className={`${inter.variable} ${montserrat.variable} font-sans antialiased m-0 p-0 bg-white dark:bg-[hsl(var(--surface-base))] text-[hsl(var(--foreground))] tracking-[0.015em] selection:bg-[hsl(var(--brand-accent))]/25`}>
+<body className={`${inter.variable} ${montserrat.variable} ${poppins.variable} font-sans antialiased m-0 p-0 bg-white dark:bg-[hsl(var(--surface-base))] text-[hsl(var(--foreground))] tracking-[0.015em] selection:bg-[hsl(var(--brand-accent))]/25`}>
         {/* Skip link for keyboard users */}
         <a
           href="#main-content"
@@ -129,8 +130,8 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <LenisProvider>
             <Navbar />
-            {/* Offset for fixed navbar to prevent heading overlap */}
-            <main id="main-content" role="main" className="m-0 p-0 pt-16 md:pt-20">{children}</main>
+            {/* Main content without top padding since navbar is not fixed */}
+            <main id="main-content" role="main" className="m-0 p-0">{children}</main>
             <Footer />
           </LenisProvider>
         </ThemeProvider>
