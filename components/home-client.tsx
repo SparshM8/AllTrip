@@ -4,7 +4,6 @@ import React from "react"
 import HeroShowcase from "@/components/hero-showcase"
 import SocialImpactSection from "@/components/social-impact-section"
 import BookDetailsSection from "@/components/book-details-section"
-import StayRedirect from "@/components/stayredirect"
 import ScrollOverlapSection from "@/components/scroll-overlap-section"
 
 // lazy-load the larger landing sections so the initial bundle is smaller
