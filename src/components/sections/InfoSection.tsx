@@ -1,0 +1,53 @@
+import React from 'react';
+
+export const InfoSection: React.FC = () => {
+  return (
+    <section style={{ padding: '80px 160px' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 32 }}>
+        <div style={{ flex: 1 }}>
+          <p
+            style={{
+              color: '#735C00',
+              fontSize: 13,
+              fontFamily: 'Outfit',
+              fontWeight: '600',
+              textTransform: 'uppercase',
+              letterSpacing: 2.8,
+              lineHeight: '20px',
+              margin: '0 0 16px',
+            }}
+          >
+            Smart Travel Planning
+          </p>
+          <h2
+            style={{
+              color: '#1A1C1A',
+              fontSize: 56,
+              fontFamily: 'Playfair Display',
+              fontWeight: '500',
+              lineHeight: '64px',
+              margin: 0,
+            }}
+          >
+            Plan smarter, travel better, experience more
+          </h2>
+        </div>
+        <div style={{ flex: 1 }}>
+          <p
+            style={{
+              color: '#424843',
+              fontSize: 18,
+              fontFamily: 'Outfit',
+              fontWeight: '400',
+              lineHeight: '30px',
+              margin: 0,
+              textAlign: 'justify',
+            }}
+          >
+            Alltripp combines AI-powered recommendations, real-time booking, and collaborative planning tools into one seamless platform. Whether you're planning a solo adventure or a company retreat, we make every journey effortless from start to finish.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
