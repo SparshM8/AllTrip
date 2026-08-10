@@ -10,27 +10,27 @@ export const TripCardsSection: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('All');
 
   const BentoCard = ({
-    width,
     title,
     bgUrl,
     category,
+    className,
   }: {
-    width: number | string;
     title: string;
     bgUrl: string;
     category: string;
+    className?: string;
   }) => {
     const isMatched = activeCategory === 'All' || activeCategory.toLowerCase() === category.toLowerCase();
 
     return (
       <div
+        className={`bento-card ${className || ''}`}
         style={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'flex-start',
           position: 'relative',
-          width: width,
           height: 250.5,
           borderRadius: 40,
           backgroundImage: `url(${bgUrl})`,
@@ -185,29 +185,18 @@ export const TripCardsSection: React.FC = () => {
           }}
         >
           {/* Top Row */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 24,
-              width: '100%',
-            }}
-          >
+          <div className="bento-grid-top">
             <BentoCard
-              width={356}
               title="Thailand"
               bgUrl={thailandImg}
               category="Beach"
             />
             <BentoCard
-              width={569}
               title="Europe Tour"
               bgUrl={europeImg}
               category="Mountain"
             />
             <BentoCard
-              width={356}
               title="Sri Lanka"
               bgUrl={srilankaImg}
               category="Beach"
@@ -215,35 +204,23 @@ export const TripCardsSection: React.FC = () => {
           </div>
 
           {/* Bottom Row */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 24,
-              width: '100%',
-            }}
-          >
+          <div className="bento-grid-bottom">
             <BentoCard
-              width={200}
               title="Europe Tour"
               bgUrl={europeImg}
               category="Mountain"
             />
             <BentoCard
-              width={428.5}
               title="Paris, France"
               bgUrl={parisImg}
               category="More"
             />
             <BentoCard
-              width={428.5}
               title="Singapore"
               bgUrl="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&q=80&w=800"
               category="Lake"
             />
             <BentoCard
-              width={200}
               title="Europe Tour"
               bgUrl={europeImg}
               category="Mountain"

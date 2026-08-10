@@ -17,7 +17,7 @@ export const Footer: React.FC = () => {
       }}
     >
       {/* Top row: logo + link columns */}
-      <div style={{ display: 'flex', gap: 60, marginBottom: 60 }}>
+      <div className="footer-flex" style={{ display: 'flex', gap: 60, marginBottom: 60 }}>
         {/* Brand column */}
         <div style={{ minWidth: 220, maxWidth: 280 }}>
           <img loading="lazy"
@@ -105,6 +105,7 @@ export const Footer: React.FC = () => {
 
       {/* Bottom row: copyright */}
       <div
+        className="responsive-flex"
         style={{
           paddingTop: 24,
           borderTop: '1px solid rgba(242,240,227,0.10)',

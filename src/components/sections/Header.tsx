@@ -31,7 +31,7 @@ export const Header: React.FC = () => {
       </a>
 
       {/* Nav links */}
-      <nav style={{ display: 'flex', gap: 40 }}>
+      <nav className="header-nav" style={{ display: 'flex', gap: 40 }}>
         {NAV_LINKS.map(link => (
           <a
             key={link.name}

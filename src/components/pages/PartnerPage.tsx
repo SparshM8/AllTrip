@@ -92,10 +92,10 @@ export const PartnerPage: React.FC = () => {
         </div>
 
         {/* 2-Column Content Grid */}
-        <div style={{ display: 'flex', flexDirection: 'row', gap: 56, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+        <div className="responsive-flex" style={{ flexWrap: 'wrap', alignItems: 'flex-start' }}>
           
           {/* Left Column - Information & Connected Partners */}
-          <div style={{ flex: '1 1 440px', display: 'flex', flexDirection: 'column', gap: 28 }}>
+          <div className="partner-content" style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
             
             {/* Alltripp Ecosystem Overview */}
             <div style={{ background: '#FFFFFF', border: '1px solid #EAE6DA', borderRadius: 24, padding: 32, boxShadow: '0 8px 30px rgba(0,0,0,0.02)' }}>
@@ -163,7 +163,7 @@ export const PartnerPage: React.FC = () => {
           </div>
 
           {/* Right Column - B2B Form Card */}
-          <div style={{ flex: '1 1 560px' }}>
+          <div className="partner-form">
             <div style={{ background: '#FFFFFF', border: '1px solid #E4E0D2', borderRadius: 32, padding: 40, boxShadow: '0 16px 50px rgba(0,0,0,0.04)' }}>
               
               {submitted ? (

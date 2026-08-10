@@ -3,7 +3,7 @@ import { FEATURES } from '../../data/mockData';
 
 export const FeaturesSection: React.FC = () => {
   return (
-    <section style={{ paddingLeft: 50, paddingRight: 50, paddingBottom: 80 }}>
+    <section className="hero-section" style={{ paddingBottom: 80 }}>
       <div style={{ maxWidth: 1340, margin: '0 auto' }}>
         {/* Heading */}
         <h2
@@ -51,7 +51,7 @@ export const FeaturesSection: React.FC = () => {
         </div>
 
         {/* 3 feature columns */}
-        <div style={{ display: 'flex', gap: 80 }}>
+        <div className="responsive-flex" style={{ gap: 80 }}>
           {FEATURES.map((feat, idx) => (
             <div key={idx} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
               {/* Icon box */}

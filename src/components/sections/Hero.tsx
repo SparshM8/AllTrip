@@ -4,11 +4,10 @@ import { ArrowIcon } from '../ui/Icons';
 
 export const Hero: React.FC = () => {
   return (
-    <section id="home" style={{ paddingLeft: 50, paddingRight: 50, paddingTop: 20 }}>
+    <section id="home" className="hero-section" style={{ paddingTop: 20 }}>
       <div
         style={{
           width: '100%',
-          height: 640,
           borderRadius: 24,
           backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.15) 100%), url(${heroImg})`,
           backgroundSize: 'cover',
@@ -18,6 +17,8 @@ export const Hero: React.FC = () => {
           alignItems: 'center',
           justifyContent: 'center',
           gap: 24,
+          height: '100%',
+          minHeight: '400px'
         }}
       >
         {/* Badge */}
@@ -48,14 +49,13 @@ export const Hero: React.FC = () => {
 
         {/* Headline */}
         <h1
+          className="hero-headline"
           style={{
             maxWidth: 900,
             textAlign: 'center',
             color: 'white',
-            fontSize: 72,
             fontFamily: 'Space Grotesk',
             fontWeight: '500',
-            lineHeight: '76px',
             textShadow: '0px 4px 4px rgba(0,0,0,0.25)',
             margin: 0,
           }}
@@ -64,7 +64,7 @@ export const Hero: React.FC = () => {
         </h1>
 
         {/* Buttons */}
-        <div style={{ display: 'flex', gap: 10 }}>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
           <a
             href="https://wa.me/919266602470?text=Hi%20Alltripp%20Team,%20I%20would%20like%20to%20book%20a%20demo."
             target="_blank"
