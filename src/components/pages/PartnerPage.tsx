@@ -64,7 +64,7 @@ export const PartnerPage: React.FC = () => {
             </span>
           </div>
 
-          <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 52, fontWeight: 600, color: '#032517', lineHeight: '60px', margin: '0 0 16px' }}>
+          <h1 className="partner-hero-title" style={{ fontFamily: 'Playfair Display, serif', fontSize: 52, fontWeight: 600, color: '#032517', lineHeight: '60px', margin: '0 0 16px' }}>
             Partner With Alltripp
           </h1>
           <p style={{ fontSize: 17, lineHeight: '28px', color: '#424843', maxWidth: 740, margin: '0 auto' }}>
@@ -77,12 +77,12 @@ export const PartnerPage: React.FC = () => {
               <div style={{ fontFamily: 'Playfair Display, serif', fontSize: 32, fontWeight: 700, color: '#084028' }}>500+</div>
               <div style={{ fontSize: 13, color: '#666666', fontWeight: 500 }}>Global Travel Partners</div>
             </div>
-            <div style={{ width: 1, height: 40, background: '#E0DDD0' }} />
+            <div className="metric-divider" style={{ width: 1, height: 40, background: '#E0DDD0' }} />
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontFamily: 'Playfair Display, serif', fontSize: 32, fontWeight: 700, color: '#084028' }}>&lt; 24h</div>
               <div style={{ fontSize: 13, color: '#666666', fontWeight: 500 }}>B2B Response SLA</div>
             </div>
-            <div style={{ width: 1, height: 40, background: '#E0DDD0' }} />
+            <div className="metric-divider" style={{ width: 1, height: 40, background: '#E0DDD0' }} />
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontFamily: 'Playfair Display, serif', fontSize: 32, fontWeight: 700, color: '#084028' }}>100%</div>
               <div style={{ fontSize: 13, color: '#666666', fontWeight: 500 }}>Verified Network</div>
@@ -164,7 +164,7 @@ export const PartnerPage: React.FC = () => {
 
           {/* Right Column - B2B Form Card */}
           <div className="partner-form">
-            <div style={{ background: '#FFFFFF', border: '1px solid #E4E0D2', borderRadius: 32, padding: 40, boxShadow: '0 16px 50px rgba(0,0,0,0.04)' }}>
+            <div className="partner-form-card" style={{ background: '#FFFFFF', border: '1px solid #E4E0D2', borderRadius: 32, padding: 40, boxShadow: '0 16px 50px rgba(0,0,0,0.04)' }}>
               
               {submitted ? (
                 <div style={{ textAlign: 'center', padding: '60px 20px' }}>

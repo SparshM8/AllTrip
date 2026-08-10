@@ -8,6 +8,7 @@ import { FOOTER_LINKS } from '../../data/mockData';
 export const Footer: React.FC = () => {
   return (
     <footer
+      className="footer-wrapper"
       style={{
         background: '#032517',
         paddingTop: 80,
@@ -17,10 +18,11 @@ export const Footer: React.FC = () => {
       }}
     >
       {/* Top row: logo + link columns */}
-      <div className="footer-flex" style={{ display: 'flex', gap: 60, marginBottom: 60 }}>
+      <div className="footer-flex" style={{ display: 'flex', gap: 60, marginBottom: 60, flexWrap: 'wrap' }}>
         {/* Brand column */}
-        <div style={{ minWidth: 220, maxWidth: 280 }}>
-          <img loading="lazy"
+        <div style={{ flex: '1 1 220px', maxWidth: 320 }}>
+          <img
+            loading="lazy"
             src={logoSrc}
             alt="Alltripp"
             style={{ height: 38, marginBottom: 20, filter: 'brightness(0) invert(1)' }}
@@ -62,45 +64,47 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Link columns */}
-        {Object.entries(FOOTER_LINKS).map(([category, links]) => (
-          <div key={category} style={{ flex: 1 }}>
-            <h4
-              style={{
-                color: '#F2F0E3',
-                fontSize: 13,
-                fontFamily: 'Plus Jakarta Sans',
-                fontWeight: '600',
-                textTransform: 'uppercase',
-                letterSpacing: 1.4,
-                lineHeight: '20px',
-                margin: '0 0 20px',
-              }}
-            >
-              {category}
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {links.map(link => (
-                <a
-                  key={link}
-                  href="#"
-                  style={{
-                    color: 'rgba(242,240,227,0.60)',
-                    fontSize: 13,
-                    fontFamily: 'Plus Jakarta Sans',
-                    fontWeight: '400',
-                    lineHeight: '18px',
-                    textDecoration: 'none',
-                    transition: 'color 0.2s',
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#F2F0E3')}
-                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(242,240,227,0.60)')}
-                >
-                  {link}
-                </a>
-              ))}
+        <div style={{ display: 'flex', flex: '2 1 400px', gap: 32, flexWrap: 'wrap', justifyContent: 'space-between' }}>
+          {Object.entries(FOOTER_LINKS).map(([category, links]) => (
+            <div key={category} style={{ minWidth: 130 }}>
+              <h4
+                style={{
+                  color: '#F2F0E3',
+                  fontSize: 13,
+                  fontFamily: 'Plus Jakarta Sans',
+                  fontWeight: '600',
+                  textTransform: 'uppercase',
+                  letterSpacing: 1.4,
+                  lineHeight: '20px',
+                  margin: '0 0 20px',
+                }}
+              >
+                {category}
+              </h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {links.map(link => (
+                  <a
+                    key={link}
+                    href="#"
+                    style={{
+                      color: 'rgba(242,240,227,0.60)',
+                      fontSize: 13,
+                      fontFamily: 'Plus Jakarta Sans',
+                      fontWeight: '400',
+                      lineHeight: '18px',
+                      textDecoration: 'none',
+                      transition: 'color 0.2s',
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#F2F0E3')}
+                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(242,240,227,0.60)')}
+                  >
+                    {link}
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* Bottom row: copyright */}
@@ -112,6 +116,8 @@ export const Footer: React.FC = () => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: 16,
         }}
       >
         <span
@@ -124,7 +130,7 @@ export const Footer: React.FC = () => {
         >
           © 2025 Alltripp. All rights reserved.
         </span>
-        <div style={{ display: 'flex', gap: 24 }}>
+        <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
           {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map(item => (
             <a
               key={item}

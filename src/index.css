@@ -99,6 +99,17 @@ button {
 .mb-4 { margin-bottom: 2rem; }
 .mb-8 { margin-bottom: 4rem; }
 
+/* Global Overflow Protection */
+html, body, #root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Helper Utilities */
+.mobile-only {
+  display: none !important;
+}
+
 /* Responsive Grid & Layouts */
 .bento-grid-top, .bento-grid-bottom {
   display: grid;
@@ -142,35 +153,121 @@ button {
   flex: 1 1 560px;
 }
 
+/* Horizontal Scroll Pills for Mobile */
+.pills-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  max-width: 100%;
+  padding: 8px 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+.pills-scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 /* Tablet (up to 1024px) */
 @media (max-width: 1024px) {
   .bento-grid-top, .bento-grid-bottom {
     grid-template-columns: 1fr 1fr;
   }
   .hero-headline {
-    font-size: 56px !important;
-    line-height: 64px !important;
+    font-size: 52px !important;
+    line-height: 60px !important;
+  }
+  .info-section-wrapper {
+    padding: 60px 40px !important;
+  }
+  .cta-card {
+    padding: 48px 32px !important;
+  }
+  .footer-wrapper {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
   }
 }
 
 /* Mobile (up to 768px) */
 @media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: flex !important;
+  }
+  
+  .header-container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  
   .bento-grid-top, .bento-grid-bottom {
     grid-template-columns: 1fr;
   }
+  
   .hero-section {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
     height: auto !important;
-    padding-bottom: 60px !important;
+    padding-bottom: 40px !important;
   }
+  
   .hero-headline {
-    font-size: 40px !important;
-    line-height: 48px !important;
+    font-size: 34px !important;
+    line-height: 42px !important;
   }
-  .header-nav {
-    display: none !important; /* Simple fix: hide links on mobile, keep logo & CTA */
+  
+  .info-section-wrapper {
+    padding: 40px 20px !important;
   }
+  .info-section-flex {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+  .info-section-heading {
+    font-size: 32px !important;
+    line-height: 38px !important;
+  }
+  .info-section-body {
+    text-align: left !important;
+  }
+
+  .cta-section-wrapper {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .cta-card {
+    padding: 32px 20px !important;
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 24px !important;
+  }
+  .cta-heading {
+    font-size: 26px !important;
+    line-height: 34px !important;
+  }
+  .cta-button {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+    height: 52px !important;
+    width: 100% !important;
+    max-width: 280px !important;
+  }
+  
+  .testimonials-wrapper {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .testimonials-heading {
+    font-size: 32px !important;
+    line-height: 38px !important;
+  }
+  .testimonial-card {
+    width: calc(100vw - 48px) !important;
+    max-width: 320px !important;
+  }
+
   .responsive-flex {
     flex-direction: column;
   }
@@ -178,14 +275,31 @@ button {
     flex: 1 1 100%;
   }
   main {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
+  .partner-hero-title {
+    font-size: 32px !important;
+    line-height: 40px !important;
+  }
+  .partner-form-card {
+    padding: 24px 18px !important;
+  }
+  .metric-divider {
+    display: none !important;
+  }
+
   .features-grid {
     grid-template-columns: 1fr !important;
   }
+  
+  .footer-wrapper {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-top: 50px !important;
+  }
   .footer-flex {
     flex-direction: column;
-    gap: 40px !important;
+    gap: 32px !important;
   }
 }

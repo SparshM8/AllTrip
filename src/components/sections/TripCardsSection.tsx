@@ -105,7 +105,7 @@ export const TripCardsSection: React.FC = () => {
         flexDirection: 'column',
         alignItems: 'center',
         padding: '60px 0',
-        gap: 48,
+        gap: 32,
         width: '100%',
       }}
     >
@@ -113,12 +113,14 @@ export const TripCardsSection: React.FC = () => {
       <div
         style={{
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          justifyContent: 'center',
           width: '100%',
+          padding: '0 16px',
+          boxSizing: 'border-box',
         }}
       >
         <div
+          className="pills-scroll-container"
           style={{
             display: 'flex',
             flexDirection: 'row',
@@ -128,6 +130,7 @@ export const TripCardsSection: React.FC = () => {
             background: 'rgba(10, 64, 40, 0.08)',
             borderRadius: 9999,
             border: '1px solid rgba(10, 64, 40, 0.12)',
+            maxWidth: '100%',
           }}
         >
           {CATEGORIES.map((cat) => {
@@ -141,19 +144,21 @@ export const TripCardsSection: React.FC = () => {
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  padding: '12px 32px',
-                  height: 48,
+                  padding: '10px 24px',
+                  height: 44,
+                  whiteSpace: 'nowrap',
                   background: isCatActive ? '#0A4028' : 'transparent',
                   borderRadius: 9999,
                   border: 'none',
                   cursor: 'pointer',
                   fontFamily: '"Plus Jakarta Sans", sans-serif',
                   fontWeight: isCatActive ? 700 : 500,
-                  fontSize: 16,
+                  fontSize: 15,
                   lineHeight: '24px',
                   color: isCatActive ? '#FFFFFF' : '#0A4028',
                   transition: 'all 0.3s cubic-bezier(0.25, 1, 0.5, 1)',
                   boxShadow: isCatActive ? '0 4px 14px rgba(10, 64, 40, 0.25)' : 'none',
+                  flexShrink: 0,
                 }}
               >
                 {cat}
@@ -163,7 +168,7 @@ export const TripCardsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Bento Grid Layout (Restored 2-Row Design) */}
+      {/* Bento Grid Layout */}
       <div
         style={{
           display: 'flex',
@@ -171,7 +176,7 @@ export const TripCardsSection: React.FC = () => {
           alignItems: 'center',
           width: '100%',
           maxWidth: 1425,
-          padding: '0 48px',
+          padding: '0 16px',
           boxSizing: 'border-box',
         }}
       >

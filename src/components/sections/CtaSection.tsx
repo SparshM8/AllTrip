@@ -2,8 +2,9 @@ import React from 'react';
 
 export const CtaSection: React.FC = () => {
   return (
-    <section style={{ paddingLeft: 50, paddingRight: 50, paddingTop: 32, paddingBottom: 32 }}>
+    <section className="cta-section-wrapper" style={{ paddingLeft: 50, paddingRight: 50, paddingTop: 32, paddingBottom: 32 }}>
       <div
+        className="cta-card"
         style={{
           background: '#084028',
           borderRadius: 24,
@@ -17,6 +18,7 @@ export const CtaSection: React.FC = () => {
         {/* Text */}
         <div style={{ maxWidth: 576 }}>
           <h2
+            className="cta-heading"
             style={{
               color: '#F2F0E3',
               fontSize: 38,
@@ -37,7 +39,6 @@ export const CtaSection: React.FC = () => {
               fontWeight: '400',
               lineHeight: '30px',
               margin: 0,
-              textAlign: 'justify',
             }}
           >
             Join thousands of travellers and corporate teams who use Alltripp to plan, book, and manage every journey with confidence.
@@ -45,11 +46,12 @@ export const CtaSection: React.FC = () => {
         </div>
 
         {/* CTA button area */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, width: '100%', maxWidth: 320 }}>
           <a
             href="https://wa.me/919266602470?text=Hi%20Alltripp%20Team,%20I%20would%20like%20to%20get%20started."
             target="_blank"
             rel="noopener noreferrer"
+            className="cta-button"
             style={{
               height: 64,
               paddingLeft: 60,
@@ -63,11 +65,11 @@ export const CtaSection: React.FC = () => {
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: '700',
               lineHeight: '24px',
-              whiteSpace: 'nowrap',
               textDecoration: 'none',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              boxSizing: 'border-box',
               transition: 'background 0.2s',
             }}
             onMouseEnter={e => (e.currentTarget.style.background = '#e0dece')}
@@ -83,6 +85,7 @@ export const CtaSection: React.FC = () => {
               fontWeight: '600',
               letterSpacing: 1.4,
               lineHeight: '20px',
+              textAlign: 'center',
             }}
           >
             Average setup time: 4 minutes

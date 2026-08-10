@@ -2,8 +2,8 @@ import React from 'react';
 
 export const InfoSection: React.FC = () => {
   return (
-    <section id="about" style={{ padding: '80px 160px' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 32 }}>
+    <section id="about" className="info-section-wrapper" style={{ padding: '80px 160px' }}>
+      <div className="info-section-flex" style={{ display: 'flex', alignItems: 'flex-end', gap: 32 }}>
         <div style={{ flex: 1 }}>
           <p
             style={{
@@ -20,6 +20,7 @@ export const InfoSection: React.FC = () => {
             Smart Travel Planning
           </p>
           <h2
+            className="info-section-heading"
             style={{
               color: '#1A1C1A',
               fontSize: 56,
@@ -34,6 +35,7 @@ export const InfoSection: React.FC = () => {
         </div>
         <div style={{ flex: 1 }}>
           <p
+            className="info-section-body"
             style={{
               color: '#424843',
               fontSize: 18,
