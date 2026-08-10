@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
       <div style={{ display: 'flex', gap: 60, marginBottom: 60 }}>
         {/* Brand column */}
         <div style={{ minWidth: 220, maxWidth: 280 }}>
-          <img
+          <img loading="lazy"
             src={logoSrc}
             alt="Alltripp"
             style={{ height: 38, marginBottom: 20, filter: 'brightness(0) invert(1)' }}
@@ -55,7 +55,7 @@ export const Footer: React.FC = () => {
                 onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(242,240,227,0.60)')}
                 onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(242,240,227,0.20)')}
               >
-                <img src={icon} alt="Social Icon" style={{ width: 18, height: 18, filter: 'brightness(0) invert(1)' }} />
+                <img src={icon} alt="Social Icon" loading="lazy" style={{ width: 18, height: 18, filter: 'brightness(0) invert(1)' }} />
               </a>
             ))}
           </div>

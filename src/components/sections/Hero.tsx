@@ -1,5 +1,5 @@
 import React from 'react';
-import heroImg from '../../assets/Container.png';
+import heroImg from '../../assets/Container.webp';
 import { ArrowIcon } from '../ui/Icons';
 
 export const Hero: React.FC = () => {

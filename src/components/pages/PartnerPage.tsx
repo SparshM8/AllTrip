@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Header } from '../sections/Header';
 import { Footer } from '../sections/Footer';
-import logoSrc from '../../assets/logo.png';
+import logoSrc from '../../assets/logo.webp';
 
 const PARTNERSHIP_TYPES = [
   { id: 'hotel', label: 'Hotel & Villa Partner', icon: '🏨' },
@@ -100,7 +100,7 @@ export const PartnerPage: React.FC = () => {
             {/* Alltripp Ecosystem Overview */}
             <div style={{ background: '#FFFFFF', border: '1px solid #EAE6DA', borderRadius: 24, padding: 32, boxShadow: '0 8px 30px rgba(0,0,0,0.02)' }}>
               <div style={{ width: 120, height: 40, background: '#084028', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
-                <img src={logoSrc} alt="Alltripp Logo" style={{ height: 22, width: 'auto', filter: 'brightness(0) invert(1)' }} />
+                <img src={logoSrc} alt="Alltripp Logo" loading="lazy" style={{ height: 22, width: 'auto', filter: 'brightness(0) invert(1)' }} />
               </div>
               <h3 style={{ margin: '0 0 12px', fontSize: 22, fontWeight: 700, color: '#032517' }}>Empowering Travel Businesses</h3>
               <p style={{ margin: 0, fontSize: 14, color: '#555555', lineHeight: '22px' }}>

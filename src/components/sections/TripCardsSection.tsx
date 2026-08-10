@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import srilankaImg from '../../assets/srilanka.png';
-import parisImg from '../../assets/paris.png';
-import europeImg from '../../assets/europe.png';
-import thailandImg from '../../assets/thailand.png';
+import srilankaImg from '../../assets/srilanka.webp';
+import parisImg from '../../assets/paris.webp';
+import europeImg from '../../assets/europe.webp';
+import thailandImg from '../../assets/thailand.webp';
 
 const CATEGORIES = ['All', 'Mountain', 'Beach', 'Lake', 'More'];
 

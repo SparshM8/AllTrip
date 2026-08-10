@@ -1,5 +1,5 @@
 import React from 'react';
-import logoSrc from '../../assets/logo.png';
+import logoSrc from '../../assets/logo.webp';
 import { NAV_LINKS } from '../../data/mockData';
 import { ArrowIcon } from '../ui/Icons';
 

@@ -68,7 +68,7 @@ export const FeaturesSection: React.FC = () => {
                   marginBottom: 32,
                 }}
               >
-                <img src={feat.icon} alt={feat.title} style={{ width: 42, height: 42 }} />
+                <img src={feat.icon} alt={feat.title} loading="lazy" style={{ width: 42, height: 42 }} />
               </div>
               {/* Title */}
               <h3
