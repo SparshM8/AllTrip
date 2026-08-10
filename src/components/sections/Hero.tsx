@@ -4,7 +4,7 @@ import { ArrowIcon } from '../ui/Icons';
 
 export const Hero: React.FC = () => {
   return (
-    <section style={{ paddingLeft: 50, paddingRight: 50, paddingTop: 20 }}>
+    <section id="home" style={{ paddingLeft: 50, paddingRight: 50, paddingTop: 20 }}>
       <div
         style={{
           width: '100%',
@@ -35,7 +35,7 @@ export const Hero: React.FC = () => {
             style={{
               color: '#2D4D3C',
               fontSize: 13,
-              fontFamily: 'Outfit',
+              fontFamily: 'Plus Jakarta Sans',
               fontWeight: '600',
               textTransform: 'uppercase',
               letterSpacing: 1.4,
@@ -53,7 +53,7 @@ export const Hero: React.FC = () => {
             textAlign: 'center',
             color: 'white',
             fontSize: 72,
-            fontFamily: 'Playfair Display',
+            fontFamily: 'Space Grotesk',
             fontWeight: '500',
             lineHeight: '76px',
             textShadow: '0px 4px 4px rgba(0,0,0,0.25)',
@@ -65,7 +65,10 @@ export const Hero: React.FC = () => {
 
         {/* Buttons */}
         <div style={{ display: 'flex', gap: 10 }}>
-          <button
+          <a
+            href="https://wa.me/919266602470?text=Hi%20Alltripp%20Team,%20I%20would%20like%20to%20book%20a%20demo."
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               height: 48,
               paddingLeft: 24,
@@ -78,14 +81,15 @@ export const Hero: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               gap: 8,
+              textDecoration: 'none',
               transition: 'background 0.2s',
             }}
           >
-            <span style={{ color: 'white', fontSize: 14, fontFamily: 'Outfit', fontWeight: '500' }}>
+            <span style={{ color: 'white', fontSize: 14, fontFamily: 'Plus Jakarta Sans', fontWeight: '500' }}>
               Book a demo
             </span>
             <ArrowIcon />
-          </button>
+          </a>
 
           <button
             style={{
@@ -102,7 +106,7 @@ export const Hero: React.FC = () => {
               gap: 8,
             }}
           >
-            <span style={{ color: 'white', fontSize: 14, fontFamily: 'Outfit', fontWeight: '500' }}>
+            <span style={{ color: 'white', fontSize: 14, fontFamily: 'Plus Jakarta Sans', fontWeight: '500' }}>
               Explore our product
             </span>
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">

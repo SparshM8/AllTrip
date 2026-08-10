@@ -68,12 +68,12 @@ alltripp-app/
 
 | Component | File Path | Primary Functionality |
 | :--- | :--- | :--- |
-| **Header** | `src/components/sections/Header.tsx` | Sticky navigation bar featuring the primary Alltripp brand logo, navigation links, and primary CTA button. |
+| **Header** | `src/components/sections/Header.tsx` | Fixed navigation bar featuring the primary Alltripp brand logo, navigation links, and WhatsApp CTA button. |
 | **Hero** | `src/components/sections/Hero.tsx` | High-converting hero banner with key messaging, interactive destination filter pills, and background visual. |
-| **TripCardsSection** | `src/components/sections/TripCardsSection.tsx` | Responsive **Bento Grid** layout showcasing popular trip destinations with blurred glassmorphism badges and local high-res imagery. |
+| **TripCardsSection** | `src/components/sections/TripCardsSection.tsx` | Responsive **Bento Grid** layout showcasing popular trip destinations with live category filtering (`Mountain`, `Beach`, `Lake`, `More`). |
 | **FeaturesSection** | `src/components/sections/FeaturesSection.tsx` | Highlights platform benefits with centered feature cards and an animated keyframe "flight path" travel streak divider line. |
-| **TestimonialsSection** | `src/components/sections/TestimonialsSection.tsx` | **3D Vertical Video Carousel** displaying Reels/Shorts style testimonial cards. Auto-calculates 3D transforms (`translateX`, `translateZ`, `scale`, `opacity`, `zIndex`) to elevate the active center video. |
-| **PartnersSection** | `src/components/sections/PartnersSection.tsx` | Showcases corporate integration partners, including custom SVG vector branding for **NestArrival**. |
+| **TestimonialsSection** | `src/components/sections/TestimonialsSection.tsx` | **3D Vertical Video Carousel** displaying live looping travel scenery MP4 videos with text overlays. |
+| **PartnerPage** | `src/components/pages/PartnerPage.tsx` | Dedicated B2B travel partnership form page with selection pills, SLA response indicators, and NestArrival verification badge. |
 | **Footer** | `src/components/sections/Footer.tsx` | Comprehensive footer containing company information, social links, legal pages, and copyright notice. |
 
 ---

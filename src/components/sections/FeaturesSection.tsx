@@ -10,7 +10,7 @@ export const FeaturesSection: React.FC = () => {
           style={{
             color: '#032517',
             fontSize: 36,
-            fontFamily: 'Playfair Display',
+            fontFamily: 'Space Grotesk',
             fontWeight: '600',
             lineHeight: '44px',
             textAlign: 'center',
@@ -75,7 +75,7 @@ export const FeaturesSection: React.FC = () => {
                 style={{
                   color: '#424843',
                   fontSize: 18,
-                  fontFamily: 'Outfit',
+                  fontFamily: 'Plus Jakarta Sans',
                   fontWeight: '600',
                   textTransform: 'uppercase',
                   lineHeight: '28px',
@@ -90,7 +90,7 @@ export const FeaturesSection: React.FC = () => {
                 style={{
                   color: '#424843',
                   fontSize: 16,
-                  fontFamily: 'Outfit',
+                  fontFamily: 'Plus Jakarta Sans',
                   fontWeight: '400',
                   lineHeight: '26px',
                   margin: 0,

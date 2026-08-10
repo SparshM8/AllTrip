@@ -11,13 +11,13 @@ export const TestimonialsSection: React.FC = () => {
     setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length);
 
   return (
-    <section style={{ paddingTop: 40, paddingBottom: 60, paddingLeft: 60, paddingRight: 60, overflow: 'hidden' }}>
+    <section id="testimonials" style={{ paddingTop: 40, paddingBottom: 60, paddingLeft: 60, paddingRight: 60, overflow: 'hidden' }}>
       <div style={{ textAlign: 'center', marginBottom: 48 }}>
         <h2
           style={{
             color: '#032517',
             fontSize: 52,
-            fontFamily: 'Outfit',
+            fontFamily: 'Plus Jakarta Sans',
             fontWeight: '500',
             lineHeight: '56px',
             margin: 0,
@@ -63,10 +63,40 @@ export const TestimonialsSection: React.FC = () => {
                 opacity: opacity,
                 zIndex: zIndex,
                 transition: 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
-                boxSizing: 'border-box',
-                boxShadow: isActive ? '0 20px 40px rgba(0,0,0,0.2)' : 'none',
+              overflow: 'hidden',
+              boxShadow: isActive ? '0 20px 40px rgba(0,0,0,0.2)' : 'none',
+            }}
+          >
+            {t.video && (
+              <video
+                src={t.video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  zIndex: 0,
+                }}
+              />
+            )}
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.15) 60%)',
+                zIndex: 1,
               }}
-            >
+            />
+            <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'flex-end' }}>
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24, transition: 'transform 0.3s', transform: isActive ? 'scale(1)' : 'scale(0.8)' }}>
                 <PlayIcon />
               </div>
@@ -75,7 +105,7 @@ export const TestimonialsSection: React.FC = () => {
                   style={{
                     color: 'white',
                     fontSize: isActive ? 16 : 14,
-                    fontFamily: 'Outfit',
+                    fontFamily: 'Plus Jakarta Sans',
                     fontWeight: '400',
                     lineHeight: '24px',
                     margin: '0 0 12px',
@@ -88,7 +118,7 @@ export const TestimonialsSection: React.FC = () => {
                   style={{
                     color: 'rgba(255,255,255,0.95)',
                     fontSize: isActive ? 14 : 12,
-                    fontFamily: 'Outfit',
+                    fontFamily: 'Plus Jakarta Sans',
                     fontWeight: '600',
                     margin: 0,
                   }}
@@ -99,7 +129,7 @@ export const TestimonialsSection: React.FC = () => {
                   style={{
                     color: 'rgba(255,255,255,0.60)',
                     fontSize: isActive ? 12 : 10,
-                    fontFamily: 'Outfit',
+                    fontFamily: 'Plus Jakarta Sans',
                     fontWeight: '500',
                     margin: '4px 0 0',
                   }}
@@ -107,6 +137,7 @@ export const TestimonialsSection: React.FC = () => {
                   {t.role}
                 </p>
               </div>
+            </div>
             </div>
           );
         })}

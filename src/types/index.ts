@@ -18,6 +18,7 @@ export interface TestimonialItem {
   role: string;
   quote: string;
   bg: string;
+  video?: string;
 }
 
 export type FooterLinksMap = Record<string, string[]>;

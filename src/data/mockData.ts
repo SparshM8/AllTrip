@@ -3,7 +3,13 @@ import icon1 from '../assets/Icon-1.svg';
 import icon4 from '../assets/Icon-4.svg';
 import icon10 from '../assets/Icon-10.svg';
 
-export const NAV_LINKS = ['Product', 'Solutions', 'Pricing', 'About', 'Contact'];
+export const NAV_LINKS = [
+  { name: 'Home', href: '/#home' },
+  { name: 'About', href: '/#about' },
+  { name: 'Gallery', href: '/#gallery' },
+  { name: 'Testimonials', href: '/#testimonials' },
+  { name: 'Partner with us', href: '?page=partner' },
+];
 
 export const DESTINATION_CATEGORIES = ['All', 'Mountain', 'Beaches', 'Treks', 'Others'];
 
@@ -74,18 +80,21 @@ export const TESTIMONIALS: TestimonialItem[] = [
     role: 'Frequent Traveller',
     quote: '"Alltripp transformed how I plan every trip. I saved 6 hours on my last Kyoto itinerary."',
     bg: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&q=80',
+    video: 'https://cdn.coverr.co/videos/coverr-flying-over-a-forest-and-mountains-6202/1080p.mp4',
   },
   {
     name: 'James R.',
     role: 'Corporate Travel Manager',
     quote: '"Managing 40-person retreats used to be a nightmare. Alltripp made it effortless."',
     bg: 'https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=600&q=80',
+    video: 'https://cdn.coverr.co/videos/coverr-view-of-a-lake-in-the-mountains-5353/1080p.mp4',
   },
   {
     name: 'Priya K.',
     role: 'Family Traveller',
     quote: '"Found a perfect family-friendly villa in Bali within minutes. Absolutely love Alltripp."',
     bg: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80',
+    video: 'https://cdn.coverr.co/videos/coverr-palm-trees-and-beach-aerial-view-4527/1080p.mp4',
   },
 ];
 

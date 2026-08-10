@@ -20,7 +20,7 @@ export const CtaSection: React.FC = () => {
             style={{
               color: '#F2F0E3',
               fontSize: 38,
-              fontFamily: 'Outfit',
+              fontFamily: 'Plus Jakarta Sans',
               fontWeight: '500',
               lineHeight: '48px',
               letterSpacing: 0.8,
@@ -33,7 +33,7 @@ export const CtaSection: React.FC = () => {
             style={{
               color: 'rgba(242,240,227,0.80)',
               fontSize: 18,
-              fontFamily: 'Outfit',
+              fontFamily: 'Plus Jakarta Sans',
               fontWeight: '400',
               lineHeight: '30px',
               margin: 0,
@@ -46,7 +46,10 @@ export const CtaSection: React.FC = () => {
 
         {/* CTA button area */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
-          <button
+          <a
+            href="https://wa.me/919266602470?text=Hi%20Alltripp%20Team,%20I%20would%20like%20to%20get%20started."
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               height: 64,
               paddingLeft: 60,
@@ -57,22 +60,26 @@ export const CtaSection: React.FC = () => {
               cursor: 'pointer',
               color: '#032517',
               fontSize: 16,
-              fontFamily: 'Outfit',
+              fontFamily: 'Plus Jakarta Sans',
               fontWeight: '700',
               lineHeight: '24px',
               whiteSpace: 'nowrap',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               transition: 'background 0.2s',
             }}
             onMouseEnter={e => (e.currentTarget.style.background = '#e0dece')}
             onMouseLeave={e => (e.currentTarget.style.background = '#F2F0E3')}
           >
             Get Started Free
-          </button>
+          </a>
           <span
             style={{
               color: '#7E8B60',
               fontSize: 13,
-              fontFamily: 'Outfit',
+              fontFamily: 'Plus Jakarta Sans',
               fontWeight: '600',
               letterSpacing: 1.4,
               lineHeight: '20px',

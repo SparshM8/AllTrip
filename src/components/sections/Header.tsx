@@ -15,25 +15,31 @@ export const Header: React.FC = () => {
         paddingTop: 20,
         paddingBottom: 20,
         background: 'white',
-        position: 'sticky',
+        position: 'fixed',
         top: 0,
-        zIndex: 100,
-        boxShadow: '0 1px 0 rgba(0,0,0,0.06)',
+        left: 0,
+        right: 0,
+        width: '100%',
+        boxSizing: 'border-box',
+        zIndex: 1000,
+        boxShadow: '0 2px 10px rgba(0,0,0,0.08)',
       }}
     >
       {/* Logo */}
-      <img src={logoSrc} alt="Alltripp" style={{ height: 38, width: 'auto' }} />
+      <a href="/#home" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+        <img src={logoSrc} alt="Alltripp" style={{ height: 38, width: 'auto' }} />
+      </a>
 
       {/* Nav links */}
       <nav style={{ display: 'flex', gap: 40 }}>
         {NAV_LINKS.map(link => (
           <a
-            key={link}
-            href="#"
+            key={link.name}
+            href={link.href}
             style={{
               color: '#14140F',
               fontSize: 14,
-              fontFamily: 'Outfit',
+              fontFamily: 'Plus Jakarta Sans',
               fontWeight: '400',
               lineHeight: '18px',
               textDecoration: 'none',
@@ -43,13 +49,16 @@ export const Header: React.FC = () => {
             onMouseEnter={e => (e.currentTarget.style.color = '#084028')}
             onMouseLeave={e => (e.currentTarget.style.color = '#14140F')}
           >
-            {link}
+            {link.name}
           </a>
         ))}
       </nav>
 
       {/* Primary CTA */}
-      <button
+      <a
+        href="https://wa.me/919266602470?text=Hi%20Alltripp%20Team,%20I%20would%20like%20to%20book%20a%20demo."
+        target="_blank"
+        rel="noopener noreferrer"
         style={{
           height: 40,
           paddingLeft: 20,
@@ -61,16 +70,17 @@ export const Header: React.FC = () => {
           display: 'flex',
           alignItems: 'center',
           gap: 8,
+          textDecoration: 'none',
           transition: 'background 0.2s',
         }}
         onMouseEnter={e => (e.currentTarget.style.background = '#0a5033')}
         onMouseLeave={e => (e.currentTarget.style.background = '#084028')}
       >
-        <span style={{ color: 'white', fontSize: 14, fontFamily: 'Outfit', fontWeight: '500' }}>
+        <span style={{ color: 'white', fontSize: 14, fontFamily: 'Plus Jakarta Sans', fontWeight: '500' }}>
           Book a demo
         </span>
         <ArrowIcon />
-      </button>
+      </a>
     </header>
   );
 };

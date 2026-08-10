@@ -2,14 +2,14 @@ import React from 'react';
 
 export const InfoSection: React.FC = () => {
   return (
-    <section style={{ padding: '80px 160px' }}>
+    <section id="about" style={{ padding: '80px 160px' }}>
       <div style={{ display: 'flex', alignItems: 'flex-end', gap: 32 }}>
         <div style={{ flex: 1 }}>
           <p
             style={{
               color: '#735C00',
               fontSize: 13,
-              fontFamily: 'Outfit',
+              fontFamily: 'Plus Jakarta Sans',
               fontWeight: '600',
               textTransform: 'uppercase',
               letterSpacing: 2.8,
@@ -23,7 +23,7 @@ export const InfoSection: React.FC = () => {
             style={{
               color: '#1A1C1A',
               fontSize: 56,
-              fontFamily: 'Playfair Display',
+              fontFamily: 'Space Grotesk',
               fontWeight: '500',
               lineHeight: '64px',
               margin: 0,
@@ -37,7 +37,7 @@ export const InfoSection: React.FC = () => {
             style={{
               color: '#424843',
               fontSize: 18,
-              fontFamily: 'Outfit',
+              fontFamily: 'Plus Jakarta Sans',
               fontWeight: '400',
               lineHeight: '30px',
               margin: 0,

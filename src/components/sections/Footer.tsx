@@ -29,7 +29,7 @@ export const Footer: React.FC = () => {
             style={{
               color: 'rgba(242,240,227,0.70)',
               fontSize: 14,
-              fontFamily: 'Outfit',
+              fontFamily: 'Plus Jakarta Sans',
               fontWeight: '400',
               lineHeight: '22px',
               margin: '0 0 24px',
@@ -68,7 +68,7 @@ export const Footer: React.FC = () => {
               style={{
                 color: '#F2F0E3',
                 fontSize: 13,
-                fontFamily: 'Outfit',
+                fontFamily: 'Plus Jakarta Sans',
                 fontWeight: '600',
                 textTransform: 'uppercase',
                 letterSpacing: 1.4,
@@ -86,7 +86,7 @@ export const Footer: React.FC = () => {
                   style={{
                     color: 'rgba(242,240,227,0.60)',
                     fontSize: 13,
-                    fontFamily: 'Outfit',
+                    fontFamily: 'Plus Jakarta Sans',
                     fontWeight: '400',
                     lineHeight: '18px',
                     textDecoration: 'none',
@@ -117,7 +117,7 @@ export const Footer: React.FC = () => {
           style={{
             color: 'rgba(242,240,227,0.40)',
             fontSize: 13,
-            fontFamily: 'Outfit',
+            fontFamily: 'Plus Jakarta Sans',
             fontWeight: '400',
           }}
         >
@@ -131,7 +131,7 @@ export const Footer: React.FC = () => {
               style={{
                 color: 'rgba(242,240,227,0.40)',
                 fontSize: 13,
-                fontFamily: 'Outfit',
+                fontFamily: 'Plus Jakarta Sans',
                 fontWeight: '400',
                 textDecoration: 'none',
                 transition: 'color 0.2s',
