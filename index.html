@@ -6,7 +6,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>alltripp-app</title>
+    <title>Alltripp - Smart Travel Planning & B2B Solutions</title>
+
+    <!-- Force clear old PWA Service Worker cache from old Next.js version -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+            console.log('Unregistered old ServiceWorker');
+          }
+        });
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
