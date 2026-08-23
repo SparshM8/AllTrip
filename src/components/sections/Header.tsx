@@ -40,17 +40,17 @@ export const Header: React.FC = () => {
             key={link.name}
             href={link.href}
             style={{
-              color: '#14140F',
+              color: '#1A1C1A',
               fontSize: 14,
-              fontFamily: 'Plus Jakarta Sans',
+              fontFamily: 'Inter',
               fontWeight: '500',
               lineHeight: '18px',
               textDecoration: 'none',
               cursor: 'pointer',
               transition: 'color 0.2s',
             }}
-            onMouseEnter={e => (e.currentTarget.style.color = '#084028')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#14140F')}
+            onMouseEnter={e => (e.currentTarget.style.color = '#0A4028')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#1A1C1A')}
           >
             {link.name}
           </a>
@@ -67,7 +67,7 @@ export const Header: React.FC = () => {
           height: 40,
           paddingLeft: 20,
           paddingRight: 20,
-          background: '#084028',
+          background: '#0A4028',
           borderRadius: 26,
           border: 'none',
           cursor: 'pointer',
@@ -78,9 +78,9 @@ export const Header: React.FC = () => {
           transition: 'background 0.2s',
         }}
         onMouseEnter={e => (e.currentTarget.style.background = '#0a5033')}
-        onMouseLeave={e => (e.currentTarget.style.background = '#084028')}
+        onMouseLeave={e => (e.currentTarget.style.background = '#0A4028')}
       >
-        <span style={{ color: 'white', fontSize: 14, fontFamily: 'Plus Jakarta Sans', fontWeight: '500' }}>
+        <span style={{ color: 'white', fontSize: 14, fontFamily: 'Inter', fontWeight: '500' }}>
           Book a demo
         </span>
         <ArrowIcon />
@@ -91,8 +91,10 @@ export const Header: React.FC = () => {
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         className="mobile-only"
         aria-label="Toggle navigation menu"
+        aria-expanded={mobileMenuOpen}
+        aria-controls="mobile-navigation"
         style={{
-          background: '#084028',
+          background: '#0A4028',
           color: 'white',
           border: 'none',
           borderRadius: 8,
@@ -109,6 +111,7 @@ export const Header: React.FC = () => {
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
         <div
+          id="mobile-navigation"
           className="mobile-only"
           style={{
             position: 'absolute',
@@ -130,9 +133,9 @@ export const Header: React.FC = () => {
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
               style={{
-                color: '#032517',
+                color: '#0A4028',
                 fontSize: 16,
-                fontFamily: 'Plus Jakarta Sans',
+                fontFamily: 'Inter',
                 fontWeight: '600',
                 textDecoration: 'none',
                 padding: '8px 0',
@@ -149,7 +152,7 @@ export const Header: React.FC = () => {
             onClick={() => setMobileMenuOpen(false)}
             style={{
               height: 48,
-              background: '#084028',
+              background: '#0A4028',
               color: 'white',
               borderRadius: 26,
               display: 'flex',

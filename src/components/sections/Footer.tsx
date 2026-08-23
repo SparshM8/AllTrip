@@ -1,103 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logoSrc from '../../assets/Vector.svg';
 import instagramIcon from '../../assets/Icon - Instagram.svg';
 import linkedinIcon from '../../assets/Icon - LinkedIn.svg';
 import youtubeIcon from '../../assets/Icon - YouTube.svg';
 import { FOOTER_LINKS } from '../../data/mockData';
 
+const SOCIAL_LINKS = [
+  { label: 'Instagram', icon: instagramIcon },
+  { label: 'LinkedIn', icon: linkedinIcon },
+  { label: 'YouTube', icon: youtubeIcon },
+];
+
 export const Footer: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSubscribed(true);
+  };
+
   return (
-    <footer
-      className="footer-wrapper"
-      style={{
-        background: '#032517',
-        paddingTop: 80,
-        paddingBottom: 40,
-        paddingLeft: 80,
-        paddingRight: 80,
-      }}
-    >
-      {/* Top row: logo + link columns */}
-      <div className="footer-flex" style={{ display: 'flex', gap: 60, marginBottom: 60, flexWrap: 'wrap' }}>
-        {/* Brand column */}
-        <div style={{ flex: '1 1 220px', maxWidth: 320 }}>
-          <img
-            loading="lazy"
-            src={logoSrc}
-            alt="Alltripp"
-            style={{ height: 38, marginBottom: 20, filter: 'brightness(0) invert(1)' }}
-          />
-          <p
-            style={{
-              color: 'rgba(242,240,227,0.70)',
-              fontSize: 14,
-              fontFamily: 'Plus Jakarta Sans',
-              fontWeight: '400',
-              lineHeight: '22px',
-              margin: '0 0 24px',
-            }}
-          >
+    <footer className="footer-wrapper">
+      <div className="footer-flex">
+        <div className="footer-brand">
+          <img src={logoSrc} alt="Alltripp" className="footer-logo" loading="lazy" />
+          <p className="footer-description">
             The all-in-one travel platform for individuals, families and enterprises.
           </p>
-          <div style={{ display: 'flex', gap: 12 }}>
-            {[instagramIcon, linkedinIcon, youtubeIcon].map((icon, i) => (
+          <form className={`footer-newsletter${subscribed ? ' footer-newsletter-subscribed' : ''}`} onSubmit={handleSubscribe}>
+            <label className="sr-only" htmlFor="footer-email">
+              Email address
+            </label>
+            <input
+              id="footer-email"
+              type="email"
+              name="email"
+              autoComplete="email"
+              placeholder={subscribed ? 'You’re on the list' : 'Email address'}
+              value={email}
+              onChange={event => {
+                setEmail(event.target.value);
+                setSubscribed(false);
+              }}
+              required
+              aria-label="Email address"
+            />
+            <button type="submit" aria-label="Subscribe with email">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h13M13 6l6 6-6 6" />
+              </svg>
+            </button>
+          </form>
+          {subscribed && (
+            <p className="footer-newsletter-status" role="status" aria-live="polite">
+              Thanks — you’re on the list.
+            </p>
+          )}
+          <div className="footer-social-links">
+            {SOCIAL_LINKS.map(social => (
               <a
-                key={i}
+                key={social.label}
                 href="#"
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 9999,
-                  border: '1px solid rgba(242,240,227,0.20)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'border-color 0.2s',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(242,240,227,0.60)')}
-                onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(242,240,227,0.20)')}
+                aria-label={social.label}
+                className="footer-social-link"
               >
-                <img src={icon} alt="Social Icon" loading="lazy" style={{ width: 18, height: 18, filter: 'brightness(0) invert(1)' }} />
+                <img src={social.icon} alt="" loading="lazy" />
               </a>
             ))}
           </div>
         </div>
 
-        {/* Link columns */}
-        <div style={{ display: 'flex', flex: '2 1 400px', gap: 32, flexWrap: 'wrap', justifyContent: 'space-between' }}>
+        <div className="footer-links-grid">
           {Object.entries(FOOTER_LINKS).map(([category, links]) => (
-            <div key={category} style={{ minWidth: 130 }}>
-              <h4
-                style={{
-                  color: '#F2F0E3',
-                  fontSize: 13,
-                  fontFamily: 'Plus Jakarta Sans',
-                  fontWeight: '600',
-                  textTransform: 'uppercase',
-                  letterSpacing: 1.4,
-                  lineHeight: '20px',
-                  margin: '0 0 20px',
-                }}
-              >
-                {category}
-              </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div className="footer-link-column" key={category}>
+              <h4>{category}</h4>
+              <div className="footer-link-list">
                 {links.map(link => (
-                  <a
-                    key={link}
-                    href="#"
-                    style={{
-                      color: 'rgba(242,240,227,0.60)',
-                      fontSize: 13,
-                      fontFamily: 'Plus Jakarta Sans',
-                      fontWeight: '400',
-                      lineHeight: '18px',
-                      textDecoration: 'none',
-                      transition: 'color 0.2s',
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.color = '#F2F0E3')}
-                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(242,240,227,0.60)')}
-                  >
+                  <a key={link} href="#">
                     {link}
                   </a>
                 ))}
@@ -107,49 +87,8 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Bottom row: copyright */}
-      <div
-        className="responsive-flex"
-        style={{
-          paddingTop: 24,
-          borderTop: '1px solid rgba(242,240,227,0.10)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: 16,
-        }}
-      >
-        <span
-          style={{
-            color: 'rgba(242,240,227,0.40)',
-            fontSize: 13,
-            fontFamily: 'Plus Jakarta Sans',
-            fontWeight: '400',
-          }}
-        >
-          © 2025 Alltripp. All rights reserved.
-        </span>
-        <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
-          {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map(item => (
-            <a
-              key={item}
-              href="#"
-              style={{
-                color: 'rgba(242,240,227,0.40)',
-                fontSize: 13,
-                fontFamily: 'Plus Jakarta Sans',
-                fontWeight: '400',
-                textDecoration: 'none',
-                transition: 'color 0.2s',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'rgba(242,240,227,0.80)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(242,240,227,0.40)')}
-            >
-              {item}
-            </a>
-          ))}
-        </div>
+      <div className="footer-bottom-row">
+        <span>© 2025 Alltripp. All rights reserved.</span>
       </div>
     </footer>
   );

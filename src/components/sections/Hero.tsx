@@ -28,15 +28,15 @@ export const Hero: React.FC = () => {
             paddingRight: 16,
             paddingTop: 6,
             paddingBottom: 6,
-            background: '#C7EBD4',
+            background: '#E7F3EC',
             borderRadius: 9999,
           }}
         >
           <span
             style={{
-              color: '#2D4D3C',
+              color: '#0A4028',
               fontSize: 13,
-              fontFamily: 'Plus Jakarta Sans',
+              fontFamily: 'Inter',
               fontWeight: '600',
               textTransform: 'uppercase',
               letterSpacing: 1.4,
@@ -54,7 +54,7 @@ export const Hero: React.FC = () => {
             maxWidth: 900,
             textAlign: 'center',
             color: 'white',
-            fontFamily: 'Space Grotesk',
+            fontFamily: 'Josefin Sans',
             fontWeight: '500',
             textShadow: '0px 4px 4px rgba(0,0,0,0.25)',
             margin: 0,
@@ -73,7 +73,7 @@ export const Hero: React.FC = () => {
               height: 48,
               paddingLeft: 24,
               paddingRight: 20,
-              background: '#084028',
+              background: '#0A4028',
               boxShadow: '0px 0px 4px rgba(0,0,0,0.25)',
               borderRadius: 26,
               border: 'none',
@@ -85,13 +85,14 @@ export const Hero: React.FC = () => {
               transition: 'background 0.2s',
             }}
           >
-            <span style={{ color: 'white', fontSize: 14, fontFamily: 'Plus Jakarta Sans', fontWeight: '500' }}>
+            <span style={{ color: 'white', fontSize: 14, fontFamily: 'Inter', fontWeight: '500' }}>
               Book a demo
             </span>
             <ArrowIcon />
           </a>
 
-          <button
+          <a
+            href="/destinations"
             style={{
               height: 48,
               paddingLeft: 24,
@@ -106,7 +107,7 @@ export const Hero: React.FC = () => {
               gap: 8,
             }}
           >
-            <span style={{ color: 'white', fontSize: 14, fontFamily: 'Plus Jakarta Sans', fontWeight: '500' }}>
+            <span style={{ color: 'white', fontSize: 14, fontFamily: 'Inter', fontWeight: '500' }}>
               Explore our product
             </span>
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -119,7 +120,7 @@ export const Hero: React.FC = () => {
                 transform="rotate(90 9 9)"
               />
             </svg>
-          </button>
+          </a>
         </div>
       </div>
     </section>

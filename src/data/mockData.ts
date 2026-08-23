@@ -1,12 +1,12 @@
-import type { TripCard, FeatureItem, TestimonialItem, FooterLinksMap } from '../types';
+import type { TripCard, FeatureItem, FooterLinksMap } from '../types';
 import icon1 from '../assets/Icon-1.svg';
 import icon4 from '../assets/Icon-4.svg';
 import icon10 from '../assets/Icon-10.svg';
 
 export const NAV_LINKS = [
   { name: 'Home', href: '/#home' },
-  { name: 'About', href: '/#about' },
-  { name: 'Gallery', href: '/#gallery' },
+  { name: 'About Us', href: '/about' },
+  { name: 'Destinations', href: '/destinations' },
   { name: 'Testimonials', href: '/#testimonials' },
   { name: 'Partner with us', href: '?page=partner' },
 ];
@@ -74,33 +74,7 @@ export const FEATURES: FeatureItem[] = [
   },
 ];
 
-export const TESTIMONIALS: TestimonialItem[] = [
-  {
-    name: 'Sarah M.',
-    role: 'Frequent Traveller',
-    quote: '"Alltripp transformed how I plan every trip. I saved 6 hours on my last Kyoto itinerary."',
-    bg: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&q=80',
-    video: 'https://cdn.coverr.co/videos/coverr-flying-over-a-forest-and-mountains-6202/1080p.mp4',
-  },
-  {
-    name: 'James R.',
-    role: 'Corporate Travel Manager',
-    quote: '"Managing 40-person retreats used to be a nightmare. Alltripp made it effortless."',
-    bg: 'https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=600&q=80',
-    video: 'https://cdn.coverr.co/videos/coverr-view-of-a-lake-in-the-mountains-5353/1080p.mp4',
-  },
-  {
-    name: 'Priya K.',
-    role: 'Family Traveller',
-    quote: '"Found a perfect family-friendly villa in Bali within minutes. Absolutely love Alltripp."',
-    bg: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80',
-    video: 'https://cdn.coverr.co/videos/coverr-palm-trees-and-beach-aerial-view-4527/1080p.mp4',
-  },
-];
-
 export const FOOTER_LINKS: FooterLinksMap = {
-  Product: ['Features', 'Pricing', 'Changelog', 'Roadmap', 'API'],
-  Company: ['About Us', 'Careers', 'Blog', 'Press', 'Partners'],
-  Support: ['Help Center', 'Community', 'Status', 'Contact Us', 'Privacy'],
-  Legal: ['Terms', 'Privacy Policy', 'Cookie Policy', 'GDPR', 'Licenses'],
+  Company: ['About Us', 'Careers', 'Partners'],
+  Support: ['Help Center', 'Community', 'Contact Us'],
 };

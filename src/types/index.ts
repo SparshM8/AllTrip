@@ -13,12 +13,4 @@ export interface FeatureItem {
   desc: string;
 }
 
-export interface TestimonialItem {
-  name: string;
-  role: string;
-  quote: string;
-  bg: string;
-  video?: string;
-}
-
 export type FooterLinksMap = Record<string, string[]>;
